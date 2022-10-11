@@ -1,0 +1,45 @@
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    /* This defines what 1rem is */
+    font-size: 62.5%; /* 1 rem = 10px; 10px/16px = 62.5% */
+}
+
+body {
+    font-family: var(--font-family-primary), sans-serif;
+    font-size: var(--font-size-medium);
+    font-weight: var(--font-weight-medium);
+    box-sizing: border-box;
+    color: var(--color-background-primary);
+}
+
+#root {
+    display: grid;
+    overflow: clip;
+    min-height: 100%;
+    justify-items: center;
+}
+
+@media only screen and (min-width: 600px) {
+    html {
+        font-size: 65%;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    html {
+        font-size: 70%;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    html {
+        font-size: 75%;
+    }
+}

@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://use.typekit.net/rug1wxk.css'); /* titillium-web, josefin-sans */
+body {
+    /* Global Variables */
+    /* Width */
+    --width-global: 100%;
+    --width-central-column: calc(0.8vw + 2.8rem);
+    /* Colors */
+    --color-background-primary: #222831;
+    --color-background-secondary: #f1f1f1;
+    --color-background-tertiary: #2b323d;
+    --color-primary: #00adb5;
+    --color-secondary: #eeeeee;
+    /* Fonts */
+    --font-family-primary: titillium-web, sans-serif;
+    --font-family-secondary: josefin-sans, sans-serif;
+    --font-weight-light: 200;
+    --font-weight-medium: 400;
+    --font-weight-bold: 700;
+    --font-size-small: 1.3rem;
+    --font-size-medium: 1.7rem;
+    --font-size-big: 2.1rem;
+    --font-size-extra-big: 3.3rem;
+    /* Gaps */
+    --gap-small: 0.5rem;
+    --gap-medium: 1.5rem;
+    --gap-big: 2.5rem;
+    --gap-extra-big: 5rem;
+    /* Shadows */
+    --shadow-normal: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+@media only screen and (min-width: 600px) {
+    body {
+        --width-global: 90%;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    body {
+        --width-global: 70%;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    body {
+        --width-global: 50%;
+    }
+}

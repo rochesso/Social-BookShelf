@@ -12,7 +12,7 @@ const SearchBar = () => {
     const searchTextRef = useRef<HTMLInputElement>(null);
     const searchTypeRef = useRef<HTMLSelectElement>(null);
 
-    const {searchBooksGoogleApi, booksResult, errorMessage} = useGoogleApi();
+    const {searchBooksGoogleApi, searchResults, errorMessage} = useGoogleApi();
 
     const searchHandler = async (e: FormEvent) => {
         e.preventDefault();
@@ -23,27 +23,7 @@ const SearchBar = () => {
         }
     };
 
-    let books = null;
-// If any book is found
-    if (Array.isArray(booksResult)) {
-        books = booksResult.map(book => {
-            let id;
-            let num = Math.floor(Math.random() * (100000 * 100000));
-            // some ids and isbn from googleApi are repeated making the app crash, the 'key' need to be unique!
-            // this is why a random number is being added.
-            if (Array.isArray(book.isbn)) {
-                id = book.isbn[0].identifier + num;
-            } else {
-                id = book.id + num;
-            }
-            // only books with images will be returned.
-            if (book.imageLinks) {
-                return <Book key={id} book={book}/>;
-            } else { // if no image is found
-                return null;
-            }
-        });
-    }
+    let books = searchResults.map(book => <Book key={book.id} book={book}/>);
 
     return <Fragment>
         <form action="" id="searchForm" onSubmit={searchHandler}>

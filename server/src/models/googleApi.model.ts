@@ -2,35 +2,34 @@ import axios from 'axios';
 
 const searchBooks = async (q: string, searchType: string) => {
     const key = process.env.GOOGLE_BOOKS_KEY;
+    let generalParams = {
+        maxResults: 15,
+        orderBy: 'relevance',
+        langRestrict: 'en',
+        key: key
+    };
+
     let params;
     if (searchType == 'title') {
         params = {
             // q is the searched text
             q: `intitle:${q}`,
-            maxResults: 15,
-            orderBy: 'relevance',
-            langRestrict: 'en',
-            key: key
+            ...generalParams
         };
     } else if (searchType == 'author') {
         params = {
             // q is the searched text
             q: `inauthor:${q}`,
-            maxResults: 15,
-            langRestrict: 'en',
-            orderBy: 'relevance',
-            key: key
+            ...generalParams
         };
     } else {
         params = {
             // q is the searched text
             q: q,
-            maxResults: 15,
-            langRestrict: 'en',
-            orderBy: 'relevance',
-            key: key
+            ...generalParams
         };
     }
+    
     const googleApi = `https://www.googleapis.com/books/v1/volumes`;
     const result = await axios.get(googleApi, {params});
 
@@ -39,7 +38,7 @@ const searchBooks = async (q: string, searchType: string) => {
         throw new Error('Search failed');
     }
 
-    let booksResults: CompleteBook[] = [];
+    let searchResults: CompleteBook[] = [];
     let error = null;
     // if any book is found googleAPI returns an object with an 'items' property
     if (result.data.items) {
@@ -62,7 +61,16 @@ const searchBooks = async (q: string, searchType: string) => {
                     language: info.language,
                     add: true,
                 };
-                booksResults.push(book);
+                // Google Api sometimes return duplicated books with same id.
+                let isBookDuplicated = searchResults.some(item => {
+                    return item.id === book.id;
+                });
+                if (!isBookDuplicated) {
+                    // Only return books with cover images.
+                    if (book.imageLinks) {
+                        searchResults.push(book);
+                    }
+                }
             }
             // if no books are found
         } else {
@@ -73,7 +81,7 @@ const searchBooks = async (q: string, searchType: string) => {
         error = 'No books found!';
         return error;
     }
-    return booksResults;
+    return searchResults;
 };
 
 export {

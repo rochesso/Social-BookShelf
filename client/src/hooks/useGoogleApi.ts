@@ -6,7 +6,7 @@ import {httpSearchBooksGoogleApi} from './requests';
 // import useGoogleApi from '../../hooks/useGoogleApi';
 // const {searchBooksGoogleApi} = useGoogleApi();
 function useGoogleApi() {
-    const [booksResult, setBooksResult] = useState<CompleteBook[]>([]);
+    const [searchResults, setSearchResults] = useState<CompleteBook[]>([]);
     const [errorMessage, setErrorMessage] = useState<null | string>(null);
 
     const searchBooksGoogleApi = useCallback(
@@ -14,11 +14,11 @@ function useGoogleApi() {
             const result = await httpSearchBooksGoogleApi(text, type);
             // If any book is found
             if (Array.isArray(result.data)) {
-                setBooksResult(result.data);
+                setSearchResults(result.data);
                 setErrorMessage(null);
                 // if no books are found
             } else if (typeof result.data === 'string') {
-                setBooksResult([]);
+                setSearchResults([]);
                 setErrorMessage(result.data);
             }
         },
@@ -27,7 +27,7 @@ function useGoogleApi() {
 
     return {
         searchBooksGoogleApi,
-        booksResult,
+        searchResults,
         errorMessage
     };
 }

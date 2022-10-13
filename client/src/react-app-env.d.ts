@@ -1,5 +1,13 @@
 /// <reference types="react-scripts" />
 
+// User
+interface User {
+    id: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+}
+
 // Complete version of the book with all properties.
 interface CompleteBook {
     id: string,

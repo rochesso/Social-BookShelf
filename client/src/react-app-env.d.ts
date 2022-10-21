@@ -2,7 +2,7 @@
 
 // User
 interface User {
-    id: string,
+    _id?: string,
     firstName: string,
     lastName: string,
     email: string,
@@ -10,6 +10,7 @@ interface User {
 
 // Complete version of the book with all properties.
 interface CompleteBook {
+    _id?: string,
     id: string,
     title: string,
     description: string,
@@ -21,7 +22,7 @@ interface CompleteBook {
     pageCount: number,
     averageRating: number,
     language: string,
-    add: boolean,
+    isAdded: boolean,
 }
 
 interface Thumbnail {

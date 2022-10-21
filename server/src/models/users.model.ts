@@ -1,17 +1,45 @@
 import usersCollection from './users.mongo';
 
+
 const addUser = async (user: User) => {
-    await usersCollection.findOneAndUpdate(
+    const alreadyExists = await usersCollection.findOne({
+        email: user.email,
+    }).exec();
+    if (alreadyExists) {
+        return false;
+    } else {
+        await usersCollection.create(user);
+        return true;
+    }
+
+};
+
+const searchUserEmail = async (email: string) => {
+    const result = await usersCollection.findOne(
         {
-            id: user.id,
-        },
-        user,
+            email: email,
+        }).exec();
+
+    if (result) {
+        return result._id;
+    } else {
+        return false;
+    }
+};
+
+const searchUserId = async (id: string) => {
+    const result = await usersCollection.findOne(
         {
-            upsert: true,
-        }
-    );
+            _id: id,
+        }).exec();
+
+    if (result) {
+        return result;
+    } else {
+        return false;
+    }
 };
 
 export {
-    addUser
+    addUser, searchUserEmail, searchUserId
 };

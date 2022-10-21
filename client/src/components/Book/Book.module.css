@@ -1,24 +1,24 @@
 .container {
-    display: grid;
     align-items: center;
-    margin-top: var(--gap-big);
     /*border-right: var(--color-primary) 8px solid;*/
     /*border-bottom: var(--color-primary) 8px solid;*/
     box-shadow: var(--color-primary) 8px 8px;
+    display: grid;
     grid-template-columns: min-content 1fr;
+    margin-top: var(--gap-big);
 }
 
 .cover {
 }
 
 .information {
-    display: grid;
     align-items: center;
-    width: min(50vw, 20rem);
+    background-color: var(--color-background-secondary);
+    display: grid;
+    grid-template-rows: min-content min-content min-content 1fr;
     height: 100%;
     padding-left: var(--gap-medium);
-    background-color: var(--color-background-secondary);
-    grid-template-rows: min-content min-content min-content 1fr;
+    width: min(50vw, 20rem);
 }
 
 .information__title {
@@ -42,16 +42,16 @@
 }
 
 .add {
-    display: grid;
     align-items: center;
     align-self: end;
-    width: 95%;
-    margin-top: var(--gap-small);
-    margin-bottom: var(--gap-medium);
-    padding: 0.5rem 1rem;
-    cursor: pointer;
     background-color: var(--color-primary);
+    cursor: pointer;
+    display: grid;
     grid-template-columns: min-content 1fr;
+    margin-bottom: var(--gap-medium);
+    margin-top: var(--gap-small);
+    padding: 0.5rem 1rem;
+    width: 95%;
 }
 
 .add__button {

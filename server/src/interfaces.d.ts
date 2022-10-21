@@ -1,31 +1,37 @@
 interface User {
-    id: string,
-    firstName: string,
-    lastName: string,
-    email: string,
+  _id?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+interface UserBooks {
+  user: User._id;
+  books: CompleteBook[];
 }
 
 interface CompleteBook {
-    id: string,
-    title: string,
-    description: string,
-    authors: string[],
-    categories: string[],
-    isbn: Identifier[],
-    imageLinks: Thumbnail,
-    publishedDate: string,
-    pageCount: number,
-    averageRating: number,
-    language: string,
-    add: boolean,
+  _id?: string;
+  id: string;
+  title: string;
+  description: string;
+  authors: string[];
+  categories: string[];
+  isbn: Identifier[];
+  imageLinks: Thumbnail;
+  publishedDate: string;
+  pageCount: number;
+  averageRating: number;
+  language: string;
+  isAdded: boolean;
 }
 
 interface Thumbnail {
-    smallThumbnail: string,
-    thumbnail: string
+  smallThumbnail: string;
+  thumbnail: string;
 }
 
 interface Identifier {
-    type: string,
-    identifier: string
+  type: string;
+  identifier: string;
 }

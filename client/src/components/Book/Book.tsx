@@ -10,8 +10,8 @@ type AppProps = {
 };
 
 const Book = ({book}: AppProps) => {
-    const {authors, title, add, categories, imageLinks} = book;
-    const {addBook} = useBooks();
+    const {authors, title, isAdded, categories, imageLinks} = book;
+    const {addBook, removeBook} = useBooks();
 
     //check if author is too long
     let authorsString;
@@ -44,8 +44,12 @@ const Book = ({book}: AppProps) => {
     }
 
     const addBookHandler = async () => {
-        await addBook(book);
+        await addBook({...book, isAdded:true});
     };
+
+    const removeBookHandler = async () => {
+        await removeBook(book);
+    }
 
     return <div className={styles.container}>
         <img className={styles.cover} src={cover} alt="Book cover"/>
@@ -54,11 +58,18 @@ const Book = ({book}: AppProps) => {
             <h4 className={styles.information__authors}>{authorsString}</h4>
             <p className={styles.information__categories}>{categories}</p>
 
-
-            {add ? <div className={styles.add} onClick={addBookHandler}>
+{/* Button to add a book to your library */}
+            {!isAdded ? <div className={styles.add} onClick={addBookHandler}>
                 <img className={styles.add__button} src={plusIcon}
                      alt="Add this book to your library!"/>
                 <p className={styles.add__text}>Add to your library!</p>
+            </div> : null}
+
+{/* Button to remove a book from your library */}
+            {isAdded ? <div className={styles.add} onClick={removeBookHandler}>
+                <img className={styles.add__button} src={plusIcon}
+                     alt="Remove this book to your library!"/>
+                <p className={styles.add__text}>Remove from your library!</p>
             </div> : null}
         </div>
     </div>;

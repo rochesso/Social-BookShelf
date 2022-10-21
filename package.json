@@ -1,0 +1,25 @@
+{
+  "name": "social-bookshelf",
+  "version": "1.0.0",
+  "description": "This is a web application to save and share the books you love!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rochesso/Social-BookShelf.git"
+  },
+  "keywords": [
+    "book",
+    "bookshelf",
+    "library",
+    "social"
+  ],
+  "author": "Arthur Rochesso",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rochesso/Social-BookShelf/issues"
+  },
+  "homepage": "https://github.com/rochesso/Social-BookShelf#readme"
+}

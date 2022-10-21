@@ -59,7 +59,7 @@ const searchBooks = async (q: string, searchType: string) => {
                     pageCount: info.pageCount,
                     averageRating: info.averageRating,
                     language: info.language,
-                    add: true,
+                    isAdded: false,
                 };
                 // Google Api sometimes return duplicated books with same id.
                 let isBookDuplicated = searchResults.some(item => {

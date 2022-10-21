@@ -1,11 +1,13 @@
 import express from 'express';
 
 import googleApiRouter from './googleApi/googleApi.router';
-import booksRouter from './books/books.router';
+import userBooksRouter from './userBooks/userBooks.router';
+import usersRouter from './users/users.router';
 
 const api = express.Router();
 
 api.use('/googleApi', googleApiRouter);
-api.use('/books', booksRouter);
+api.use('/userBooks', userBooksRouter);
+api.use('/user', usersRouter);
 
 export default api;

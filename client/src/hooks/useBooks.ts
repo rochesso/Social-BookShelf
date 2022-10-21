@@ -1,29 +1,46 @@
-import {useCallback} from 'react';
-import {httpAddBook} from './requests';
+import { useCallback } from "react";
+import { httpAddBook, httpGetAllBooks, httpRemoveBook } from "./requests";
+import { useAppSelector, useAppDispatch } from "../hooks/useStore";
+import { bookActions } from "../store/book-slice";
 
 // Can be used as following:
 // import useBooks from '../../hooks/useBooks';
 // const {addBook} = useBooks();
 
 function useBooks() {
-    const addBook = useCallback(
-        async (book: CompleteBook) => {
+  const dispatch = useAppDispatch();
 
-            const response = await httpAddBook(book);
-            const success = response.ok;
-            if (success) {
-                console.log('Book added!');
-            } else {
-                console.log('Book not added!');
+  const addBook = useCallback(async (book: CompleteBook) => {
+    const response = await httpAddBook(book);
+    const success = response.ok;
+    if (success) {
+      console.log(response.message);
+    } else {
+      console.log(response.message);
+    }
+  }, []);
 
-            }
-        },
-        [httpAddBook]
-    );
+  const removeBook = useCallback(async (book: CompleteBook) => {
+    const response = await httpRemoveBook(book);
+    const success = response.ok;
+    if (success) {
+      console.log(response.message);
+      dispatch(bookActions.removeBook(book));
+    } else {
+      console.log(response.message);
+    }
+  }, []);
 
-    return {
-        addBook
-    };
+  const getAllBooks = useCallback(async () => {
+    const response = await httpGetAllBooks();
+    dispatch(bookActions.replaceBooks(response));
+  }, []);
+
+  return {
+    addBook,
+    getAllBooks,
+    removeBook,
+  };
 }
 
 export default useBooks;

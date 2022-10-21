@@ -17,7 +17,7 @@ interface CompleteBook {
   description: string;
   authors: string[];
   categories: string[];
-  isbn: Identifier[];
+  industryIdentifiers: Identifier[];
   imageLinks: Thumbnail;
   publishedDate: string;
   pageCount: number;
@@ -34,4 +34,9 @@ interface Thumbnail {
 interface Identifier {
   type: string;
   identifier: string;
+}
+
+interface GoogleBookAPI {
+  id: string;
+  volumeInfo: CompleteBook;
 }

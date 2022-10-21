@@ -4,12 +4,19 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 // Search books on Google books api.
 const httpSearchBooksGoogleApi = async (text: string, type: string) => {
-  const params = {
-    // q is the searched text
-    q: text,
-    searchType: type,
+  const userId = sessionStorage.getItem("user");
+  const config = {
+    params: {
+      // q is the searched text
+      q: text,
+      searchType: type,
+    },
+    headers: {
+      id: userId,
+    },
   };
-  return await axios.get(`${API_URL}/googleapi/search`, { params });
+
+  return await axios.get(`${API_URL}/googleapi/search`, config);
 };
 
 // Add a book to the database.

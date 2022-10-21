@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import bookSlice from './book-slice';
+import searchBookGoogleSlice from './searchBookGoogle-slice';
 
 const store = configureStore({
-  reducer: { bookStore: bookSlice.reducer},
+  reducer: { bookStore: bookSlice.reducer, searchBookGoogleStore: searchBookGoogleSlice.reducer},
   devTools: true,
 });
 

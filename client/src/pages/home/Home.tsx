@@ -32,7 +32,7 @@ const Home = () => {
     }
         }
         
-    return <div>{books}{message}</div>;
+    return <div><p>{bookStore.totalQuantity}</p>{books}{message}</div>;
 };
 
 export default Home;

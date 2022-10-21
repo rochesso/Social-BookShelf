@@ -2,43 +2,45 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 // Define a type for the slice state
 interface bookState {
-    books: CompleteBook[],
+    searchedBooks: CompleteBook[],
     totalQuantity: number
   }
   
   // Define the initial state using that type
   const initialState: bookState = {
-    books: [],
+    searchedBooks: [],
     totalQuantity: 0
   }
 
-const bookSlice = createSlice({
-  name: 'bookStore',
+const searchBookGoogleSlice = createSlice({
+  name: 'searchBookGoogleStore',
   initialState,
   reducers: {
     replaceBooks(state, action: PayloadAction<CompleteBook[]>) {
 const books = action.payload
 if (books.length > 0) {
-    state.books = books;
+    state.searchedBooks = books;
     state.totalQuantity = books.length;
 }
     },
     addBook(state, action: PayloadAction<CompleteBook>) {
       const newBook = action.payload;
-      const existingBook = state.books.some((item) => item._id === newBook._id);
+      const existingBook = state.searchedBooks.some((item) => item.id === newBook.id);
       if (!existingBook) {
-        state.books.push(newBook);
+        state.searchedBooks.push(newBook);
         state.totalQuantity++;
       } else {
         return console.log('Book already exists!')
       }
     },
     removeBook(state, action: PayloadAction<CompleteBook>) {
-      const newBook = action.payload;
-      const existingBook = state.books.some((item) => item._id === newBook._id);
+      const book = action.payload;
+      const existingBook = state.searchedBooks.some((item) => item.id === book.id);
       if (existingBook) {
-        state.books = state.books.filter((item) => item._id !== newBook._id);
+        state.searchedBooks = state.searchedBooks.filter((item) => item.id !== book.id);
         state.totalQuantity--;
+        return console.log('Book removed!')
+
       } else {
         return console.log('Book not removed!')
       }
@@ -46,6 +48,6 @@ if (books.length > 0) {
   },
 });
 
-export const bookActions = bookSlice.actions;
+export const searchBookGoogleActions = searchBookGoogleSlice.actions;
 
-export default bookSlice;
+export default searchBookGoogleSlice;

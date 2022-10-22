@@ -9,11 +9,11 @@ import {
 const httpGetAllUserBooks = async (req: Request, res: Response) => {
   if (req.headers.id != null) {
     const id = req.headers.id.toString();
-    const data = await getUserData(id);
+    const response = await getUserData(id);
     let books: CompleteBook[] = [];
-    if (data) {
-      if (data.books.length > 0) {
-        books = data.books;
+    if (response) {
+      if (response.ok) {
+        books = response.userData.books;
       }
     }
     return res.status(200).json(books);

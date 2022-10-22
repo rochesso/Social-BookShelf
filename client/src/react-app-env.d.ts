@@ -12,9 +12,11 @@ interface User {
 interface UserData {
   user: User._id;
   books: CompleteBook[];
-  config: {
-    sortPreference: string;
-  };
+  config: Config;
+}
+
+interface Config {
+  sortPreference: "recent" | "title" | "author";
 }
 
 // Complete version of the book with all properties.

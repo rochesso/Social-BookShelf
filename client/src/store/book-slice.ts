@@ -13,14 +13,16 @@ const initialState: bookState = {
 };
 
 const bookSlice = createSlice({
-  name: "bookStore",
+  name: "configStore",
   initialState,
   reducers: {
     replaceBooks(state, action: PayloadAction<CompleteBook[]>) {
       const books = action.payload;
-      if (books.length > 0) {
-        state.books = books;
-        state.totalQuantity = books.length;
+      if (Array.isArray(books)) {
+        if (books.length > 0) {
+          state.books = books;
+          state.totalQuantity = books.length;
+        }
       }
     },
     addBook(state, action: PayloadAction<CompleteBook>) {

@@ -3,17 +3,25 @@ import { useAppSelector, useAppDispatch } from '../../hooks/useStore'
 
 import useBooks from '../../hooks/useBooks';
 import Book from '../../components/Book/Book';
-import { bookActions } from '../../store/book-slice';
+import { configActions } from '../../store/config-slice';
+import useConfig from '../../hooks/useConfig';
+
 
 const Home = () => {
     const dispatch = useAppDispatch();
+
+    const configStore = useAppSelector((state) => state.configStore)
     const bookStore = useAppSelector((state) => state.bookStore)
+
     const {getAllBooks} = useBooks();
+    const {getConfig} = useConfig()
 
     useEffect(() => {
         // declare the data fetching function
         const fetchData = async () => {
             await getAllBooks();
+            await getConfig();
+
         };
         // call the function
         fetchData()

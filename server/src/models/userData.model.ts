@@ -22,12 +22,33 @@ const searchUserData = async (_id: string) => {
 
 // get a userData inside userDataCollection, if it still doesn't exists, it will create a new userData
 const getUserData = async (_id: string) => {
-  const userData = await searchUserData(_id);
-  if (userData) {
-    return userData;
+  let response = await searchUserData(_id);
+  let userData: UserData;
+  if (response) {
+    userData = response;
+    const message = "User data found!";
+    const ok = true;
+    return { userData, message, ok };
   } else {
     await createUserData(_id);
-    return await searchUserData(_id);
+    response = await searchUserData(_id);
+    if (response) {
+      userData = response;
+      const message = "User data created!";
+      const ok = true;
+      return { userData, message, ok };
+    }
+  }
+};
+
+// Change user configuration.
+const changeUserConfig = async (id: string, config: Config) => {
+  const user = await searchUserData(id);
+  if (user) {
+    await user.updateOne({ config: config });
+    const message = "User configuration updated!";
+    const ok = true;
+    return { message, ok };
   }
 };
 
@@ -73,4 +94,5 @@ export {
   removeUserBook,
   createUserData,
   searchUserData,
+  changeUserConfig,
 };

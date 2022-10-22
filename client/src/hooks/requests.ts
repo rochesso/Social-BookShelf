@@ -114,6 +114,26 @@ const httpGetAllBooks = async () => {
   }
 };
 
+const httpGetConfig = async () => {
+  const userId = sessionStorage.getItem("user");
+  try {
+    if (userId) {
+      const response = await fetch(`${API_URL}/userConfig`, {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          id: userId,
+        },
+      });
+      return await response.json();
+    }
+  } catch (err) {
+    return {
+      ok: false,
+    };
+  }
+};
+
 export {
   httpAddBook,
   httpSearchBooksGoogleApi,
@@ -121,4 +141,5 @@ export {
   httpLoginUser,
   httpGetAllBooks,
   httpRemoveBook,
+  httpGetConfig,
 };

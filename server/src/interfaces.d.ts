@@ -8,9 +8,11 @@ interface User {
 interface UserData {
   user: User._id;
   books: CompleteBook[];
-  config: {
-    sortPreference: string;
-  };
+  config: Config;
+}
+
+interface Config {
+  sortPreference: "recent" | "title" | "author";
 }
 
 interface CompleteBook {

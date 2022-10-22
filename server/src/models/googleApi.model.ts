@@ -65,8 +65,8 @@ const searchBooks = async (q: string, searchType: string, id: string) => {
   // send a get request only if googleApi and key are specified in .env
   if (googleApi && key) {
     const result = await axios.get(googleApi, { params });
-    const userData = await getUserData(id);
-    const userBooks = userData?.books;
+    const response = await getUserData(id);
+    const userBooks = response?.userData.books;
 
     if (result.status !== 200) {
       console.log("We got a problem while searching for the books.");

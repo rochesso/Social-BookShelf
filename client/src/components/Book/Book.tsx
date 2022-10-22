@@ -57,7 +57,6 @@ const Book = ({book}: AppProps) => {
             <h3 className={styles.information__title}>{titleString}</h3>
             <h4 className={styles.information__authors}>{authorsString}</h4>
             <p className={styles.information__categories}>{categories}</p>
-
 {/* Button to add a book to your library */}
             {!isAdded ? <div className={styles.add} onClick={addBookHandler}>
                 <img className={styles.add__button} src={plusIcon}

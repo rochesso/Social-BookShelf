@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
 import {
   addUserBook,
-  searchUserBooks,
+  getUserData,
   removeUserBook,
-} from "../../models/userBooks.model";
+} from "../../models/userData.model";
 
+// - /userBooks get request
 const httpGetAllUserBooks = async (req: Request, res: Response) => {
   if (req.headers.id != null) {
     const id = req.headers.id.toString();
-    const data = await searchUserBooks(id);
+    const data = await getUserData(id);
     let books: CompleteBook[] = [];
     if (data) {
       if (data.books.length > 0) {
@@ -19,6 +20,7 @@ const httpGetAllUserBooks = async (req: Request, res: Response) => {
   }
 };
 
+// - /userBooks/add post request - Add an book to user collection
 const httpAddUserBooks = async (req: Request, res: Response) => {
   const book = req.body.book;
   const id = req.body.id;
@@ -26,6 +28,7 @@ const httpAddUserBooks = async (req: Request, res: Response) => {
   return res.status(201).json(result);
 };
 
+// - /userBooks/remove post request - Remove and book from user collection
 const httpRemoveUserBooks = async (req: Request, res: Response) => {
   const book = req.body.book;
   const id = req.body.id;

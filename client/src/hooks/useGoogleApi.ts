@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-import { searchBookGoogleActions } from "../store/searchBookGoogle-slice";
+import { googleSearchBooksActions } from "../store/googleSearchBooks-slice";
 import { useAppDispatch } from "../hooks/useStore";
 import { httpSearchBooksGoogleApi } from "./requests";
 
@@ -16,11 +16,11 @@ function useGoogleApi() {
       const result = await httpSearchBooksGoogleApi(text, type);
       // If any book is found
       if (Array.isArray(result.data)) {
-        dispatch(searchBookGoogleActions.replaceBooks(result.data));
+        dispatch(googleSearchBooksActions.replaceBooks(result.data));
         setErrorMessage(null);
         // if no books are found
       } else if (typeof result.data === "string") {
-        dispatch(searchBookGoogleActions.replaceBooks([]));
+        dispatch(googleSearchBooksActions.replaceBooks([]));
         setErrorMessage(result.data);
       }
     },

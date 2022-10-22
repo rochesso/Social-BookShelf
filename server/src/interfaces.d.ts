@@ -5,9 +5,12 @@ interface User {
   email: string;
 }
 
-interface UserBooks {
+interface UserData {
   user: User._id;
   books: CompleteBook[];
+  config: {
+    sortPreference: string;
+  };
 }
 
 interface CompleteBook {
@@ -24,6 +27,12 @@ interface CompleteBook {
   averageRating: number;
   language: string;
   isAdded: boolean;
+  lastModified: Date;
+  status: {
+    currentPage: number;
+    reading: "notStarted" | "started" | "finished" | "gaveUp";
+    isFavorite: boolean;
+  };
 }
 
 interface Thumbnail {

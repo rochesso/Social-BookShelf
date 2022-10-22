@@ -8,7 +8,7 @@ import {
 
 const userBooksRouter = express.Router();
 
-// - /userBooks
+// - /userBooks routes
 userBooksRouter.get("/", httpGetAllUserBooks);
 userBooksRouter.post("/add", httpAddUserBooks);
 userBooksRouter.post("/remove", httpRemoveUserBooks);

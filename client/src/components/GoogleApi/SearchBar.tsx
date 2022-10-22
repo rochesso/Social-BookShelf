@@ -1,6 +1,6 @@
-import React, {FormEvent, Fragment, useRef} from 'react';
+import{FormEvent, Fragment, useRef} from 'react';
 
-import { useAppSelector, useAppDispatch } from '../../hooks/useStore'
+import { useAppSelector } from '../../hooks/useStore'
 import useGoogleApi from '../../hooks/useGoogleApi';
 import styles from './SearchBar.module.css';
 import Book from '../Book/Book';
@@ -10,7 +10,7 @@ import Book from '../Book/Book';
 // };
 
 const SearchBar = () => {
-    const searchBookStore = useAppSelector((state) => state.searchBookGoogleStore)
+    const searchBookStore = useAppSelector((state) => state.googleSearchBooksStore)
     const searchTextRef = useRef<HTMLInputElement>(null);
     const searchTypeRef = useRef<HTMLSelectElement>(null);
 

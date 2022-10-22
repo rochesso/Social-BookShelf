@@ -1,6 +1,7 @@
 import axios from "axios";
-import { searchUserBooks } from "./userBooks.model";
+import { getUserData } from "./userData.model";
 
+// convert the information from google api to a book.
 const createBook = (item: GoogleBookAPI) => {
   const info = item.volumeInfo;
   const description = info.description || "";
@@ -18,12 +19,21 @@ const createBook = (item: GoogleBookAPI) => {
     averageRating: info.averageRating,
     language: info.language,
     isAdded: false,
+    lastModified: new Date(),
+    status: {
+      currentPage: 0,
+      reading: "notStarted",
+      isFavorite: false,
+    },
   };
   return book;
 };
 
+// Search for books using google books api.
 const searchBooks = async (q: string, searchType: string, id: string) => {
   const key = process.env.GOOGLE_BOOKS_KEY;
+  const googleApi = process.env.GOOGLE_BOOKS_API;
+
   let generalParams = {
     maxResults: 15,
     orderBy: "relevance",
@@ -52,47 +62,50 @@ const searchBooks = async (q: string, searchType: string, id: string) => {
     };
   }
 
-  const googleApi = `https://www.googleapis.com/books/v1/volumes`;
-  const result = await axios.get(googleApi, { params });
-  const user = await searchUserBooks(id);
-  const userBooks = user?.books;
+  // send a get request only if googleApi and key are specified in .env
+  if (googleApi && key) {
+    const result = await axios.get(googleApi, { params });
+    const userData = await getUserData(id);
+    const userBooks = userData?.books;
 
-  if (result.status !== 200) {
-    console.log("We got a problem while searching for the books.");
-    throw new Error("Search failed");
-  }
+    if (result.status !== 200) {
+      console.log("We got a problem while searching for the books.");
+      throw new Error("Search failed");
+    }
 
-  let searchResults: CompleteBook[] = [];
-  let error = null;
-  // if any book is found googleAPI returns an object with an 'items' property
-  if (result.data.items) {
-    if (result.data.items.length > 0) {
-      for (const item of result.data.items) {
-        const isBookAdded = userBooks?.some((book) => book.id === item.id);
-        if (!isBookAdded) {
-          const book = createBook(item);
-          // Google Api sometimes return duplicated books with same id.
-          let isBookDuplicated = searchResults.some((item) => {
-            return item.id === book.id;
-          });
-          if (!isBookDuplicated) {
-            // Only return books with cover images.
-            if (book.imageLinks) {
-              searchResults.push(book);
+    let searchResults: CompleteBook[] = [];
+    let error = null;
+    // if any book is found googleAPI returns an object with an 'items' property
+    if (result.data.items) {
+      if (result.data.items.length > 0) {
+        for (const item of result.data.items) {
+          // Check if user already has the book added to their collection.
+          const isBookAdded = userBooks?.some((book) => book.id === item.id);
+          if (!isBookAdded) {
+            const book = createBook(item);
+            // Google Api sometimes return duplicated books with same id.
+            let isBookDuplicated = searchResults.some((item) => {
+              return item.id === book.id;
+            });
+            if (!isBookDuplicated) {
+              // Only return books with cover images.
+              if (book.imageLinks) {
+                searchResults.push(book);
+              }
             }
           }
         }
+        // if no books are found
+      } else {
+        error = "No books found!";
+        return error;
       }
-      // if no books are found
     } else {
       error = "No books found!";
       return error;
     }
-  } else {
-    error = "No books found!";
-    return error;
+    return searchResults;
   }
-  return searchResults;
 };
 
 export { searchBooks };

@@ -10,37 +10,44 @@ type AppProps = {
 };
 
 const Book = ({book}: AppProps) => {
-    const {authors, title, isAdded, categories, imageLinks} = book;
-    const {addBook, removeBook} = useBooks();
+    const {authors, title, isAdded, categories, imageLinks, status} = book;
+    const {addBook, removeBook, updateBook} = useBooks();
 
     //check if author is too long
     let authorsString;
     if (authors) {
-        if (authors.length > 1) {
-            if (authors.join(', ').length > 50) {
-                authorsString = [`${authors.join(', ').substring(0, 50)}...`];
+        if (Array.isArray(authors)) {
+            if (authors.length > 1) {
+                if (authors.join(', ').length > 50) {
+                    authorsString = [`${authors.join(', ').substring(0, 50)}...`];
+                } else {
+                    authorsString = [`${authors.join(', ')}`];
+                }
             } else {
-                authorsString = [`${authors.join(', ')}`];
+                authorsString = authors;
             }
-        } else {
-            authorsString = authors;
         }
     }
 
     // Check if the title is too long
     let titleString;
-    if (title.length > 50) {
-        titleString = `${title.substring(0, 50)}...`;
-    } else {
-        titleString = `${title}`;
+    if (title) {
+        if (title.length > 50) {
+            titleString = `${title.substring(0, 50)}...`;
+        } else {
+            titleString = `${title}`;
+        }
     }
+    
 
     // Check image available
-    let cover: string;
-    if (imageLinks.thumbnail) {
-        cover = imageLinks.thumbnail;
-    } else {
-        cover = imageLinks.smallThumbnail;
+    let cover: string = 'null';
+    if (imageLinks) {
+        if (imageLinks.thumbnail) {
+            cover = imageLinks.thumbnail;
+        } else {
+            cover = imageLinks.smallThumbnail;
+        }
     }
 
     const addBookHandler = async () => {
@@ -49,6 +56,10 @@ const Book = ({book}: AppProps) => {
 
     const removeBookHandler = async () => {
         await removeBook(book);
+    }
+
+    const updateBookHandler = async () => {
+        await updateBook({...book, status: {currentPage: 12, isFavorite: true, reading: 'started'}});
     }
 
     return <div className={styles.container}>
@@ -70,6 +81,14 @@ const Book = ({book}: AppProps) => {
                      alt="Remove this book to your library!"/>
                 <p className={styles.add__text}>Remove from your library!</p>
             </div> : null}
+
+{/* Temporary to test update button */}
+            <div className={styles.add} onClick={updateBookHandler}>
+                <img className={styles.add__button} src={plusIcon}
+                     alt="Add this book to your library!"/>
+                <p className={styles.add__text}>update book</p>
+            </div>
+            <p>{status.currentPage}</p>
         </div>
     </div>;
 };

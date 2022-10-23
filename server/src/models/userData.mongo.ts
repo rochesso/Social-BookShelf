@@ -9,7 +9,7 @@ const userDataSchema = new mongoose.Schema({
       description: { type: String, required: true },
       authors: { type: [String], required: true, default: [""] },
       categories: { type: [String], required: true, default: [""] },
-      isbn: { type: [Object], required: true },
+      industryIdentifiers: { type: [Object], required: true },
       imageLinks: { type: Object, required: true },
       publishedDate: { type: String, required: true },
       pageCount: { type: Number, required: true },

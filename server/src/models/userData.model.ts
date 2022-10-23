@@ -20,12 +20,17 @@ const createUserData = async (_id: string) => {
 const searchUserData = async (_id: string) => {
   const user = await searchUserId(_id);
   if (user) {
-    const userData = await userDataCollection
+    const response = await userDataCollection
       .findOne({
         user: _id,
       })
       .exec();
-    return userData;
+    if (response) {
+      const userData = response;
+      return userData;
+    } else {
+      return false;
+    }
   } else {
     return false;
   }
@@ -103,6 +108,29 @@ const removeUserBook = async (id: string, book: CompleteBook) => {
   }
 };
 
+const updateUserBook = async (id: string, book: CompleteBook) => {
+  const userData = await searchUserData(id);
+  if (userData) {
+    await userData.updateOne(
+      {
+        $set: {
+          "books.$[element].status": book.status,
+        },
+      },
+      {
+        arrayFilters: [
+          {
+            "element._id": book._id,
+          },
+        ],
+      }
+    );
+    const message = "Book updated!";
+    const ok = true;
+    return { message, ok };
+  }
+};
+
 export {
   getUserData,
   addUserBook,
@@ -110,4 +138,5 @@ export {
   createUserData,
   searchUserData,
   changeUserConfig,
+  updateUserBook,
 };

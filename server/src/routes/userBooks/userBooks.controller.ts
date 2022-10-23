@@ -3,6 +3,7 @@ import {
   addUserBook,
   getUserData,
   removeUserBook,
+  updateUserBook,
 } from "../../models/userData.model";
 
 // - /userBooks get request
@@ -36,4 +37,16 @@ const httpRemoveUserBooks = async (req: Request, res: Response) => {
   return res.status(201).json(result);
 };
 
-export { httpAddUserBooks, httpGetAllUserBooks, httpRemoveUserBooks };
+const httpUpdateUserBooks = async (req: Request, res: Response) => {
+  const book = req.body.book;
+  const id = req.body.id;
+  const result = await updateUserBook(id, book);
+  return res.status(201).json(result);
+};
+
+export {
+  httpAddUserBooks,
+  httpGetAllUserBooks,
+  httpRemoveUserBooks,
+  httpUpdateUserBooks,
+};

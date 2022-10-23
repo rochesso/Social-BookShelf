@@ -30,11 +30,13 @@ interface CompleteBook {
   language: string;
   isAdded: boolean;
   lastModified: Date;
-  status: {
-    currentPage: number;
-    reading: "notStarted" | "started" | "finished" | "gaveUp";
-    isFavorite: boolean;
-  };
+  status: Status;
+}
+
+interface Status {
+  currentPage: number;
+  reading: "notStarted" | "started" | "finished" | "gaveUp";
+  isFavorite: boolean;
 }
 
 interface Thumbnail {

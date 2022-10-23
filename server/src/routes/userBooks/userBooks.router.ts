@@ -4,6 +4,7 @@ import {
   httpAddUserBooks,
   httpGetAllUserBooks,
   httpRemoveUserBooks,
+  httpUpdateUserBooks,
 } from "./userBooks.controller";
 
 const userBooksRouter = express.Router();
@@ -12,5 +13,6 @@ const userBooksRouter = express.Router();
 userBooksRouter.get("/", httpGetAllUserBooks);
 userBooksRouter.post("/add", httpAddUserBooks);
 userBooksRouter.post("/remove", httpRemoveUserBooks);
+userBooksRouter.post("/update", httpUpdateUserBooks);
 
 export default userBooksRouter;

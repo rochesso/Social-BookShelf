@@ -19,6 +19,26 @@ const httpSearchBooksGoogleApi = async (text: string, type: string) => {
   return await axios.get(`${API_URL}/googleapi/search`, config);
 };
 
+// Update a book from database.
+const httpUpdateBook = async (book: CompleteBook) => {
+  const userId = sessionStorage.getItem("user");
+  try {
+    const result = await fetch(`${API_URL}/userBooks/update`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ book: book, id: userId }),
+    });
+    const data = await result.json();
+    return data;
+  } catch (err) {
+    return {
+      ok: false,
+    };
+  }
+};
+
 // Add a book to the database.
 const httpAddBook = async (book: CompleteBook) => {
   const userId = sessionStorage.getItem("user");
@@ -142,4 +162,5 @@ export {
   httpGetAllBooks,
   httpRemoveBook,
   httpGetConfig,
+  httpUpdateBook,
 };

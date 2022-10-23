@@ -1,5 +1,10 @@
 import { useCallback } from "react";
-import { httpAddBook, httpGetAllBooks, httpRemoveBook } from "./requests";
+import {
+  httpAddBook,
+  httpGetAllBooks,
+  httpRemoveBook,
+  httpUpdateBook,
+} from "./requests";
 import { useAppDispatch } from "../hooks/useStore";
 import { bookActions } from "../store/book-slice";
 import { googleSearchBooksActions } from "../store/googleSearchBooks-slice";
@@ -35,6 +40,17 @@ function useBooks() {
     [dispatch]
   );
 
+  const updateBook = useCallback(async (book: CompleteBook) => {
+    const response = await httpUpdateBook(book);
+    const success = response.ok;
+    if (success) {
+      console.log("book updated");
+      getAllBooks();
+    } else {
+      console.log("book not updated");
+    }
+  }, []);
+
   const getAllBooks = useCallback(async () => {
     const response = await httpGetAllBooks();
     dispatch(bookActions.replaceBooks(response));
@@ -44,6 +60,7 @@ function useBooks() {
     addBook,
     getAllBooks,
     removeBook,
+    updateBook,
   };
 }
 

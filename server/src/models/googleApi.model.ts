@@ -30,7 +30,7 @@ const createBook = (item: GoogleBookAPI) => {
 };
 
 // Search for books using google books api.
-const searchBooks = async (q: string, searchType: string, id: string) => {
+const searchBooks = async (q: string, searchType: string, id?: string) => {
   const key = process.env.GOOGLE_BOOKS_KEY;
   const googleApi = process.env.GOOGLE_BOOKS_API;
 
@@ -65,8 +65,13 @@ const searchBooks = async (q: string, searchType: string, id: string) => {
   // send a get request only if googleApi and key are specified in .env
   if (googleApi && key) {
     const result = await axios.get(googleApi, { params });
-    const response = await getUserData(id);
-    const userBooks = response?.userData.books;
+    let userBooks: CompleteBook[] = [];
+    if (id) {
+      const response = await getUserData(id);
+      if (response) {
+        userBooks = response.userData.books;
+      }
+    }
 
     if (result.status !== 200) {
       console.log("We got a problem while searching for the books.");
@@ -80,7 +85,7 @@ const searchBooks = async (q: string, searchType: string, id: string) => {
       if (result.data.items.length > 0) {
         for (const item of result.data.items) {
           // Check if user already has the book added to their collection.
-          const isBookAdded = userBooks?.some((book) => book.id === item.id);
+          const isBookAdded = userBooks.some((book) => book.id === item.id);
           if (!isBookAdded) {
             const book = createBook(item);
             // Google Api sometimes return duplicated books with same id.

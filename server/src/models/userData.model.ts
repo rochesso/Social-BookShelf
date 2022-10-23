@@ -1,23 +1,34 @@
 import userDataCollection from "./userData.mongo";
+import { searchUserId } from "./users.model";
 
 // create a userData inside userDataCollection
 const createUserData = async (_id: string) => {
-  const userData: UserData = {
-    user: _id,
-    books: [],
-    config: { sortPreference: "recent" },
-  };
-  await userDataCollection.create(userData);
+  const user = await searchUserId(_id);
+  if (user) {
+    const userData: UserData = {
+      user: _id,
+      books: [],
+      config: { sortPreference: "recent" },
+    };
+    await userDataCollection.create(userData);
+  } else {
+    return false;
+  }
 };
 
 // search for a userData inside userDataCollection
 const searchUserData = async (_id: string) => {
-  const userData = await userDataCollection
-    .findOne({
-      user: _id,
-    })
-    .exec();
-  return userData;
+  const user = await searchUserId(_id);
+  if (user) {
+    const userData = await userDataCollection
+      .findOne({
+        user: _id,
+      })
+      .exec();
+    return userData;
+  } else {
+    return false;
+  }
 };
 
 // get a userData inside userDataCollection, if it still doesn't exists, it will create a new userData
@@ -30,13 +41,17 @@ const getUserData = async (_id: string) => {
     const ok = true;
     return { userData, message, ok };
   } else {
-    await createUserData(_id);
-    response = await searchUserData(_id);
-    if (response) {
-      userData = response;
-      const message = "User data created!";
-      const ok = true;
-      return { userData, message, ok };
+    const isUserCreated = await createUserData(_id);
+    if (isUserCreated) {
+      response = await searchUserData(_id);
+      if (response) {
+        userData = response;
+        const message = "User data created!";
+        const ok = true;
+        return { userData, message, ok };
+      }
+    } else {
+      return false;
     }
   }
 };

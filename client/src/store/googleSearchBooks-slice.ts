@@ -18,7 +18,7 @@ const googleSearchBooksSlice = createSlice({
   reducers: {
     replaceBooks(state, action: PayloadAction<CompleteBook[]>) {
       const books = action.payload;
-      if (books.length > 0) {
+      if (books.length >= 0) {
         state.searchedBooks = books;
         state.totalQuantity = books.length;
       }

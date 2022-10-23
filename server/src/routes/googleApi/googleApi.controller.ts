@@ -11,6 +11,13 @@ const httpSearchBooks = async (req: Request, res: Response) => {
     const id = req.headers.id.toString();
 
     return res.status(200).json(await searchBooks(q, searchType, id));
+  } else {
+    if (req.query.q && req.query.searchType != null) {
+      const q = req.query.q.toString();
+      const searchType = req.query.searchType.toString();
+
+      return res.status(200).json(await searchBooks(q, searchType));
+    }
   }
 };
 

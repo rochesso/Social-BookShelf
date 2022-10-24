@@ -38,26 +38,30 @@ const searchUserData = async (_id: string) => {
 
 // get a userData inside userDataCollection, if it still doesn't exists, it will create a new userData
 const getUserData = async (_id: string) => {
-  let response = await searchUserData(_id);
-  let userData: UserData;
-  if (response) {
-    userData = response;
-    const message = "User data found!";
-    const ok = true;
-    return { userData, message, ok };
-  } else {
-    const isUserCreated = await createUserData(_id);
-    if (isUserCreated) {
-      response = await searchUserData(_id);
-      if (response) {
-        userData = response;
-        const message = "User data created!";
-        const ok = true;
-        return { userData, message, ok };
-      }
+  try {
+    let response = await searchUserData(_id);
+    let userData: UserData;
+    if (response) {
+      userData = response;
+      const message = "User data found!";
+      const ok = true;
+      return { userData, message, ok };
     } else {
-      return false;
+      const isUserCreated = await createUserData(_id);
+      if (isUserCreated) {
+        response = await searchUserData(_id);
+        if (response) {
+          userData = response;
+          const message = "User data created!";
+          const ok = true;
+          return { userData, message, ok };
+        }
+      } else {
+        return false;
+      }
     }
+  } catch (error) {
+    console.log("getUserData error!");
   }
 };
 
@@ -98,23 +102,24 @@ const addUserBook = async (id: string, book: CompleteBook) => {
 };
 
 // Remove a book from userData
-const removeUserBook = async (id: string, book: CompleteBook) => {
-  const user = await searchUserData(id);
+const removeUserBook = async (userId: string, bookId: string) => {
+  const user = await searchUserData(userId);
   if (user) {
-    await user.updateOne({ $pull: { books: { _id: book._id } } });
+    await user.updateOne({ $pull: { books: { _id: bookId } } });
     const message = "Book removed from your collection!";
     const ok = true;
     return { message, ok };
   }
 };
 
-const updateUserBook = async (id: string, book: CompleteBook) => {
-  const userData = await searchUserData(id);
+// Update a book from userData
+const updateUserBook = async (userId: string, book: CompleteBook) => {
+  const userData = await searchUserData(userId);
   if (userData) {
     await userData.updateOne(
       {
         $set: {
-          "books.$[element].status": book.status,
+          "books.$[element]": book,
         },
       },
       {

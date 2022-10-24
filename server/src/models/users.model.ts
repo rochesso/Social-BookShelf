@@ -15,11 +15,9 @@ const addUser = async (user: User) => {
 };
 
 const searchUserEmail = async (email: string) => {
-  const result = await usersCollection
-    .findOne({
-      email: email,
-    })
-    .exec();
+  const result = await usersCollection.findOne({
+    email: email,
+  });
 
   if (result) {
     return result._id;
@@ -29,16 +27,17 @@ const searchUserEmail = async (email: string) => {
 };
 
 const searchUserId = async (id: string) => {
-  const result = await usersCollection
-    .findOne({
+  try {
+    const result = await usersCollection.findOne({
       _id: id,
-    })
-    .exec();
-
-  if (result) {
-    return result;
-  } else {
-    return false;
+    });
+    if (result) {
+      return result;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("searchUserId error!");
   }
 };
 

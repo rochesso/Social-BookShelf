@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import  {useEffect} from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/useStore'
 
 import useBooks from '../../hooks/useBooks';
 import Book from '../../components/Book/Book';
-import { configActions } from '../../store/config-slice';
+// import { configActions } from '../../store/config-slice';
+import { bookActions } from "../../store/book-slice";
 import useConfig from '../../hooks/useConfig';
 
 
@@ -21,6 +22,9 @@ const Home = () => {
         const fetchData = async () => {
             await getAllBooks();
             await getConfig();
+            const sortPreference = configStore.config.sortPreference;
+            console.log(sortPreference)
+            dispatch(bookActions.sortBooks(sortPreference));
 
         };
         // call the function
@@ -28,7 +32,7 @@ const Home = () => {
 
             // make sure to catch any error
             .catch(console.error);
-    }, []);
+    }, [configStore.config.sortPreference, dispatch, getAllBooks, getConfig]);
 
     let books;
     let message;

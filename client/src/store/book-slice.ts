@@ -45,6 +45,26 @@ const bookSlice = createSlice({
         return console.log("Book not removed!");
       }
     },
+    sortBooks(state, action: PayloadAction<string>) {
+      console.log(action.payload);
+      if (action.payload === "recent") {
+        state.books.sort((a, b) => {
+          if (a.lastModified > b.lastModified) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+      } else if (action.payload === "title") {
+        state.books.sort((a, b) => {
+          if (a.title < b.title) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+      }
+    },
   },
 });
 

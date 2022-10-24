@@ -3,9 +3,9 @@ import { getUserData, changeUserConfig } from "../../models/userData.model";
 
 // - /userConfig get request - get user configurations
 const httpGetUserConfig = async (req: Request, res: Response) => {
-  if (req.headers.id != null) {
-    const id = req.headers.id.toString();
-    const response = await getUserData(id);
+  if (req.params.userId != null) {
+    const userId = req.params.userId;
+    const response = await getUserData(userId);
     if (response) {
       const success = response.ok;
       let config: Config;

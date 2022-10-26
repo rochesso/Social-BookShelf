@@ -2,19 +2,18 @@ import  {useEffect} from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/useStore'
 
 import Book from '../../components/Book/Book';
-// import { configActions } from '../../store/config-slice';
+import { fetchConfig } from '../../store/config-actions';
 import { fetchBooks } from "../../store/book-actions";
 
 
 const Home = () => {
     const dispatch = useAppDispatch();
-
-    const configStore = useAppSelector((state) => state.configStore)
     const bookStore = useAppSelector((state) => state.bookStore)
 
     useEffect(() => {
             dispatch(fetchBooks());
-    }, []);
+            dispatch(fetchConfig())
+    }, [dispatch]);
 
     let books;
     let message;

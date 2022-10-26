@@ -14,10 +14,16 @@ const userSlice = createSlice({
   name: "userStore",
   initialState,
   reducers: {
-    replaceUser(state, action: PayloadAction<User>) {
+    loginUser(state, action: PayloadAction<User>) {
       const user = action.payload;
       if (user) {
         state.user = user;
+      }
+    },
+    logoutUser(state, action: PayloadAction<boolean>) {
+      const logoutUser = action.payload;
+      if (logoutUser) {
+        state.user = null;
       }
     },
   },

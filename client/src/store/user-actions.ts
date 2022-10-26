@@ -6,13 +6,13 @@ const API_URL = process.env.REACT_APP_API_URL;
 export const fetchUser = () => {
   return async (dispatch: (arg: any) => void) => {
     const fetchData = async () => {
-      const response: User = await axios.get(`${API_URL}/user`);
-      return response;
+      const response = await axios.get(`${API_URL}/user`);
+      return response.data.user;
     };
 
     try {
-      const userData: User = await fetchData();
-      dispatch(userActions.replaceUser(userData));
+      const user: User = await fetchData();
+      dispatch(userActions.loginUser(user));
     } catch (error) {
       //   dispatch(
       //     uiActions.showNotification({

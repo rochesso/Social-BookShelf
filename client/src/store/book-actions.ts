@@ -60,25 +60,21 @@ export const removeBook = (book: CompleteBook) => {
   };
 };
 
-// const removeBook = useCallback(
-//   async (book: CompleteBook) => {
-//     const response = await httpRemoveBook(book);
-//     const success = response.ok;
-//     if (success) {
-//       dispatch(bookActions.removeBook(book));
-//     } else {
-//     }
-//   },
-//   [dispatch]
-// );
-
-// const updateBook = useCallback(async (book: CompleteBook) => {
-//   const response = await httpUpdateBook(book);
-//   const success = response.ok;
-//   if (success) {
-//     console.log("book updated");
-//     getAllBooks();
-//   } else {
-//     console.log("book not updated");
-//   }
-// }, []);
+export const updateBook = (book: CompleteBook) => {
+  return async (dispatch: (arg: any) => void) => {
+    try {
+      await axios.patch(API_URL + "/user/books/", { book });
+      dispatch(fetchBooks());
+      console.log("book updated");
+    } catch (error) {
+      console.log("book not updated");
+      //   dispatch(
+      //     uiActions.showNotification({
+      //       status: "error",
+      //       title: "Error!",
+      //       message: "Fetching cart data failed!",
+      //     })
+      //   );
+    }
+  };
+};

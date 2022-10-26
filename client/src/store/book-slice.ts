@@ -46,7 +46,6 @@ const bookSlice = createSlice({
       }
     },
     sortBooks(state, action: PayloadAction<string>) {
-      console.log(action.payload);
       if (action.payload === "recent") {
         state.books.sort((a, b) => {
           if (a.lastModified > b.lastModified) {

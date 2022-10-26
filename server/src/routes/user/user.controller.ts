@@ -5,8 +5,13 @@ const CLIENT_URL = process.env.CLIENT_URL;
 // /user get request - search user by email and return user _id
 const httpGetLoggedUser = async (req: Request, res: Response) => {
   if (req.user && req.isAuthenticated()) {
-    const user: User = req.user;
-    if (user) {
+    const userData: User = req.user;
+    const user = {
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+    };
+    if (userData) {
       return res.status(200).json({ user, ok: true });
     } else {
       return res.status(200).json({ message: "User not found!", ok: false });

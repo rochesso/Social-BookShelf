@@ -8,9 +8,9 @@ import {
 
 // - v1/user/books/:userId get request
 const httpGetAllUserBooks = async (req: Request, res: Response) => {
-  if (req.params.userId != null) {
-    const userId = req.params.userId;
-    const response = await getUserData(userId);
+  if (req.user != null) {
+    const user = req.user;
+    const response = await getUserData(user.id);
     let books: CompleteBook[] = [];
     if (response) {
       if (response.ok) {
@@ -24,28 +24,34 @@ const httpGetAllUserBooks = async (req: Request, res: Response) => {
   }
 };
 
-// - v1/user/books/:userId post request - Add an book to user collection
+// - v1/user/books/ post request - Add an book to user collection
 const httpAddUserBooks = async (req: Request, res: Response) => {
-  const book = req.body.book;
-  const userId = req.params.userId;
-  const result = await addUserBook(userId, book);
-  return res.status(201).json(result);
+  if (req.user != null) {
+    const book = req.body.book;
+    const user = req.user;
+    const result = await addUserBook(user.id, book);
+    return res.status(201).json(result);
+  }
 };
 
 // - v1/user/books/:userId/:bookId delete request - Remove and book from user collection
 const httpRemoveUserBooks = async (req: Request, res: Response) => {
-  const bookId = req.params.bookId;
-  const userId = req.params.userId;
-  const result = await removeUserBook(userId, bookId);
-  return res.status(201).json(result);
+  if (req.user != null) {
+    const bookId = req.params.bookId;
+    const user = req.user;
+    const result = await removeUserBook(user.id, bookId);
+    return res.status(201).json(result);
+  }
 };
 
 // v1/user/books/:userId patch request
 const httpUpdateUserBooks = async (req: Request, res: Response) => {
-  const book = req.body.book;
-  const userId = req.params.userId;
-  const result = await updateUserBook(userId, book);
-  return res.status(200).json(result);
+  if (req.user != null) {
+    const book = req.body.book;
+    const user = req.user;
+    const result = await updateUserBook(user.id, book);
+    return res.status(200).json(result);
+  }
 };
 
 export {

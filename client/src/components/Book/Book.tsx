@@ -1,8 +1,10 @@
-import React from 'react';
+
 
 import plusIcon from '../../assets/svg/plus-svgrepo-com (1).svg';
 import styles from './Book.module.css';
-import useBooks from '../../hooks/useBooks';
+import { addBook, removeBook} from '../../store/book-actions'
+import { useAppDispatch } from "../../hooks/useStore";
+
 
 
 type AppProps = {
@@ -11,7 +13,7 @@ type AppProps = {
 
 const Book = ({book}: AppProps) => {
     const {authors, title, isAdded, categories, imageLinks, status} = book;
-    const {addBook, removeBook, updateBook} = useBooks();
+    const dispatch = useAppDispatch();
 
     //check if author is too long
     let authorsString;
@@ -51,16 +53,19 @@ const Book = ({book}: AppProps) => {
     }
 
     const addBookHandler = async () => {
-        await addBook({...book, isAdded:true});
+        dispatch(addBook({...book, isAdded: true}))
+    };
+    const removeBookHandler = async () => {
+        dispatch(removeBook(book))
     };
 
-    const removeBookHandler = async () => {
-        await removeBook(book);
-    }
+    // const removeBookHandler = async () => {
+    //     await removeBook(book);
+    // }
 
-    const updateBookHandler = async () => {
-        await updateBook({...book, status: {currentPage: 12, isFavorite: true, reading: 'started'}});
-    }
+    // const updateBookHandler = async () => {
+    //     await updateBook({...book, status: {currentPage: 12, isFavorite: true, reading: 'started'}});
+    // }
 
     return <div className={styles.container}>
         <img className={styles.cover} src={cover} alt="Book cover"/>
@@ -73,22 +78,12 @@ const Book = ({book}: AppProps) => {
                 <img className={styles.add__button} src={plusIcon}
                      alt="Add this book to your library!"/>
                 <p className={styles.add__text}>Add to your library!</p>
-            </div> : null}
-
-{/* Button to remove a book from your library */}
-            {isAdded ? <div className={styles.add} onClick={removeBookHandler}>
+            </div> : <div className={styles.add} onClick={removeBookHandler}>
                 <img className={styles.add__button} src={plusIcon}
-                     alt="Remove this book to your library!"/>
+                     alt="Remove this book from your library!"/>
                 <p className={styles.add__text}>Remove from your library!</p>
-            </div> : null}
+            </div>}
 
-{/* Temporary to test update button */}
-            <div className={styles.add} onClick={updateBookHandler}>
-                <img className={styles.add__button} src={plusIcon}
-                     alt="Add this book to your library!"/>
-                <p className={styles.add__text}>update book</p>
-            </div>
-            <p>{status.currentPage}</p>
         </div>
     </div>;
 };

@@ -1,9 +1,9 @@
 import userDataCollection from "./userData.mongo";
-import { searchUserId } from "./users.model";
+import { searchUserById } from "./user.model";
 
 // create a userData inside userDataCollection
 const createUserData = async (_id: string) => {
-  const user = await searchUserId(_id);
+  const user = await searchUserById(_id);
   if (user) {
     const userData: UserData = {
       user: _id,
@@ -18,7 +18,7 @@ const createUserData = async (_id: string) => {
 
 // search for a userData inside userDataCollection
 const searchUserData = async (_id: string) => {
-  const user = await searchUserId(_id);
+  const user = await searchUserById(_id);
   if (user) {
     const response = await userDataCollection
       .findOne({
@@ -83,7 +83,7 @@ const addUserBook = async (id: string, book: CompleteBook) => {
   const newBook: CompleteBook = { ...book, lastModified: date };
   if (user) {
     const books = user.books;
-    const isRepeated = books.some((item) => item.id === newBook.id);
+    const isRepeated = books.some((item) => item.googleId === newBook.googleId);
     if (!isRepeated) {
       await user.updateOne({ $push: { books: [newBook] } });
       const message = "Book added to your collection!!";

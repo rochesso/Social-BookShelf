@@ -26,7 +26,7 @@ const googleSearchBooksSlice = createSlice({
     addBook(state, action: PayloadAction<CompleteBook>) {
       const newBook = action.payload;
       const existingBook = state.searchedBooks.some(
-        (item) => item.id === newBook.id
+        (item) => item.googleId === newBook.googleId
       );
       if (!existingBook) {
         state.searchedBooks.push(newBook);
@@ -38,11 +38,11 @@ const googleSearchBooksSlice = createSlice({
     removeBook(state, action: PayloadAction<CompleteBook>) {
       const book = action.payload;
       const existingBook = state.searchedBooks.some(
-        (item) => item.id === book.id
+        (item) => item.googleId === book.googleId
       );
       if (existingBook) {
         state.searchedBooks = state.searchedBooks.filter(
-          (item) => item.id !== book.id
+          (item) => item.googleId !== book.googleId
         );
         state.totalQuantity--;
       } else {

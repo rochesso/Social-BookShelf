@@ -36,10 +36,10 @@ const bookSlice = createSlice({
       }
     },
     removeBook(state, action: PayloadAction<CompleteBook>) {
-      const newBook = action.payload;
-      const existingBook = state.books.some((item) => item._id === newBook._id);
+      const book = action.payload;
+      const existingBook = state.books.some((item) => item._id === book._id);
       if (existingBook) {
-        state.books = state.books.filter((item) => item._id !== newBook._id);
+        state.books = state.books.filter((item) => item._id !== book._id);
         state.totalQuantity--;
       } else {
         return console.log("Book not removed!");

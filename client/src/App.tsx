@@ -1,4 +1,5 @@
-import React, {Fragment} from 'react';
+import {Fragment} from 'react';
+import  axios  from 'axios';
 import {Route, Routes} from 'react-router-dom';
 
 import SearchBar from './components/GoogleApi/SearchBar';
@@ -9,6 +10,9 @@ import Login from './pages/login/Login';
 
 import './App.css';
 
+// Server needs to have cors with credentials true
+// Client needs to send withCredentials = true
+axios.defaults.withCredentials = true;
 
 function App() {
     return (

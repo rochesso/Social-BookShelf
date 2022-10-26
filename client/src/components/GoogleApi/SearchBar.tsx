@@ -25,7 +25,7 @@ const SearchBar = () => {
         }
     };
 
-    let books = searchBookStore.searchedBooks.map(book => <Book key={book.id} book={book}/>);
+    let books = searchBookStore.searchedBooks.map(book => <Book key={book.googleId} book={book}/>);
 
     return <Fragment>
         <form action="" id="searchForm" onSubmit={searchHandler}>

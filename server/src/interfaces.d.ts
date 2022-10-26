@@ -1,9 +1,15 @@
-interface User {
-  _id?: string;
-  firstName: string;
-  lastName: string;
-  email: string;
+declare namespace Express {
+  interface User {
+    googleId: string;
+    _id: ObjectId;
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  }
 }
+
+interface User extends Express.User {}
 
 interface UserData {
   user: User._id;
@@ -16,8 +22,9 @@ interface Config {
 }
 
 interface CompleteBook {
-  _id?: string;
+  _id: ObjectId;
   id: string;
+  googleId: string;
   title: string;
   description: string;
   authors: string[];
@@ -52,4 +59,28 @@ interface Identifier {
 interface GoogleBookAPI {
   id: string;
   volumeInfo: CompleteBook;
+}
+
+interface NewUser {
+  googleId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+interface NewBook {
+  googleId: string;
+  title: string;
+  description: string;
+  authors: string[];
+  categories: string[];
+  industryIdentifiers: Identifier[];
+  imageLinks: Thumbnail;
+  publishedDate: string;
+  pageCount: number;
+  averageRating: number;
+  language: string;
+  isAdded: boolean;
+  lastModified: Date;
+  status: Status;
 }

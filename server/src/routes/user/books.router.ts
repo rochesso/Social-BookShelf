@@ -7,12 +7,12 @@ import {
   httpUpdateUserBooks,
 } from "./books.controller";
 
-const userBooksRouter = express.Router();
+const booksRouter = express.Router();
 
 // - v1/user/books routes
-userBooksRouter.get("/:userId", httpGetAllUserBooks);
-userBooksRouter.post("/:userId", httpAddUserBooks);
-userBooksRouter.delete("/:userId/:bookId", httpRemoveUserBooks);
-userBooksRouter.patch("/:userId", httpUpdateUserBooks);
+booksRouter.get("/", httpGetAllUserBooks);
+booksRouter.post("/", httpAddUserBooks);
+booksRouter.delete("/:bookId", httpRemoveUserBooks);
+booksRouter.patch("/", httpUpdateUserBooks);
 
-export default userBooksRouter;
+export default booksRouter;

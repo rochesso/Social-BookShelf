@@ -4,7 +4,7 @@ const userDataSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
   books: [
     {
-      id: { type: String, required: true },
+      googleId: { type: String, required: true },
       title: { type: String, required: true },
       description: { type: String, required: true },
       authors: { type: [String], required: true, default: [""] },

@@ -3,9 +3,9 @@ import { getUserData, changeUserConfig } from "../../models/userData.model";
 
 // - /userConfig get request - get user configurations
 const httpGetUserConfig = async (req: Request, res: Response) => {
-  if (req.params.userId != null) {
-    const userId = req.params.userId;
-    const response = await getUserData(userId);
+  if (req.user != null) {
+    const user = req.user;
+    const response = await getUserData(user.id);
     if (response) {
       const success = response.ok;
       let config: Config;
@@ -21,10 +21,12 @@ const httpGetUserConfig = async (req: Request, res: Response) => {
 
 // - /userConfig post request - change user configurations
 const httpChangeUserConfig = async (req: Request, res: Response) => {
-  const config = req.body.config;
-  const id = req.body.id;
-  const result = await changeUserConfig(id, config);
-  return res.status(201).json(result);
+  if (req.user != null) {
+    const user = req.user;
+    const config = req.body.config;
+    const result = await changeUserConfig(user.id, config);
+    return res.status(201).json(result);
+  }
 };
 
 export { httpChangeUserConfig, httpGetUserConfig };

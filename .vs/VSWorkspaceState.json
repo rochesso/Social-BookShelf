@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\client",
+    "\\client\\src",
+    "\\client\\src\\components",
+    "\\client\\src\\components\\GoogleApi"
+  ],
+  "SelectedNode": "\\client\\src\\components\\GoogleApi\\SearchBar.tsx",
+  "PreviewInSolutionExplorer": false
+}

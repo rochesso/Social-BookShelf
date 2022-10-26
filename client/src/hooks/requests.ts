@@ -4,15 +4,11 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 // Search books on Google books api.
 const httpSearchBooksGoogleApi = async (text: string, type: string) => {
-  const userId = sessionStorage.getItem("user");
   const config = {
     params: {
       // q is the searched text
       q: text,
       searchType: type,
-    },
-    headers: {
-      userId: userId,
     },
   };
 

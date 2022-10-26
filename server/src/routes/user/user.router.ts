@@ -1,11 +1,11 @@
 import express from "express";
 
-import { httpAddUser, httpLoginUser } from "./user.controller";
+import { httpGetLoggedUser, httpLogoutUser } from "./user.controller";
 
 const userRouter = express.Router();
 
 // - v1/user routes
-userRouter.get("/", httpLoginUser);
-userRouter.post("/", httpAddUser);
+userRouter.get("/", httpGetLoggedUser);
+userRouter.get("/logout", httpLogoutUser);
 
 export default userRouter;

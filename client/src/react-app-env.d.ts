@@ -2,7 +2,9 @@
 
 // User
 interface User {
-  _id?: string;
+  googleId?: string;
+  _id?: ObjectId;
+  id?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -23,8 +25,9 @@ interface Config {
 
 // Complete version of the book with all properties.
 interface CompleteBook {
-  _id?: string;
-  id: string;
+  _id?: ObjectId;
+  id?: string;
+  googleId: string;
   title: string;
   description: string;
   authors: string[];

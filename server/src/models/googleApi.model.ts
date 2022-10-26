@@ -6,8 +6,8 @@ const createBook = (item: GoogleBookAPI) => {
   const info = item.volumeInfo;
   const description = info.description || "";
 
-  const book: CompleteBook = {
-    id: item.id,
+  const book: NewBook = {
+    googleId: item.id,
     title: info.title,
     description: `${description.slice(0, 200)}...`,
     authors: info.authors,
@@ -33,7 +33,7 @@ const createBook = (item: GoogleBookAPI) => {
 const searchBooks = async (q: string, searchType: string, id?: string) => {
   const key = process.env.GOOGLE_BOOKS_KEY;
   const googleApi = process.env.GOOGLE_BOOKS_API;
-
+  console.log("asdfasfasdfasdfasdfas");
   let generalParams = {
     maxResults: 15,
     orderBy: "relevance",
@@ -78,24 +78,26 @@ const searchBooks = async (q: string, searchType: string, id?: string) => {
       throw new Error("Search failed");
     }
 
-    let searchResults: CompleteBook[] = [];
+    let searchResults: NewBook[] = [];
     let error = null;
     // if any book is found googleAPI returns an object with an 'items' property
     if (result.data.items) {
       if (result.data.items.length > 0) {
         for (const item of result.data.items) {
           // Check if user already has the book added to their collection.
-          const isBookAdded = userBooks.some((book) => book.id === item.id);
+          const isBookAdded = userBooks.some(
+            (book) => book.googleId === item.id
+          );
           if (!isBookAdded) {
-            const book = createBook(item);
+            const newBook = createBook(item);
             // Google Api sometimes return duplicated books with same id.
             let isBookDuplicated = searchResults.some((item) => {
-              return item.id === book.id;
+              return item.googleId === newBook.googleId;
             });
             if (!isBookDuplicated) {
               // Only return books with cover images.
-              if (book.imageLinks) {
-                searchResults.push(book);
+              if (newBook.imageLinks) {
+                searchResults.push(newBook);
               }
             }
           }

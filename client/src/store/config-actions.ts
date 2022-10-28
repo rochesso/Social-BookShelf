@@ -13,7 +13,7 @@ export const fetchConfig = () => {
 
     try {
       const data = await fetchData();
-      const config: Config = data.config;
+      const config: Config = data;
       dispatch(configActions.replaceConfig(config));
       const sortPreference = config.sortPreference;
       dispatch(bookActions.sortBooks(sortPreference));

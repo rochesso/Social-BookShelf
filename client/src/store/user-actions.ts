@@ -7,7 +7,7 @@ export const fetchUser = () => {
   return async (dispatch: (arg: any) => void) => {
     const fetchData = async () => {
       const response = await axios.get(`${API_URL}/user`);
-      return response.data.user;
+      return response.data;
     };
 
     try {

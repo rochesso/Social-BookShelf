@@ -1,26 +1,24 @@
 import { Request, Response } from "express";
+import { searchUserById } from "../../models/user.model";
 
 const CLIENT_URL = process.env.CLIENT_URL;
 
-// /user get request - search user by email and return user _id
+// api/v1/user get request - search user by email and return user _id
 const httpGetLoggedUser = async (req: Request, res: Response) => {
-  if (req.user && req.isAuthenticated()) {
-    const userData: User = req.user;
-    const user = {
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      email: userData.email,
-    };
-    if (userData) {
-      return res.status(200).json({ user, ok: true });
+  if (req.isAuthenticated() && req.user) {
+    const response = await searchUserById(req.user.id);
+    if (response) {
+      const user: User = response;
+      return res.status(200).json(user);
     } else {
-      return res.status(200).json({ message: "User not found!", ok: false });
+      return res.status(400).json({ message: "Ops! Something went wrong." });
     }
   } else {
-    return res.status(401).json({ message: "User not logged in!", ok: false });
+    return res.status(200).json(null);
   }
 };
 
+// api/v1/user/logout get request - logout the user.
 const httpLogoutUser = async (req: Request, res: Response) => {
   req.logout((err) => {
     if (err) {

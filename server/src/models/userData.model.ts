@@ -43,18 +43,15 @@ const getUserData = async (_id: string) => {
     let userData: UserData;
     if (response) {
       userData = response;
-      const message = "User data found!";
-      const ok = true;
-      return { userData, message, ok };
+      return userData;
     } else {
       const isUserCreated = await createUserData(_id);
       if (isUserCreated) {
         response = await searchUserData(_id);
         if (response) {
           userData = response;
-          const message = "User data created!";
-          const ok = true;
-          return { userData, message, ok };
+
+          return userData;
         }
       } else {
         return false;
@@ -67,48 +64,57 @@ const getUserData = async (_id: string) => {
 
 // Change user configuration.
 const changeUserConfig = async (id: string, config: Config) => {
-  const user = await searchUserData(id);
-  if (user) {
-    await user.updateOne({ config: config });
-    const message = "User configuration updated!";
-    const ok = true;
-    return { message, ok };
+  const userData = await searchUserData(id);
+  if (userData) {
+    const isChanged = await userData.updateOne({ config: config });
+    if (isChanged) {
+      const message = "User configuration updated!";
+      return message;
+    } else {
+      return false;
+    }
   }
 };
 
 // Add a book to the userData
 const addUserBook = async (id: string, book: CompleteBook) => {
-  const user = await searchUserData(id);
+  const userData = await searchUserData(id);
   const date = new Date();
   const newBook: CompleteBook = { ...book, lastModified: date };
-  if (user) {
-    const books = user.books;
+  if (userData) {
+    const books = userData.books;
     const isRepeated = books.some((item) => item.googleId === newBook.googleId);
     if (!isRepeated) {
-      await user.updateOne({ $push: { books: [newBook] } });
-      const message = "Book added to your collection!!";
-      const ok = true;
-      return { message, ok };
+      const isAdded = await userData
+        .updateOne({ $push: { books: [newBook] } })
+        .exec();
+      if (isAdded) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      const message = "Book already exists in your collection";
-      const ok = false;
-      return { message, ok };
+      return false;
     }
   } else {
-    const message = "User not found!";
-    const ok = false;
-    return { message, ok };
+    // const message = "User not found!";
+    return false;
   }
 };
 
 // Remove a book from userData
 const removeUserBook = async (userId: string, bookId: string) => {
-  const user = await searchUserData(userId);
-  if (user) {
-    await user.updateOne({ $pull: { books: { _id: bookId } } });
-    const message = "Book removed from your collection!";
-    const ok = true;
-    return { message, ok };
+  const userData = await searchUserData(userId);
+  if (userData) {
+    const isRemoved = await userData
+      .updateOne({ $pull: { books: { _id: bookId } } })
+      .exec();
+    if (isRemoved) {
+      const message = "Book removed from your collection!";
+      return message;
+    } else {
+      return false;
+    }
   }
 };
 
@@ -116,23 +122,28 @@ const removeUserBook = async (userId: string, bookId: string) => {
 const updateUserBook = async (userId: string, book: CompleteBook) => {
   const userData = await searchUserData(userId);
   if (userData) {
-    await userData.updateOne(
-      {
-        $set: {
-          "books.$[element]": book,
-        },
-      },
-      {
-        arrayFilters: [
-          {
-            "element._id": book._id,
+    const isUpdated = await userData
+      .updateOne(
+        {
+          $set: {
+            "books.$[element]": book,
           },
-        ],
-      }
-    );
-    const message = "Book updated!";
-    const ok = true;
-    return { message, ok };
+        },
+        {
+          arrayFilters: [
+            {
+              "element._id": book._id,
+            },
+          ],
+        }
+      )
+      .exec();
+    if (isUpdated) {
+      const message = "Book updated!";
+      return message;
+    } else {
+      return false;
+    }
   }
 };
 

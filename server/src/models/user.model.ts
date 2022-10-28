@@ -44,7 +44,10 @@ const searchUserByGoogleId = async (googleId: string) => {
 
 const searchUserById = async (_id: string) => {
   try {
-    const result = await usersCollection.findById(_id);
+    const result = await usersCollection
+      .findById(_id)
+      .select({ firstName: 1, lastName: 1, email: 1 })
+      .exec();
     if (result) {
       const user: User = result;
       return user;

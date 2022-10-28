@@ -1,3 +1,4 @@
+import { Request, Response, NextFunction } from "express";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { addUser, searchUserById } from "../models/user.model";
@@ -42,3 +43,13 @@ passport.deserializeUser(async (userId: string, done) => {
     done(null, user);
   }
 });
+
+export function checkLoggedIn(req: Request, res: Response, next: NextFunction) {
+  const isLoggedIn = req.isAuthenticated() && req.user;
+  if (!isLoggedIn) {
+    return res.status(401).json({
+      error: "You must be logged in!",
+    });
+  }
+  next();
+}

@@ -3,29 +3,32 @@ import { getUserData, changeUserConfig } from "../../models/userData.model";
 
 // - /userConfig get request - get user configurations
 const httpGetUserConfig = async (req: Request, res: Response) => {
-  if (req.user != null) {
+  if (req.user) {
     const user = req.user;
-    const response = await getUserData(user.id);
-    if (response) {
-      const success = response.ok;
+    const userData = await getUserData(user.id);
+    if (userData) {
       let config: Config;
-      if (success) {
-        config = response.userData.config;
-        return res.status(200).json({ config, ok: success });
-      } else {
-        return res.status(200).json({ ok: success });
-      }
+      config = userData.config;
+      return res.status(200).json(config);
+    } else {
+      const message = "Something went wrong!";
+      return res.status(400).json(message);
     }
   }
 };
 
 // - /userConfig post request - change user configurations
 const httpChangeUserConfig = async (req: Request, res: Response) => {
-  if (req.user != null) {
+  if (req.user) {
     const user = req.user;
     const config = req.body.config;
     const result = await changeUserConfig(user.id, config);
-    return res.status(201).json(result);
+    if (result) {
+      return res.status(201).json(result);
+    } else {
+      const message = "Configuration not updated or something went wrong!";
+      return res.status(400).json(message);
+    }
   }
 };
 

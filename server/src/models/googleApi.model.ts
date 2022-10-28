@@ -33,7 +33,6 @@ const createBook = (item: GoogleBookAPI) => {
 const searchBooks = async (q: string, searchType: string, id?: string) => {
   const key = process.env.GOOGLE_BOOKS_KEY;
   const googleApi = process.env.GOOGLE_BOOKS_API;
-  console.log("asdfasfasdfasdfasdfas");
   let generalParams = {
     maxResults: 15,
     orderBy: "relevance",
@@ -67,9 +66,9 @@ const searchBooks = async (q: string, searchType: string, id?: string) => {
     const result = await axios.get(googleApi, { params });
     let userBooks: CompleteBook[] = [];
     if (id) {
-      const response = await getUserData(id);
-      if (response) {
-        userBooks = response.userData.books;
+      const userData = await getUserData(id);
+      if (userData) {
+        userBooks = userData.books;
       }
     }
 

@@ -18,6 +18,8 @@ const userSlice = createSlice({
       const user = action.payload;
       if (user) {
         state.user = user;
+      } else {
+        state.user = null;
       }
     },
     logoutUser(state, action: PayloadAction<boolean>) {

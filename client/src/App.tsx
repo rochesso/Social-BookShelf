@@ -5,7 +5,6 @@ import { Route, Routes } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "./hooks/useStore";
 import { fetchUser } from "./store/user-actions";
 
-import SearchBar from "./components/GoogleApi/SearchBar";
 import Home from "./pages/home/Home";
 import Navbar from "./components/Navbar/Navbar";
 

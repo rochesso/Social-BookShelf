@@ -4,12 +4,14 @@ import { useAppSelector, useAppDispatch } from "../../hooks/useStore";
 import Book from "../../components/Book/Book";
 import { fetchConfig } from "../../store/config-actions";
 import { fetchBooks } from "../../store/book-actions";
+import { fetchUser } from "../../store/user-actions";
 
 const MyBooks = () => {
   const dispatch = useAppDispatch();
   const bookStore = useAppSelector((state) => state.bookStore);
 
   useEffect(() => {
+    dispatch(fetchUser());
     dispatch(fetchBooks());
     dispatch(fetchConfig());
   }, [dispatch]);

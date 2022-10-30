@@ -15,8 +15,6 @@ export const fetchConfig = () => {
       const data = await fetchData();
       const config: Config = data;
       dispatch(configActions.replaceConfig(config));
-      const sortPreference = config.sortPreference;
-      dispatch(bookActions.sortBooks(sortPreference));
     } catch (error) {
       //   dispatch(
       //     uiActions.showNotification({

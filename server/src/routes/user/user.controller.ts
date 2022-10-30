@@ -8,7 +8,12 @@ const httpGetLoggedUser = async (req: Request, res: Response) => {
   if (req.isAuthenticated() && req.user) {
     const response = await searchUserById(req.user.id);
     if (response) {
-      const user: User = response;
+      let user: NewUser = {
+        firstName: response.firstName,
+        lastName: response.lastName,
+        email: response.email,
+      };
+
       return res.status(200).json(user);
     } else {
       return res.status(400).json({ message: "Ops! Something went wrong." });

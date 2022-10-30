@@ -1,39 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, Fragment } from "react";
 import { useAppSelector, useAppDispatch } from "../../hooks/useStore";
 
-import Book from "../../components/Book/Book";
-import { fetchConfig } from "../../store/config-actions";
+import BookList from "../../components/Book/BookList";
 import { fetchBooks } from "../../store/book-actions";
+import { bookActions } from "../../store/book-slice";
 import { fetchUser } from "../../store/user-actions";
 
 const MyBooks = () => {
   const dispatch = useAppDispatch();
-  const bookStore = useAppSelector((state) => state.bookStore);
+  const configStore = useAppSelector((state) => state.configStore);
 
   useEffect(() => {
-    dispatch(fetchUser());
-    dispatch(fetchBooks());
-    dispatch(fetchConfig());
+    const getData = async () => {
+      await dispatch(fetchUser());
+      await dispatch(fetchBooks());
+      dispatch(bookActions.sortBooks(configStore.config.sortPreference));
+    };
+    getData();
   }, [dispatch]);
 
-  let books;
-  let message;
-  if (Array.isArray(bookStore.books)) {
-    if (bookStore.books.length > 0) {
-      books = bookStore.books.map((book) => (
-        <Book key={book.googleId} book={book} />
-      ));
-    } else {
-      message = "Start adding books to your collection!";
-    }
-  }
-
   return (
-    <div>
-      <p>{bookStore.totalQuantity}</p>
-      {books}
-      {message}
-    </div>
+    <Fragment>
+      <BookList />
+    </Fragment>
   );
 };
 

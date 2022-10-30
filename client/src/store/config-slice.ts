@@ -8,7 +8,11 @@ interface configState {
 // Define the initial state using that type
 const initialState: configState = {
   config: {
-    sortPreference: "title",
+    sortPreference: sessionStorage.getItem("sortPreference") as unknown as
+      | "title"
+      | "recent"
+      | "author"
+      | "title",
   },
 };
 
@@ -20,6 +24,7 @@ const configSlice = createSlice({
       const config = action.payload;
       if (config) {
         state.config = config;
+        sessionStorage.setItem("sortPreference", config.sortPreference);
       }
     },
   },

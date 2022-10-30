@@ -1,7 +1,6 @@
-import{FormEvent, Fragment, useRef} from 'react';
-
-import { useAppSelector } from '../../hooks/useStore';
-import styles from './header.module.css';
+import { useAppSelector } from "../../hooks/useStore";
+import styles from "./Header.module.css";
+import Login from "./Login";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -10,15 +9,20 @@ const API_URL = process.env.REACT_APP_API_URL;
 // };
 
 const Header = () => {
-    const userStore = useAppSelector((state) => state.userStore)
-    const user: User | null = userStore.user;
+  const userStore = useAppSelector((state) => state.userStore);
+  const user: User | null = userStore.user;
 
-    return <Fragment>
-      <h1>Welcome {user ? user.firstName : 'Guest'}!</h1>
-     { user ? <a href={API_URL + '/user/logout'}>Logout</a> : <a href={API_URL + '/auth/google'}>Login</a>}
-    </Fragment>;
-
-
+  return (
+    <header className={styles.container}>
+      <span></span>
+      <h1 className={styles.title}>
+        Welcome {user ? user.firstName : "Guest"}!
+      </h1>
+      <span className={styles.login}>
+        <Login />
+      </span>
+    </header>
+  );
 };
 
 export default Header;

@@ -122,11 +122,13 @@ const removeUserBook = async (userId: string, bookId: string) => {
 const updateUserBook = async (userId: string, book: CompleteBook) => {
   const userData = await searchUserData(userId);
   if (userData) {
+    const date = new Date();
+    const updatedBook: CompleteBook = { ...book, lastModified: date };
     const isUpdated = await userData
       .updateOne(
         {
           $set: {
-            "books.$[element]": book,
+            "books.$[element]": updatedBook,
           },
         },
         {

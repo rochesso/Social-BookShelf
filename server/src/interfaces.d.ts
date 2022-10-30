@@ -62,7 +62,7 @@ interface GoogleBookAPI {
 }
 
 interface NewUser {
-  googleId: string;
+  googleId?: string;
   firstName: string;
   lastName: string;
   email: string;

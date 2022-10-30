@@ -39,7 +39,7 @@ interface CompleteBook {
   averageRating: number;
   language: string;
   isAdded: boolean;
-  lastModified: Date;
+  lastModified: Date | string;
   status: Status;
 }
 

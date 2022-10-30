@@ -35,6 +35,18 @@ const bookSlice = createSlice({
         return console.log("Book already exists!");
       }
     },
+    updateBook(state, action: PayloadAction<CompleteBook>) {
+      const updatedBook = action.payload;
+      const date = new Date().toString();
+      let existingBookIndex = state.books.findIndex(
+        (item) => item._id === updatedBook._id
+      );
+      if (existingBookIndex >= 0) {
+        state.books[existingBookIndex] = { ...updatedBook, lastModified: date };
+      } else {
+        return console.log("Book not updated!");
+      }
+    },
     removeBook(state, action: PayloadAction<CompleteBook>) {
       const book = action.payload;
       const existingBook = state.books.some((item) => item._id === book._id);

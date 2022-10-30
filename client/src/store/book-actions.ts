@@ -64,8 +64,6 @@ export const updateBook = (book: CompleteBook) => {
   return async (dispatch: (arg: any) => void) => {
     try {
       await axios.patch(API_URL + "/user/books/", { book });
-      dispatch(fetchBooks());
-      console.log("book updated");
     } catch (error) {
       console.log("book not updated");
       //   dispatch(

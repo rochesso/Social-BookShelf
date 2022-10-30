@@ -15,7 +15,37 @@
   width: 10rem;
 }
 
-.settings {
+.information {
+  display: grid;
+  grid-template-rows: min-content min-content min-content 1fr;
+  height: 100%;
+  padding-left: var(--gap-medium);
+  width: min(50vw, 20rem);
+}
+
+.information__title {
+  font-family: var(--font-family-secondary), sans-serif;
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-bold);
+  margin-top: var(--gap-small);
+}
+
+.information__authors {
+  font-family: var(--font-family-secondary), sans-serif;
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--gap-extra-big);
+}
+
+.information__categories,
+.information__pageCount {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  text-align: justify;
+}
+
+.add {
   background-color: var(--color-background-tertiary);
   border-radius: 50%;
   bottom: calc(-1 * (var(--add-button) / 2));
@@ -29,14 +59,14 @@
   width: var(--add-button);
 }
 
-.settings__img {
+.add__img {
   fill: white;
   height: calc(var(--add-button) / 3);
   margin-bottom: calc((var(--add-button) / 2) / 1.25);
   margin-right: calc((var(--add-button) / 2) / 1.25);
 }
 
-.settings__text {
+.add__text {
   font-family: var(--font-family-primary), sans-serif;
   font-size: calc(var(--font-size-small) * 1.1);
   text-align: center;

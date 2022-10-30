@@ -44,7 +44,7 @@ const httpRemoveUserBooks = async (req: Request, res: Response) => {
     const user = req.user;
     const result = await removeUserBook(user.id, bookId);
     if (result) {
-      return res.status(202).json(result);
+      return res.status(200).json(result);
     } else {
       const message =
         "Book not removed from your collection or something went wrong!";
@@ -60,7 +60,7 @@ const httpUpdateUserBooks = async (req: Request, res: Response) => {
     const user = req.user;
     const result = await updateUserBook(user.id, book);
     if (result) {
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     } else {
       const message = "Book not updated or something went wrong!";
       return res.status(400).json(message);

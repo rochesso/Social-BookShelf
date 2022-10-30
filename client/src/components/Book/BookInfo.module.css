@@ -1,0 +1,30 @@
+.information {
+  display: grid;
+  grid-template-rows: min-content min-content min-content 1fr;
+  height: 100%;
+  padding-left: var(--gap-medium);
+  width: min(50vw, 20rem);
+}
+
+.information__title {
+  font-family: var(--font-family-secondary), sans-serif;
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-bold);
+  margin-top: var(--gap-small);
+}
+
+.information__authors {
+  font-family: var(--font-family-secondary), sans-serif;
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--gap-extra-big);
+}
+
+.information__categories,
+.information__pageCount {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  text-align: justify;
+}
+

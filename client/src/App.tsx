@@ -1,15 +1,15 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { Route, Routes } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "./hooks/useStore";
 import { fetchUser } from "./store/user-actions";
-
-import Home from "./pages/home/Home";
-import Navbar from "./components/Navbar/Navbar";
+import { fetchConfig } from "./store/config-actions";
 
 import "./App.css";
-import Header from "./components/header/header";
+import HomeLayout from "./components/Layouts/HomeLayout";
+import Home from "./pages/home/Home";
+import ProtectedLayout from "./components/Layouts/ProtectedLayout";
 import MyBooks from "./pages/myBooks/MyBooks";
 
 // Server needs to have cors with credentials true
@@ -18,22 +18,26 @@ axios.defaults.withCredentials = true;
 
 function App() {
   const dispatch = useAppDispatch();
-  const userStore = useAppSelector((state) => state.userStore);
-  const user: User | null = userStore.user;
 
   useEffect(() => {
-    dispatch(fetchUser());
+    const getData = async () => {
+      await dispatch(fetchUser());
+      await dispatch(fetchConfig());
+
+      console.log("app");
+    };
+    getData();
   }, [dispatch]);
 
   return (
-    <Fragment>
-      <Header />
-      {user ? <Navbar /> : null}
-      <Routes>
+    <Routes>
+      <Route element={<HomeLayout />}>
         <Route path="/" element={<Home />} />
-        {user ? <Route path="/books" element={<MyBooks />} /> : null}
-      </Routes>
-    </Fragment>
+      </Route>
+      <Route path="/user" element={<ProtectedLayout />}>
+        <Route path="books" element={<MyBooks />} />
+      </Route>
+    </Routes>
   );
 }
 

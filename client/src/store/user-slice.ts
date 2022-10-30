@@ -7,7 +7,7 @@ interface userState {
 
 // Define the initial state using that type
 const initialState: userState = {
-  user: null,
+  user: sessionStorage.getItem("user") as unknown as User,
 };
 
 const userSlice = createSlice({
@@ -18,14 +18,17 @@ const userSlice = createSlice({
       const user = action.payload;
       if (user) {
         state.user = user;
+        sessionStorage.setItem("user", user.firstName);
       } else {
         state.user = null;
+        sessionStorage.removeItem("user");
       }
     },
     logoutUser(state, action: PayloadAction<boolean>) {
       const logoutUser = action.payload;
       if (logoutUser) {
         state.user = null;
+        sessionStorage.removeItem("user");
       }
     },
   },

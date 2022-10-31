@@ -2,7 +2,6 @@ import plusIcon from "../../assets/svg/plus-white.png";
 import styles from "./SearchedBook.module.css";
 import { addBook } from "../../store/book-actions";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
-import { Navigate } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_API_URL;
 

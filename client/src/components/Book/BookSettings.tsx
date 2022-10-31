@@ -1,7 +1,6 @@
 import { FormEvent, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
-import { removeBook, updateBook, fetchBooks } from "../../store/book-actions";
-import { fetchConfig } from "../../store/config-actions";
+import { removeBook, updateBook } from "../../store/book-actions";
 import { bookActions } from "../../store/book-slice";
 
 import styles from "./BookSettings.module.css";
@@ -46,7 +45,7 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
         | "finished"
         | "gaveUp";
       let config: Status;
-      if (reading == "gaveUp" && Number(currentPage) < book.pageCount) {
+      if (reading === "gaveUp" && Number(currentPage) < book.pageCount) {
         config = {
           currentPage: Number(currentPage),
           isFavorite: isFavorite,

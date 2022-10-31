@@ -1,0 +1,44 @@
+.form {
+  --input-width: 12rem;
+  --margin-top: 0.5rem;
+  display: grid;
+  font-size: var(--font-size-small);
+  gap: var(--margin-top);
+  place-items: center;
+  width: min(55vw, 22rem);
+}
+
+.reading {
+  width: var(--input-width);
+}
+
+.reading__select {
+  width: var(--input-width);
+}
+
+.currentPage {
+  width: var(--input-width);
+}
+
+.currentPage__input {
+  width: var(--input-width);
+}
+
+.favorite {
+}
+
+.favorite__checkbox {
+}
+.actions {
+  display: flex;
+  gap: var(--margin-top);
+}
+.actions__button {
+  background-color: var(--color-background-quinary);
+  border: var(--border-primary);
+  width: 5rem;
+}
+
+.actions__button--red {
+  background-color: var(--color-background-septenary);
+}

@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
+import { useAppSelector } from "../../hooks/useStore";
 
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {
+  const userStore = useAppSelector((state) => state.userStore);
+  const user = userStore.user;
   return (
     <div className={styles.container}>
       <ul className={styles.list}>
@@ -10,8 +13,14 @@ const Navbar = () => {
           <NavLink to="/">Home</NavLink>
         </li>
         <li>
-          <NavLink to="/user/books">My Books</NavLink>
+          <NavLink to="/search">Search</NavLink>
         </li>
+
+        {user ? (
+          <li>
+            <NavLink to="/user/books">My Books</NavLink>
+          </li>
+        ) : null}
       </ul>
     </div>
   );

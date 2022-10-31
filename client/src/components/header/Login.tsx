@@ -13,8 +13,16 @@ const Login = () => {
   const userStore = useAppSelector((state) => state.userStore);
   const user: User | null = userStore.user;
 
+  const logoutHandler = () => {
+    sessionStorage.removeItem("user");
+  };
+
   const logout = (
-    <a className={styles.login} href={API_URL + "/user/logout"}>
+    <a
+      onClick={logoutHandler}
+      className={styles.login}
+      href={API_URL + "/user/logout"}
+    >
       Logout
     </a>
   );

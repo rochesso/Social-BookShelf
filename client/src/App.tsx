@@ -8,9 +8,10 @@ import { fetchConfig } from "./store/config-actions";
 
 import "./App.css";
 import HomeLayout from "./components/Layouts/HomeLayout";
-import Home from "./pages/home/Home";
+import Search from "./pages/search/Search";
 import ProtectedLayout from "./components/Layouts/ProtectedLayout";
 import MyBooks from "./pages/myBooks/MyBooks";
+import Home from "./pages/home/Home";
 
 // Server needs to have cors with credentials true
 // Client needs to send withCredentials = true
@@ -18,21 +19,24 @@ axios.defaults.withCredentials = true;
 
 function App() {
   const dispatch = useAppDispatch();
+  const userStore = useAppSelector((state) => state.userStore);
+  const user = userStore.user;
 
   useEffect(() => {
     const getData = async () => {
       await dispatch(fetchUser());
-      await dispatch(fetchConfig());
-
-      console.log("app");
+      if (user) {
+        await dispatch(fetchConfig());
+      }
     };
     getData();
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   return (
     <Routes>
       <Route element={<HomeLayout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/search" element={<Search />} />
       </Route>
       <Route path="/user" element={<ProtectedLayout />}>
         <Route path="books" element={<MyBooks />} />

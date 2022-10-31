@@ -1,9 +1,9 @@
 .information {
   display: grid;
-  grid-template-rows: min-content min-content min-content 1fr;
+  grid-template-rows: min-content min-content 1fr min-content min-content;
   height: 100%;
   padding-left: var(--gap-medium);
-  width: min(50vw, 20rem);
+  width: min(55vw, 22rem);
 }
 
 .information__title {
@@ -17,14 +17,29 @@
   font-family: var(--font-family-secondary), sans-serif;
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-medium);
-  margin-bottom: var(--gap-extra-big);
 }
 
 .information__categories,
 .information__pageCount {
+  align-self: flex-end;
   font-family: var(--font-family-primary), sans-serif;
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-medium);
   text-align: justify;
 }
 
+.bookShelf {
+  align-self: center;
+  height: 3rem;
+}
+
+.percentage {
+  align-self: center;
+
+  display: flex;
+  gap: 0.2rem;
+}
+
+.percentage__icon {
+  height: 3rem;
+}

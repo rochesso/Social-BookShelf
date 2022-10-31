@@ -19,6 +19,10 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
   );
   const [isFavorite, setIsFavorite] = useState<boolean>(book.status.isFavorite);
 
+  const currentPageRef = useRef<HTMLInputElement>(null);
+  const readingRef = useRef<HTMLSelectElement>(null);
+  const favoriteRef = useRef<HTMLInputElement>(null);
+
   const currentPageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue: number = Number(event.target.value);
     setCurrentPage(newValue);
@@ -27,10 +31,6 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
   const isFavoriteHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsFavorite(!isFavorite);
   };
-
-  const currentPageRef = useRef<HTMLInputElement>(null);
-  const readingRef = useRef<HTMLSelectElement>(null);
-  const favoriteRef = useRef<HTMLInputElement>(null);
 
   const updateBookHandler = async (e: FormEvent) => {
     e.preventDefault();
@@ -44,7 +44,10 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
         "finished" ||
         "gaveUp";
 
-      if (reading === "notStarted" || "started" || "finished" || "gaveUp") {
+      if (
+        (reading === "notStarted" || "started" || "finished" || "gaveUp") &&
+        Number(currentPage) <= book.pageCount
+      ) {
         let config: Status = {
           currentPage: Number(currentPage),
           isFavorite: isFavorite,
@@ -99,26 +102,36 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
             onChange={currentPageHandler}
           />
         </div>
-        <div>
+        <div className={styles.favorite}>
           <input
+            className={styles.favorite__checkbox}
             ref={favoriteRef}
             type="checkbox"
             name="isFavorite"
             checked={isFavorite}
             onChange={isFavoriteHandler}
           />
-          <label htmlFor="isFavorite"> Favorite?</label>
+          <label className={styles.favorite__label} htmlFor="isFavorite">
+            {" "}
+            Favorite?
+          </label>
         </div>
-
-        <button
-          className={styles.form__button}
-          form={book.googleId}
-          type="submit"
-        >
-          Submit
-        </button>
+        <div className={styles.actions}>
+          <button
+            className={styles.actions__button}
+            form={book.googleId}
+            type="submit"
+          >
+            Submit
+          </button>
+          <button
+            className={`${styles.actions__button} ${styles["actions__button--red"]}`}
+            onClick={removeBookHandler}
+          >
+            Delete
+          </button>
+        </div>
       </form>
-      <div onClick={removeBookHandler}>Remove</div>
     </div>
   );
 };

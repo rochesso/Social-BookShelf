@@ -1,3 +1,7 @@
+.book {
+  position: relative;
+}
+
 .container {
   align-items: center;
   background-color: var(--color-background-quaternary);
@@ -40,4 +44,12 @@
   font-family: var(--font-family-primary), sans-serif;
   font-size: calc(var(--font-size-small) * 1.1);
   text-align: center;
+}
+
+.favoriteIcon {
+  height: 3rem;
+  position: absolute;
+  right: -0.8rem;
+  top: -0.8rem;
+  z-index: 101;
 }

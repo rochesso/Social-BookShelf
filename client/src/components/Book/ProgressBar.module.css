@@ -1,0 +1,35 @@
+.chartBar {
+  align-self: center;
+  display: grid;
+  height: 2rem;
+  position: relative;
+  width: 80%;
+}
+
+.chartBar__inner {
+  background-color: #c3b4f3;
+  border: 1px solid #313131;
+  border-radius: 12px;
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+.chartBar__fill {
+  background-color: #4826b9;
+  height: 100%;
+  transition: all 0.3s ease-out;
+}
+
+.chartBar__icon {
+  align-self: center;
+  height: 1.5rem;
+  position: absolute;
+  right: 0.2rem;
+}
+
+.chartBar__text {
+  color: white;
+  place-self: center;
+  position: absolute;
+}

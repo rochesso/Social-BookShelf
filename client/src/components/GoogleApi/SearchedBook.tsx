@@ -2,6 +2,9 @@ import plusIcon from "../../assets/svg/plus-white.png";
 import styles from "./SearchedBook.module.css";
 import { addBook } from "../../store/book-actions";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
+import { Navigate } from "react-router-dom";
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 type AppProps = {
   book: CompleteBook;
@@ -51,7 +54,13 @@ const SearchedBook = ({ book }: AppProps) => {
   }
 
   const addBookHandler = async () => {
-    dispatch(addBook({ ...book, isAdded: true }));
+    if (user) {
+      dispatch(addBook({ ...book, isAdded: true }));
+    } else {
+      if (API_URL) {
+        window.location.replace(API_URL + "/auth/google");
+      }
+    }
   };
 
   // const removeBookHandler = async () => {

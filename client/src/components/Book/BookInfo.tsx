@@ -1,6 +1,6 @@
 import styles from "./BookInfo.module.css";
 import bookShelf from "../../assets/svg/shelf-svgrepo-com.svg";
-import percentageIcon from "../../assets/svg/percentage-percent-svgrepo-com.svg";
+import ProgressBar from "./ProgressBar";
 
 type AppProps = {
   book: CompleteBook;
@@ -42,17 +42,14 @@ const BookInfo = ({ book }: AppProps) => {
           <img className={styles.bookShelf} src={bookShelf} alt="Bookshelf" />
         );
       case "started":
-        let percentage = Math.floor((status.currentPage / pageCount) * 100);
         return (
-          <div className={styles.percentage}>
-            <p className={styles.percentage__text}>{percentage}</p>
-            <img
-              className={styles.percentage__icon}
-              src={percentageIcon}
-              alt="Percentage"
-            />
-          </div>
+          <ProgressBar currentPage={status.currentPage} pageCount={pageCount} />
         );
+      case "finished":
+        return <p>Finished!</p>;
+      case "gaveUp":
+        return <p>Gave up!</p>;
+
       default:
       // code block
     }

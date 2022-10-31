@@ -25,7 +25,9 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
 
   const currentPageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue: number = Number(event.target.value);
-    setCurrentPage(newValue);
+    if (newValue <= book.pageCount && newValue >= 0) {
+      setCurrentPage(newValue);
+    }
   };
 
   const isFavoriteHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,27 +40,44 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
     if (currentPageRef.current && readingRef.current && favoriteRef.current) {
       const currentPage = currentPageRef.current.value;
       const isFavorite = favoriteRef.current.checked;
-      let reading =
-        (readingRef.current.value as unknown as "notStarted") ||
-        "started" ||
-        "finished" ||
-        "gaveUp";
-
-      if (
-        (reading === "notStarted" || "started" || "finished" || "gaveUp") &&
-        Number(currentPage) <= book.pageCount
-      ) {
-        let config: Status = {
+      let reading = readingRef.current.value as unknown as
+        | "notStarted"
+        | "started"
+        | "finished"
+        | "gaveUp";
+      let config: Status;
+      if (reading == "gaveUp" && Number(currentPage) < book.pageCount) {
+        config = {
           currentPage: Number(currentPage),
           isFavorite: isFavorite,
-          reading: reading,
+          reading: "gaveUp",
         };
-        const updatedBook = { ...book, status: config };
-        await dispatch(updateBook(updatedBook));
-        updatingBookHandler();
-        dispatch(bookActions.updateBook(updatedBook));
-        dispatch(bookActions.sortBooks(configStore.config.sortPreference));
+      } else if (Number(currentPage) === book.pageCount) {
+        config = {
+          currentPage: Number(currentPage),
+          isFavorite: isFavorite,
+          reading: "finished",
+        };
+      } else if (Number(currentPage) > 0) {
+        config = {
+          currentPage: Number(currentPage),
+          isFavorite: isFavorite,
+          reading: "started",
+        };
+      } else if (Number(currentPage) === 0) {
+        config = {
+          currentPage: Number(currentPage),
+          isFavorite: isFavorite,
+          reading: "notStarted",
+        };
+      } else {
+        config = { ...book.status };
       }
+      const updatedBook = { ...book, status: config };
+      await dispatch(updateBook(updatedBook));
+      updatingBookHandler();
+      dispatch(bookActions.updateBook(updatedBook));
+      dispatch(bookActions.sortBooks(configStore.config.sortPreference));
     }
   };
 

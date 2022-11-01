@@ -1,4 +1,4 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import { removeBook, updateBook } from "../../store/book-actions";
 import { bookActions } from "../../store/book-slice";
@@ -13,71 +13,69 @@ type AppProps = {
 const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
   const dispatch = useAppDispatch();
   const configStore = useAppSelector((state) => state.configStore);
-  const [currentPage, setCurrentPage] = useState<number>(
-    book.status.currentPage
-  );
-  const [isFavorite, setIsFavorite] = useState<boolean>(book.status.isFavorite);
-
-  const currentPageRef = useRef<HTMLInputElement>(null);
-  const readingRef = useRef<HTMLSelectElement>(null);
-  const favoriteRef = useRef<HTMLInputElement>(null);
+  const [currentPage, setCurrentPage] = useState(book.status.currentPage);
+  const [isFavorite, setIsFavorite] = useState(book.status.isFavorite);
+  const [readingStatus, setReadingStatus] = useState(book.status.reading);
 
   const currentPageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue: number = Number(event.target.value);
+    const newValue = Number(event.target.value);
     if (newValue <= book.pageCount && newValue >= 0) {
-      setCurrentPage(newValue);
+      switch (true) {
+        case newValue === 0:
+          setCurrentPage(newValue);
+          setReadingStatus("notStarted");
+          break;
+        case newValue === book.pageCount:
+          setCurrentPage(newValue);
+          setReadingStatus("finished");
+          break;
+        case newValue > 0:
+          setCurrentPage(newValue);
+          setReadingStatus("started");
+      }
     }
   };
 
   const isFavoriteHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsFavorite(!isFavorite);
+    setIsFavorite((prevState) => !prevState);
+  };
+
+  const readingStatusHandler = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const newValue = event.target.value as Status["reading"];
+    switch (newValue) {
+      case "gaveUp":
+        if (Number(currentPage) < book.pageCount) {
+          setReadingStatus(newValue);
+        }
+        break;
+      case "finished":
+        setReadingStatus(newValue);
+        setCurrentPage(book.pageCount);
+        break;
+      case "notStarted":
+        setReadingStatus(newValue);
+        setCurrentPage(0);
+        break;
+      case "started":
+        setReadingStatus(newValue);
+        break;
+    }
   };
 
   const updateBookHandler = async (e: FormEvent) => {
     e.preventDefault();
-
-    if (currentPageRef.current && readingRef.current && favoriteRef.current) {
-      const currentPage = currentPageRef.current.value;
-      const isFavorite = favoriteRef.current.checked;
-      let reading = readingRef.current.value as unknown as
-        | "notStarted"
-        | "started"
-        | "finished"
-        | "gaveUp";
-      let config: Status;
-      if (reading === "gaveUp" && Number(currentPage) < book.pageCount) {
-        config = {
-          currentPage: Number(currentPage),
-          isFavorite: isFavorite,
-          reading: "gaveUp",
-        };
-      } else if (Number(currentPage) === book.pageCount) {
-        config = {
-          currentPage: Number(currentPage),
-          isFavorite: isFavorite,
-          reading: "finished",
-        };
-      } else if (Number(currentPage) > 0) {
-        config = {
-          currentPage: Number(currentPage),
-          isFavorite: isFavorite,
-          reading: "started",
-        };
-      } else if (Number(currentPage) === 0) {
-        config = {
-          currentPage: Number(currentPage),
-          isFavorite: isFavorite,
-          reading: "notStarted",
-        };
-      } else {
-        config = { ...book.status };
-      }
-      const updatedBook = { ...book, status: config };
-      await dispatch(updateBook(updatedBook));
-      updatingBookHandler();
-      dispatch(bookActions.updateBook(updatedBook));
-      dispatch(bookActions.sortBooks(configStore.config.sortPreference));
-    }
+    const config = {
+      currentPage: currentPage,
+      isFavorite: isFavorite,
+      reading: readingStatus,
+    };
+    const updatedBook = { ...book, status: config };
+    await dispatch(updateBook(updatedBook));
+    updatingBookHandler();
+    dispatch(bookActions.updateBook(updatedBook));
+    dispatch(bookActions.sortBooks(configStore.config.sortPreference));
   };
 
   const removeBookHandler = async () => {
@@ -95,10 +93,10 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
           <label htmlFor="readingStatus">Reading Status</label>
           <select
             className={styles.reading__select}
-            ref={readingRef}
             id="readingStatus"
             name="readingStatus"
-            defaultValue={book.status.reading}
+            value={readingStatus}
+            onChange={readingStatusHandler}
           >
             <option value="notStarted">Not Started</option>
             <option value="started">Started</option>
@@ -111,7 +109,6 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
           <label htmlFor="currentPage">Current Page</label>
           <input
             className={styles.currentPage__input}
-            ref={currentPageRef}
             placeholder="Type your current page!"
             type="number"
             name="currentPage"
@@ -123,7 +120,6 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
         <div className={styles.favorite}>
           <input
             className={styles.favorite__checkbox}
-            ref={favoriteRef}
             type="checkbox"
             name="isFavorite"
             checked={isFavorite}

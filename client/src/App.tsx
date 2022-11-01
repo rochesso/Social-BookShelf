@@ -19,18 +19,16 @@ axios.defaults.withCredentials = true;
 
 function App() {
   const dispatch = useAppDispatch();
-  const userStore = useAppSelector((state) => state.userStore);
-  const user = userStore.user;
+  // const userStore = useAppSelector((state) => state.userStore);
+  // const user = userStore.user;
 
   useEffect(() => {
     const getData = async () => {
       await dispatch(fetchUser());
-      if (user) {
-        await dispatch(fetchConfig());
-      }
+      await dispatch(fetchConfig());
     };
     getData();
-  }, [dispatch, user]);
+  }, [dispatch]);
 
   return (
     <Routes>

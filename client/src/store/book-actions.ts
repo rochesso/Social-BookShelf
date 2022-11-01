@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { bookActions } from "./book-slice";
 import { googleSearchBooksActions } from "./googleSearchBooks-slice";
 import { userActions } from "./user-slice";
@@ -24,13 +24,13 @@ export const fetchBooks = () => {
           break;
       }
     } catch (error) {
-      //   dispatch(
-      //     uiActions.showNotification({
-      //       status: "error",
-      //       title: "Error!",
-      //       message: "Fetching cart data failed!",
-      //     })
-      //   );
+      const axiosError = error as AxiosError;
+      const axiosErrorStatus = axiosError.response?.status;
+      switch (axiosErrorStatus) {
+        case 401:
+          dispatch(userActions.logoutUser(true));
+          break;
+      }
     }
   };
 };
@@ -48,13 +48,13 @@ export const addBook = (book: CompleteBook) => {
           break;
       }
     } catch (error) {
-      //   dispatch(
-      //     uiActions.showNotification({
-      //       status: "error",
-      //       title: "Error!",
-      //       message: "Fetching cart data failed!",
-      //     })
-      //   );
+      const axiosError = error as AxiosError;
+      const axiosErrorStatus = axiosError.response?.status;
+      switch (axiosErrorStatus) {
+        case 401:
+          dispatch(userActions.logoutUser(true));
+          break;
+      }
     }
   };
 };
@@ -72,13 +72,13 @@ export const removeBook = (book: CompleteBook) => {
           break;
       }
     } catch (error) {
-      //   dispatch(
-      //     uiActions.showNotification({
-      //       status: "error",
-      //       title: "Error!",
-      //       message: "Fetching cart data failed!",
-      //     })
-      //   );
+      const axiosError = error as AxiosError;
+      const axiosErrorStatus = axiosError.response?.status;
+      switch (axiosErrorStatus) {
+        case 401:
+          dispatch(userActions.logoutUser(true));
+          break;
+      }
     }
   };
 };
@@ -95,14 +95,13 @@ export const updateBook = (book: CompleteBook) => {
           break;
       }
     } catch (error) {
-      console.log("book not updated");
-      //   dispatch(
-      //     uiActions.showNotification({
-      //       status: "error",
-      //       title: "Error!",
-      //       message: "Fetching cart data failed!",
-      //     })
-      //   );
+      const axiosError = error as AxiosError;
+      const axiosErrorStatus = axiosError.response?.status;
+      switch (axiosErrorStatus) {
+        case 401:
+          dispatch(userActions.logoutUser(true));
+          break;
+      }
     }
   };
 };

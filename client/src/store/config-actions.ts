@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { bookActions } from "./book-slice";
 import { configActions } from "./config-slice";
 import { userActions } from "./user-slice";
@@ -14,7 +14,7 @@ export const fetchConfig = () => {
 
     try {
       const response = await fetchData();
-      switch (Number(response.status)) {
+      switch (response.status) {
         case 200:
           const config: Config = response.data;
           dispatch(configActions.replaceConfig(config));
@@ -23,6 +23,14 @@ export const fetchConfig = () => {
           dispatch(userActions.logoutUser(true));
       }
     } catch (error) {
+      const axiosError = error as AxiosError;
+      const axiosErrorStatus = axiosError.response?.status;
+      switch (axiosErrorStatus) {
+        case 401:
+          dispatch(userActions.logoutUser(true));
+          break;
+      }
+
       //   dispatch(
       //     uiActions.showNotification({
       //       status: "error",

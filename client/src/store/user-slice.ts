@@ -24,12 +24,9 @@ const userSlice = createSlice({
         sessionStorage.removeItem("user");
       }
     },
-    logoutUser(state, action: PayloadAction<boolean>) {
-      const logoutUser = action.payload;
-      if (logoutUser) {
-        state.user = null;
-        sessionStorage.removeItem("user");
-      }
+    logoutUser(state) {
+      state.user = null;
+      sessionStorage.removeItem("user");
     },
   },
 });

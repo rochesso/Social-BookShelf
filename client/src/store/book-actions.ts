@@ -5,10 +5,10 @@ import { userActions } from "./user-slice";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export const fetchBooks = () => {
+export const fetchUserData = () => {
   return async (dispatch: (arg: any) => void) => {
     const fetchData = async () => {
-      const response = await axios.get(`${API_URL}/user/books`);
+      const response = await axios.get(`${API_URL}/user/data`);
       return response;
     };
 
@@ -16,11 +16,17 @@ export const fetchBooks = () => {
       const response = await fetchData();
       switch (Number(response.status)) {
         case 200:
-          const booksData: CompleteBook[] = response.data;
+          const booksData: CompleteBook[] = response.data.books;
+          const configData: Config = response.data.config;
+          console.log(booksData);
+          dispatch(bookActions.setSortPreference(configData.sortPreference));
           dispatch(bookActions.replaceBooks(booksData));
+          dispatch(bookActions.getFilters());
+          dispatch(bookActions.sortBooks());
+
           break;
         case 401:
-          dispatch(userActions.logoutUser(true));
+          dispatch(userActions.logoutUser());
           break;
       }
     } catch (error) {
@@ -28,7 +34,7 @@ export const fetchBooks = () => {
       const axiosErrorStatus = axiosError.response?.status;
       switch (axiosErrorStatus) {
         case 401:
-          dispatch(userActions.logoutUser(true));
+          dispatch(userActions.logoutUser());
           break;
       }
     }
@@ -42,9 +48,13 @@ export const addBook = (book: CompleteBook) => {
       switch (Number(response.status)) {
         case 201:
           dispatch(googleSearchBooksActions.removeBook(book));
+          dispatch(bookActions.addBook(book));
+          dispatch(bookActions.getFilters());
+          dispatch(bookActions.sortBooks());
+
           break;
         case 401:
-          dispatch(userActions.logoutUser(true));
+          dispatch(userActions.logoutUser());
           break;
       }
     } catch (error) {
@@ -52,7 +62,7 @@ export const addBook = (book: CompleteBook) => {
       const axiosErrorStatus = axiosError.response?.status;
       switch (axiosErrorStatus) {
         case 401:
-          dispatch(userActions.logoutUser(true));
+          dispatch(userActions.logoutUser());
           break;
       }
     }
@@ -66,9 +76,11 @@ export const removeBook = (book: CompleteBook) => {
       switch (Number(response.status)) {
         case 200:
           dispatch(bookActions.removeBook(book));
+          dispatch(bookActions.getFilters());
+
           break;
         case 401:
-          dispatch(userActions.logoutUser(true));
+          dispatch(userActions.logoutUser());
           break;
       }
     } catch (error) {
@@ -76,7 +88,7 @@ export const removeBook = (book: CompleteBook) => {
       const axiosErrorStatus = axiosError.response?.status;
       switch (axiosErrorStatus) {
         case 401:
-          dispatch(userActions.logoutUser(true));
+          dispatch(userActions.logoutUser());
           break;
       }
     }
@@ -89,9 +101,13 @@ export const updateBook = (book: CompleteBook) => {
       const response = await axios.patch(API_URL + "/user/books/", { book });
       switch (Number(response.status)) {
         case 200:
+          dispatch(bookActions.updateBook(book));
+          dispatch(bookActions.getFilters());
+          dispatch(bookActions.sortBooks());
+
           break;
         case 401:
-          dispatch(userActions.logoutUser(true));
+          dispatch(userActions.logoutUser());
           break;
       }
     } catch (error) {
@@ -99,7 +115,7 @@ export const updateBook = (book: CompleteBook) => {
       const axiosErrorStatus = axiosError.response?.status;
       switch (axiosErrorStatus) {
         case 401:
-          dispatch(userActions.logoutUser(true));
+          dispatch(userActions.logoutUser());
           break;
       }
     }

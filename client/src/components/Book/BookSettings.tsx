@@ -12,7 +12,6 @@ type AppProps = {
 
 const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
   const dispatch = useAppDispatch();
-  const configStore = useAppSelector((state) => state.configStore);
   const [currentPage, setCurrentPage] = useState(book.status.currentPage);
   const [isFavorite, setIsFavorite] = useState(book.status.isFavorite);
   const [readingStatus, setReadingStatus] = useState(book.status.reading);
@@ -74,8 +73,6 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
     const updatedBook = { ...book, status: config };
     await dispatch(updateBook(updatedBook));
     updatingBookHandler();
-    dispatch(bookActions.updateBook(updatedBook));
-    dispatch(bookActions.sortBooks(configStore.config.sortPreference));
   };
 
   const removeBookHandler = async () => {

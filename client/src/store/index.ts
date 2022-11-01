@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import bookSlice from "./book-slice";
-import configSlice from "./config-slice";
 import googleSearchBooksSlice from "./googleSearchBooks-slice";
 import userSlice from "./user-slice";
 
@@ -9,7 +8,6 @@ const store = configureStore({
   reducer: {
     bookStore: bookSlice.reducer,
     googleSearchBooksStore: googleSearchBooksSlice.reducer,
-    configStore: configSlice.reducer,
     userStore: userSlice.reducer,
   },
   devTools: true,

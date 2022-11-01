@@ -1,0 +1,6 @@
+.container {
+  display: flex;
+  gap: var(--gap-medium);
+  list-style: none;
+  margin-top: var(--gap-medium);
+}

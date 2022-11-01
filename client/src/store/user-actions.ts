@@ -13,7 +13,6 @@ export const fetchUser = () => {
     try {
       const user: User = await fetchData();
       dispatch(userActions.loginUser(user));
-      return user;
     } catch (error) {
       //   dispatch(
       //     uiActions.showNotification({

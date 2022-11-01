@@ -1,15 +1,20 @@
 import { useEffect } from "react";
-import axios from "axios";
 import { Route, Routes } from "react-router-dom";
-
-import { useAppSelector, useAppDispatch } from "./hooks/useStore";
-import { fetchUser } from "./store/user-actions";
-import { fetchConfig } from "./store/config-actions";
+import axios from "axios";
 
 import "./App.css";
+
+import { useAppSelector, useAppDispatch } from "./hooks/useStore";
+
+import { fetchUser } from "./store/user-actions";
+import { fetchUserData } from "./store/book-actions";
+
+import { bookActions } from "./store/book-slice";
+
 import HomeLayout from "./components/Layouts/HomeLayout";
-import Search from "./pages/search/Search";
 import ProtectedLayout from "./components/Layouts/ProtectedLayout";
+
+import Search from "./pages/search/Search";
 import MyBooks from "./pages/myBooks/MyBooks";
 import Home from "./pages/home/Home";
 
@@ -19,13 +24,14 @@ axios.defaults.withCredentials = true;
 
 function App() {
   const dispatch = useAppDispatch();
+
   // const userStore = useAppSelector((state) => state.userStore);
   // const user = userStore.user;
 
   useEffect(() => {
     const getData = async () => {
       await dispatch(fetchUser());
-      await dispatch(fetchConfig());
+      await dispatch(fetchUserData());
     };
     getData();
   }, [dispatch]);

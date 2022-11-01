@@ -21,6 +21,10 @@ interface Config {
   sortPreference: "recent" | "title" | "author";
 }
 
+interface Filter {
+  filter: Status["reading"] | "all";
+}
+
 /////////////////////////////////////////////////////////////////////
 
 // Complete version of the book with all properties.

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { searchUserById } from "../../models/user.model";
+import { getUserData } from "../../models/userData.model";
 
 const CLIENT_URL = process.env.CLIENT_URL;
 
@@ -35,4 +36,19 @@ const httpLogoutUser = async (req: Request, res: Response) => {
   }
 };
 
-export { httpGetLoggedUser, httpLogoutUser };
+const httpGetUserData = async (req: Request, res: Response) => {
+  if (req.user) {
+    const user = req.user;
+    const data = await getUserData(user.id);
+    if (data) {
+      const userData = {
+        books: data.books,
+        config: data.config,
+      };
+      return res.status(200).json(userData);
+    }
+    return res.status(400).json("Error while fetching data!");
+  }
+};
+
+export { httpGetLoggedUser, httpLogoutUser, httpGetUserData };

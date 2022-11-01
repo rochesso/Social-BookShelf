@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import { Route, Routes } from "react-router-dom";
 
-import { useAppDispatch } from "./hooks/useStore";
+import { useAppSelector, useAppDispatch } from "./hooks/useStore";
 import { fetchUser } from "./store/user-actions";
+import { fetchConfig } from "./store/config-actions";
 
 import "./App.css";
 import HomeLayout from "./components/Layouts/HomeLayout";
@@ -22,10 +23,11 @@ function App() {
   // const user = userStore.user;
 
   useEffect(() => {
-    const getUser = async () => {
+    const getData = async () => {
       await dispatch(fetchUser());
+      await dispatch(fetchConfig());
     };
-    getUser();
+    getData();
   }, [dispatch]);
 
   return (

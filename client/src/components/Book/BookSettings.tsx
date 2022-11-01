@@ -141,6 +141,7 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
           <button
             className={`${styles.actions__button} ${styles["actions__button--red"]}`}
             onClick={removeBookHandler}
+            type="button"
           >
             Delete
           </button>

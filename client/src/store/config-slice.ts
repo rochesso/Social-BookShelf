@@ -8,11 +8,9 @@ interface configState {
 // Define the initial state using that type
 const initialState: configState = {
   config: {
-    sortPreference: sessionStorage.getItem("sortPreference") as unknown as
-      | "title"
-      | "recent"
-      | "author"
-      | "title",
+    sortPreference:
+      (sessionStorage.getItem("sortPreference") as Config["sortPreference"]) ||
+      "title",
   },
 };
 

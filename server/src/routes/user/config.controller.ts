@@ -24,7 +24,7 @@ const httpChangeUserConfig = async (req: Request, res: Response) => {
     const config = req.body.config;
     const result = await changeUserConfig(user.id, config);
     if (result) {
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     } else {
       const message = "Configuration not updated or something went wrong!";
       return res.status(400).json(message);

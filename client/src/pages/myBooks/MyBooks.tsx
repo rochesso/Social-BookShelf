@@ -12,7 +12,6 @@ const MyBooks = () => {
 
   useEffect(() => {
     const getData = async () => {
-      await dispatch(fetchUser());
       await dispatch(fetchBooks());
       dispatch(bookActions.sortBooks(configStore.config.sortPreference));
     };

@@ -101,6 +101,7 @@ export const updateBook = (book: CompleteBook) => {
       const response = await axios.patch(API_URL + "/user/books/", { book });
       switch (Number(response.status)) {
         case 200:
+          console.log(book.status.rate);
           dispatch(bookActions.updateBook(book));
           dispatch(bookActions.getFilters());
           dispatch(bookActions.sortBooks());
@@ -119,5 +120,12 @@ export const updateBook = (book: CompleteBook) => {
           break;
       }
     }
+  };
+};
+
+export const filterBooks = (filter: Filter["filter"]) => {
+  return async (dispatch: (arg: any) => void) => {
+    dispatch(bookActions.filterBooks(filter));
+    dispatch(bookActions.sortBooks());
   };
 };

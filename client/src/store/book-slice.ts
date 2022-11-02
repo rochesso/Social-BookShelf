@@ -45,7 +45,8 @@ const bookSlice = createSlice({
       }
     },
     addBook(state, action: PayloadAction<CompleteBook>) {
-      const newBook = action.payload;
+      const date = new Date().toString();
+      const newBook = { ...action.payload, lastModified: date };
       const existingBook = state.books.some(
         (item) => item.googleId === newBook.googleId
       );
@@ -58,26 +59,40 @@ const bookSlice = createSlice({
       }
     },
     updateBook(state, action: PayloadAction<CompleteBook>) {
-      const updatedBook = action.payload;
       const date = new Date().toString();
+      const updatedBook = { ...action.payload, lastModified: date };
       // books
-      let existingBookIndex = state.books.findIndex(
-        (item) => item._id === updatedBook._id
-      );
+      let bookId: string;
+      let existingBookIndex: number;
+      if (updatedBook._id) {
+        bookId = updatedBook._id;
+        existingBookIndex = state.books.findIndex(
+          (item) => item._id === bookId
+        );
+      } else {
+        bookId = updatedBook.googleId;
+        existingBookIndex = state.books.findIndex(
+          (item) => item.googleId === bookId
+        );
+      }
       if (existingBookIndex >= 0) {
-        state.books[existingBookIndex] = { ...updatedBook, lastModified: date };
+        state.books[existingBookIndex] = updatedBook;
       } else {
         return console.log("Book not updated!");
       }
       // Filtered Books
-      let existingFilteredBookIndex = state.filteredBooks.findIndex(
-        (item) => item._id === updatedBook._id
-      );
-      if (existingFilteredBookIndex >= 0) {
-        state.filteredBooks[existingFilteredBookIndex] = {
-          ...updatedBook,
-          lastModified: date,
-        };
+      let existingFilteredBookIndex: number;
+      if (updatedBook._id) {
+        existingFilteredBookIndex = state.filteredBooks.findIndex(
+          (item) => item._id === bookId
+        );
+      } else {
+        existingFilteredBookIndex = state.filteredBooks.findIndex(
+          (item) => item.googleId === bookId
+        );
+      }
+      if (existingBookIndex >= 0) {
+        state.filteredBooks[existingFilteredBookIndex] = updatedBook;
       } else {
         return console.log("Book not updated!");
       }

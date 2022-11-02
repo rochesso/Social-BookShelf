@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <Fragment>
       <img className={styles.img} src={bookshelfIcon} alt="Bookshelf" />
-      <p>
+      <p className={styles.text}>
         Start your virtual shelf by searching for a book on the search box. Add
         it to your shelf, rate it, comment on it, link a song to the book, this
         space is your online book club :)

@@ -2,7 +2,7 @@ import { Fragment } from "react";
 
 import BookList from "../../components/Book/BookList";
 
-const MyBooks = () => {
+const MyLibrary = () => {
   return (
     <Fragment>
       <BookList />
@@ -10,4 +10,4 @@ const MyBooks = () => {
   );
 };
 
-export default MyBooks;
+export default MyLibrary;

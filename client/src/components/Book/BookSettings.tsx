@@ -69,6 +69,7 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
       currentPage: currentPage,
       isFavorite: isFavorite,
       reading: readingStatus,
+      rate: book.status.rate,
     };
     const updatedBook = { ...book, status: config };
     await dispatch(updateBook(updatedBook));

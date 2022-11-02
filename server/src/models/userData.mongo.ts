@@ -21,6 +21,7 @@ const userDataSchema = new mongoose.Schema({
         currentPage: { type: Number, required: true },
         reading: { type: String, required: true },
         isFavorite: { type: Boolean, required: true },
+        rate: { type: Number, required: true },
       },
     },
   ],

@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  position: absolute;
+  top: -2.5rem;
+  z-index: 101;
+}
+
+/* tilde will select the antecedent siblings */
+.container__black {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+/* tilde will select the subsequent siblings */
+.container__colored {
+  direction: ltr;
+  unicode-bidi: bidi-override;
+}

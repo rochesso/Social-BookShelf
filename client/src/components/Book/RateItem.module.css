@@ -1,0 +1,20 @@
+.star {
+  height: 2.5rem;
+}
+
+.star__black {
+  filter: brightness(0) opacity(0.1);
+}
+
+.star__black:hover,
+.star__black:hover ~ .star {
+  filter: brightness(1) opacity(1);
+}
+
+.star__colored {
+  filter: brightness(1) opacity(1);
+}
+
+.star__colored:hover ~ .star {
+  filter: brightness(0) opacity(0.1);
+}

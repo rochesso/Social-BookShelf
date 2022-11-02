@@ -24,6 +24,7 @@ const createBook = (item: GoogleBookAPI) => {
       currentPage: 0,
       reading: "notStarted",
       isFavorite: false,
+      rate: 1,
     },
   };
   return book;

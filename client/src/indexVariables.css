@@ -8,6 +8,7 @@ body {
   --width-global: 100%;
   --width-central-column: calc(0.8vw + 2.8rem);
   /* Colors */
+  --color-background-page: #fffef5;
   --color-background-primary: #c6baff;
   --color-background-secondary: #ffcdea;
   --color-background-tertiary: #feb0e1;
@@ -33,7 +34,7 @@ body {
   /* Gaps */
   --gap-small: 0.5rem;
   --gap-medium: 1.5rem;
-  --gap-big: 2.5rem;
+  --gap-big: 3.5rem;
   --gap-extra-big: 5rem;
   /* Shadows */
   --shadow-normal: rgba(0, 0, 0, 0.35) 0px 5px 15px;

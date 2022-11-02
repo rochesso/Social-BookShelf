@@ -51,6 +51,7 @@ interface Status {
   currentPage: number;
   reading: "notStarted" | "started" | "finished" | "gaveUp";
   isFavorite: boolean;
+  rate: number;
 }
 
 interface Thumbnail {

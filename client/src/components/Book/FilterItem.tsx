@@ -1,5 +1,5 @@
 import styles from "./FilterItem.module.css";
-import { bookActions } from "../../store/book-slice";
+import { filterBooks } from "../../store/book-actions";
 import { useAppDispatch } from "../../hooks/useStore";
 
 type AppProps = {
@@ -10,7 +10,7 @@ const FilterItem = ({ filter }: AppProps) => {
   const dispatch = useAppDispatch();
 
   const filterHandler = (e: any) => {
-    dispatch(bookActions.filterBooks(filter));
+    dispatch(filterBooks(filter));
   };
   let filterName = null;
   switch (filter) {

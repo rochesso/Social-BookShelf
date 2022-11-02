@@ -15,7 +15,7 @@ import HomeLayout from "./components/Layouts/HomeLayout";
 import ProtectedLayout from "./components/Layouts/ProtectedLayout";
 
 import Search from "./pages/search/Search";
-import MyBooks from "./pages/myBooks/MyBooks";
+import MyLibrary from "./pages/myLibrary/MyLibrary";
 import Home from "./pages/home/Home";
 
 // Server needs to have cors with credentials true
@@ -43,7 +43,7 @@ function App() {
         <Route path="/search" element={<Search />} />
       </Route>
       <Route path="/user" element={<ProtectedLayout />}>
-        <Route path="books" element={<MyBooks />} />
+        <Route path="books" element={<MyLibrary />} />
       </Route>
     </Routes>
   );

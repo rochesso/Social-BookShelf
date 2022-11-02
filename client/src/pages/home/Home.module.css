@@ -1,4 +1,11 @@
 .img {
   height: 10rem;
-  margin-top: 2rem;
+  margin-top: 10rem;
+}
+
+.text {
+  background-color: var(--color-background-tertiary);
+  padding: 2rem;
+  text-align: justify;
+  width: 50%;
 }

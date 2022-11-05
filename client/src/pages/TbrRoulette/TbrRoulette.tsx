@@ -20,8 +20,8 @@ const TbrRoulette = () => {
       const tbrRouletteFunction = () => {
         bookToReadIndex = randomBookIndex(books);
         while (
-          books[bookToReadIndex].status.reading ===
-          (ReadingStatus.finished || ReadingStatus.gaveUp)
+          books[bookToReadIndex].status.reading === ReadingStatus.finished ||
+          books[bookToReadIndex].status.reading === ReadingStatus.gaveUp
         ) {
           bookToReadIndex = randomBookIndex(books);
         }

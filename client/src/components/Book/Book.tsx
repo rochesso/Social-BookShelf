@@ -33,7 +33,7 @@ const Book = ({ book }: AppProps) => {
   return (
     <div className={styles.book}>
       {/* Rate Stars */}
-      <Rate book={book} />
+      {/* <Rate book={book} /> */}
 
       {/* Favorite heart icon */}
       {status.isFavorite ? (
@@ -58,7 +58,7 @@ const Book = ({ book }: AppProps) => {
           <img
             className={styles.settings__img}
             src={settingsIcon}
-            alt="Remove this book from your library!"
+            alt="Settings icon!"
           />
         </div>
       </div>

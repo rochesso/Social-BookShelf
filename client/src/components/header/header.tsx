@@ -14,7 +14,7 @@ const Header = () => {
 
   return (
     <header className={styles.container}>
-      <span></span>
+      <span className={styles.span}></span>
       <h1 className={styles.title}>
         Welcome {user ? user.firstName : "Guest"}!
       </h1>

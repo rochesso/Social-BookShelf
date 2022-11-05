@@ -1,0 +1,26 @@
+.container {
+  text-align: center;
+}
+
+.link {
+  padding: 0 2rem;
+}
+
+.active {
+  background-color: var(--color-background-primary);
+}
+
+.text {
+}
+
+@media only screen and (max-width: 435px) {
+  .container {
+    width: 100%;
+  }
+
+  .link {
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    width: inherit;
+  }
+}

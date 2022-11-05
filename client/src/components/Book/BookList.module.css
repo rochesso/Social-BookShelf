@@ -6,3 +6,12 @@
   margin-top: var(--gap-big);
   width: 80%;
 }
+
+.actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-medium);
+  justify-content: center;
+  margin-top: var(--gap-medium);
+}

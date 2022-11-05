@@ -1,0 +1,19 @@
+.container {
+}
+
+.label {
+}
+
+.select {
+  background-color: var(--color-background-quinary);
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  padding: var(--padding-button);
+}
+
+.select:hover {
+  background-color: var(--color-background-primary);
+}

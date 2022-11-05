@@ -1,5 +1,20 @@
 /// <reference types="react-scripts" />
 
+// Enums
+enum ReadingStatus {
+  notStarted = "notStarted",
+  started = "started",
+  finished = "finished",
+  gaveUp = "gaveUp",
+}
+
+enum SortPreferences {
+  lastModified = "lastModified",
+  title = "title",
+  author = "author",
+  timeAdded = "timeAdded",
+}
+
 // User
 interface User {
   googleId?: string;
@@ -18,12 +33,10 @@ interface UserData {
 }
 
 interface Config {
-  sortPreference: "recent" | "title" | "author";
+  sortPreference: SortPreferences;
 }
 
-interface Filter {
-  filter: Status["reading"] | "all";
-}
+type Filter = ReadingStatus | "all";
 
 /////////////////////////////////////////////////////////////////////
 
@@ -44,12 +57,13 @@ interface CompleteBook {
   language: string;
   isAdded: boolean;
   lastModified: Date | string;
+  timeAdded: Date;
   status: Status;
 }
 
 interface Status {
   currentPage: number;
-  reading: "notStarted" | "started" | "finished" | "gaveUp";
+  reading: ReadingStatus;
   isFavorite: boolean;
   rate: number;
 }

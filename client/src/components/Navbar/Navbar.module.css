@@ -6,7 +6,17 @@
 
 .list {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--gap-medium);
   justify-content: center;
   list-style: none;
+}
+
+@media only screen and (max-width: 435px) {
+  .list {
+    align-content: center;
+    flex-direction: column;
+    gap: var(--gap-small);
+    margin-top: 1rem;
+  }
 }

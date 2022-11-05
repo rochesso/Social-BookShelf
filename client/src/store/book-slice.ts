@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { SortPreferences } from "../globals";
 
 // Define a type for the slice state
 interface bookState {
   books: CompleteBook[];
   totalQuantity: number;
-  filters: Filter["filter"][];
+  filters: Filter[];
   filteredBooks: CompleteBook[];
   sortPreference: Config["sortPreference"];
 }
@@ -16,15 +17,15 @@ const initialState: bookState = {
   filters: [],
   filteredBooks: [],
   sortPreference:
-    (sessionStorage.getItem("sortPreference") as Config["sortPreference"]) ||
-    "title",
+    (sessionStorage.getItem("sortPreference") as SortPreferences) ||
+    SortPreferences.title,
 };
 
 const bookSlice = createSlice({
   name: "configStore",
   initialState,
   reducers: {
-    setSortPreference(state, action: PayloadAction<Config["sortPreference"]>) {
+    setSortPreference(state, action: PayloadAction<SortPreferences>) {
       state.sortPreference = action.payload;
       sessionStorage.setItem("sortPreference", action.payload);
     },
@@ -32,7 +33,11 @@ const bookSlice = createSlice({
       const filters = Array.from(
         new Set(state.books.map((book) => book.status.reading))
       );
-      state.filters = [...filters, "all"];
+      if (filters.length > 1) {
+        state.filters = [...filters, "all"];
+      } else {
+        state.filters = ["all"];
+      }
     },
     replaceBooks(state, action: PayloadAction<CompleteBook[]>) {
       const books = action.payload;
@@ -112,7 +117,7 @@ const bookSlice = createSlice({
     },
     sortBooks(state) {
       switch (state.sortPreference) {
-        case "recent":
+        case SortPreferences.lastModified:
           state.filteredBooks.sort((a, b) => {
             if (a.lastModified > b.lastModified) {
               return -1;
@@ -121,7 +126,16 @@ const bookSlice = createSlice({
             }
           });
           break;
-        case "title":
+        case SortPreferences.timeAdded:
+          state.filteredBooks.sort((a, b) => {
+            if (a.timeAdded > b.timeAdded) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          break;
+        case SortPreferences.title:
           state.filteredBooks.sort((a, b) => {
             if (a.title < b.title) {
               return -1;
@@ -130,9 +144,18 @@ const bookSlice = createSlice({
             }
           });
           break;
+        case SortPreferences.author:
+          state.filteredBooks.sort((a, b) => {
+            if (a.authors < b.authors) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          break;
       }
     },
-    filterBooks(state, action: PayloadAction<Filter["filter"]>) {
+    filterBooks(state, action: PayloadAction<Filter>) {
       if (action.payload === "all") {
         state.filteredBooks = state.books;
       } else {

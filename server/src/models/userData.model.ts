@@ -66,7 +66,8 @@ const getUserData = async (_id: string) => {
 const changeUserConfig = async (id: string, config: Config) => {
   const userData = await searchUserData(id);
   if (userData) {
-    const isChanged = await userData.updateOne({ config: config });
+    const newConfig: Config = { ...userData.config, ...config };
+    const isChanged = await userData.updateOne({ config: newConfig });
     if (isChanged) {
       const message = "User configuration updated!";
       return message;

@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../../hooks/useStore";
+import NavItem from "./NavItem";
 
 import styles from "./Navbar.module.css";
 
@@ -9,18 +10,11 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <ul className={styles.list}>
-        <li>
-          <NavLink to="/">Home</NavLink>
-        </li>
-        <li>
-          <NavLink to="/search">Search</NavLink>
-        </li>
+        <NavItem to="/" text="Home" />
+        <NavItem to="/search" text="Search" />
 
-        {user ? (
-          <li>
-            <NavLink to="/user/books">My Library</NavLink>
-          </li>
-        ) : null}
+        {user ? <NavItem to="/user/books" text="My Library" /> : null}
+        {user ? <NavItem to="/user/settings" text="Settings" /> : null}
       </ul>
     </div>
   );

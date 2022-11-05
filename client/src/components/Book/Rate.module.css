@@ -1,18 +1,22 @@
 .container {
+  --gap: 0.3rem;
   display: flex;
-  position: absolute;
-  top: -2.5rem;
-  z-index: 101;
+  gap: var(--gap);
+  margin-bottom: var(--gap-small);
 }
 
 /* tilde will select the antecedent siblings */
 .container__black {
   direction: rtl;
+  display: flex;
+  gap: var(--gap);
   unicode-bidi: bidi-override;
 }
 
 /* tilde will select the subsequent siblings */
 .container__colored {
   direction: ltr;
+  display: flex;
+  gap: var(--gap);
   unicode-bidi: bidi-override;
 }

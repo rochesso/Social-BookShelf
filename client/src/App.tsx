@@ -4,12 +4,10 @@ import axios from "axios";
 
 import "./App.css";
 
-import { useAppSelector, useAppDispatch } from "./hooks/useStore";
+import { useAppDispatch } from "./hooks/useStore";
 
 import { fetchUser } from "./store/user-actions";
 import { fetchUserData } from "./store/book-actions";
-
-import { bookActions } from "./store/book-slice";
 
 import HomeLayout from "./components/Layouts/HomeLayout";
 import ProtectedLayout from "./components/Layouts/ProtectedLayout";
@@ -17,6 +15,7 @@ import ProtectedLayout from "./components/Layouts/ProtectedLayout";
 import Search from "./pages/search/Search";
 import MyLibrary from "./pages/myLibrary/MyLibrary";
 import Home from "./pages/home/Home";
+import Settings from "./pages/settings/Settings";
 
 // Server needs to have cors with credentials true
 // Client needs to send withCredentials = true
@@ -30,8 +29,10 @@ function App() {
 
   useEffect(() => {
     const getData = async () => {
-      await dispatch(fetchUser());
-      await dispatch(fetchUserData());
+      const user = await dispatch(fetchUser());
+      if (user) {
+        await dispatch(fetchUserData());
+      }
     };
     getData();
   }, [dispatch]);
@@ -44,6 +45,7 @@ function App() {
       </Route>
       <Route path="/user" element={<ProtectedLayout />}>
         <Route path="books" element={<MyLibrary />} />
+        <Route path="settings" element={<Settings />} />
       </Route>
     </Routes>
   );

@@ -1,5 +1,13 @@
 .star {
+  cursor: pointer;
   height: 2.5rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.star:hover {
+  cursor: pointer;
+  height: 2.5rem;
+  transform: scale(1.25);
 }
 
 .star__black {

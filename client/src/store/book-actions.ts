@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { SortPreferences } from "../globals";
 import { bookActions } from "./book-slice";
 import { googleSearchBooksActions } from "./googleSearchBooks-slice";
 import { userActions } from "./user-slice";
@@ -18,7 +19,6 @@ export const fetchUserData = () => {
         case 200:
           const booksData: CompleteBook[] = response.data.books;
           const configData: Config = response.data.config;
-          console.log(booksData);
           dispatch(bookActions.setSortPreference(configData.sortPreference));
           dispatch(bookActions.replaceBooks(booksData));
           dispatch(bookActions.getFilters());
@@ -101,11 +101,10 @@ export const updateBook = (book: CompleteBook) => {
       const response = await axios.patch(API_URL + "/user/books/", { book });
       switch (Number(response.status)) {
         case 200:
-          console.log(book.status.rate);
           dispatch(bookActions.updateBook(book));
           dispatch(bookActions.getFilters());
-          dispatch(bookActions.sortBooks());
-
+          // In case the sort preference is recent, the book will go to the top after being updated.
+          // dispatch(bookActions.sortBooks());
           break;
         case 401:
           dispatch(userActions.logoutUser());
@@ -123,9 +122,40 @@ export const updateBook = (book: CompleteBook) => {
   };
 };
 
-export const filterBooks = (filter: Filter["filter"]) => {
+export const filterBooks = (filter: Filter) => {
   return async (dispatch: (arg: any) => void) => {
     dispatch(bookActions.filterBooks(filter));
     dispatch(bookActions.sortBooks());
+  };
+};
+
+export const sortPreferenceAction = (preference: SortPreferences) => {
+  return async (dispatch: (arg: any) => void) => {
+    try {
+      const sortPreference: Config["sortPreference"] = preference;
+      const response = await axios.patch(API_URL + "/user/config", {
+        sortPreference,
+      });
+      switch (Number(response.status)) {
+        case 200:
+          dispatch(bookActions.setSortPreference(preference));
+          dispatch(bookActions.sortBooks());
+          return true;
+
+        // In case the sort preference is recent, the book will go to the top after being updated.
+        // dispatch(bookActions.sortBooks());
+        case 401:
+          dispatch(userActions.logoutUser());
+          return false;
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      const axiosErrorStatus = axiosError.response?.status;
+      switch (axiosErrorStatus) {
+        case 401:
+          dispatch(userActions.logoutUser());
+          return false;
+      }
+    }
   };
 };

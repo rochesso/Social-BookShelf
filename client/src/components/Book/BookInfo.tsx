@@ -1,6 +1,13 @@
-import styles from "./BookInfo.module.css";
-import bookShelf from "../../assets/svg/shelf-svgrepo-com.svg";
+import bookshelfIcon from "../../assets/svg/shelf-svgrepo-com.svg";
+import doneIcon from "../../assets/svg/done.svg";
+import notDoneIcon from "../../assets/svg/close.svg";
+
 import ProgressBar from "./ProgressBar";
+import Rate from "./Rate";
+import ReadingStatusComponent from "./ReadingStatus";
+
+import styles from "./BookInfo.module.css";
+import { ReadingStatus } from "../../globals";
 
 type AppProps = {
   book: CompleteBook;
@@ -37,18 +44,21 @@ const BookInfo = ({ book }: AppProps) => {
   }
   const content = () => {
     switch (reading) {
-      case "notStarted":
+      case ReadingStatus.notStarted:
         return (
-          <img className={styles.bookShelf} src={bookShelf} alt="Bookshelf" />
+          <ReadingStatusComponent icon={bookshelfIcon} text="Time to Start!" />
         );
-      case "started":
+      case ReadingStatus.started:
         return (
           <ProgressBar currentPage={status.currentPage} pageCount={pageCount} />
         );
-      case "finished":
-        return <p>Finished!</p>;
-      case "gaveUp":
-        return <p>Gave up!</p>;
+      case ReadingStatus.finished:
+        return <ReadingStatusComponent icon={doneIcon} text="Congrats!" />;
+
+      case ReadingStatus.gaveUp:
+        return (
+          <ReadingStatusComponent icon={notDoneIcon} text="Another Try?" />
+        );
 
       default:
       // code block
@@ -60,6 +70,7 @@ const BookInfo = ({ book }: AppProps) => {
       <h3 className={styles.information__title}>{titleString}</h3>
       <h4 className={styles.information__authors}>{authorsString}</h4>
       {content()}
+      <Rate book={book} />
       <p className={styles.information__categories}>{categories}</p>
       <p className={styles.information__pageCount}>{pageCount} pages</p>
     </div>

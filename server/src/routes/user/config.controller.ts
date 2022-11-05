@@ -18,10 +18,13 @@ const httpGetUserConfig = async (req: Request, res: Response) => {
 };
 
 // - /userConfig post request - change user configurations
+// - Instead of receiving a single Config object, for example: req.body.config
+// - it will receive all configs separately, for example; req.body.config1, req.body.config2
+// - the client needs to send an object like this: {config1: 'test1', config2: 'test2', ...}
 const httpChangeUserConfig = async (req: Request, res: Response) => {
   if (req.user) {
     const user = req.user;
-    const config = req.body.config;
+    const config: Config = req.body;
     const result = await changeUserConfig(user.id, config);
     if (result) {
       return res.status(200).json(result);

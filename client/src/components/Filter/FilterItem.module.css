@@ -1,0 +1,11 @@
+.item {
+  background-color: var(--color-background-quinary);
+  cursor: pointer;
+  padding: var(--padding-button);
+}
+.item:hover {
+  background-color: var(--color-background-primary);
+}
+.selected {
+  background-color: var(--color-background-primary);
+}

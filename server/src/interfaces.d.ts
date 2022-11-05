@@ -18,7 +18,7 @@ interface UserData {
 }
 
 interface Config {
-  sortPreference: "recent" | "title" | "author";
+  sortPreference: "recent" | "title" | "author" | "added";
 }
 
 interface CompleteBook {
@@ -37,6 +37,7 @@ interface CompleteBook {
   language: string;
   isAdded: boolean;
   lastModified: Date;
+  timeAdded: Date;
   status: Status;
 }
 
@@ -83,5 +84,6 @@ interface NewBook {
   language: string;
   isAdded: boolean;
   lastModified: Date;
+  timeAdded: Date;
   status: Status;
 }

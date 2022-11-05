@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import bookshelfIcon from "../../assets/svg/shelf-svgrepo-com.svg";
+import bookshelfIcon from "../../assets/svg/StackOfBooks2.svg";
 import styles from "./Home.module.css";
 
 const Home = () => {

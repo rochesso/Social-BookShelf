@@ -1,5 +1,4 @@
 import styles from "./Rate.module.css";
-import starIcon from "../../assets/svg/star-svgrepo-com.svg";
 import RateItem from "./RateItem";
 
 type AppProps = {

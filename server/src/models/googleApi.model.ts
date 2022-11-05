@@ -1,4 +1,5 @@
 import axios from "axios";
+import mongoose from "mongoose";
 import { getUserData } from "./userData.model";
 
 // convert the information from google api to a book.
@@ -20,11 +21,12 @@ const createBook = (item: GoogleBookAPI) => {
     language: info.language,
     isAdded: false,
     lastModified: new Date(),
+    timeAdded: new Date(),
     status: {
       currentPage: 0,
       reading: "notStarted",
       isFavorite: false,
-      rate: 1,
+      rate: 0,
     },
   };
   return book;

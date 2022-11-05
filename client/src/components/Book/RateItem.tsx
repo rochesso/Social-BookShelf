@@ -1,5 +1,5 @@
 import { updateBook } from "../../store/book-actions";
-import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
+import { useAppDispatch } from "../../hooks/useStore";
 
 import styles from "./RateItem.module.css";
 import starIcon from "../../assets/svg/star-svgrepo-com.svg";

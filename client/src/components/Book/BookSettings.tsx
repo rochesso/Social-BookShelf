@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
+import { useAppDispatch } from "../../hooks/useStore";
 import { removeBook, updateBook } from "../../store/book-actions";
-import { bookActions } from "../../store/book-slice";
+import { ReadingStatus } from "../../globals";
 
 import styles from "./BookSettings.module.css";
 
@@ -22,15 +22,15 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
       switch (true) {
         case newValue === 0:
           setCurrentPage(newValue);
-          setReadingStatus("notStarted");
+          setReadingStatus(ReadingStatus.notStarted);
           break;
         case newValue === book.pageCount:
           setCurrentPage(newValue);
-          setReadingStatus("finished");
+          setReadingStatus(ReadingStatus.finished);
           break;
         case newValue > 0:
           setCurrentPage(newValue);
-          setReadingStatus("started");
+          setReadingStatus(ReadingStatus.started);
       }
     }
   };
@@ -42,23 +42,25 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
   const readingStatusHandler = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const newValue = event.target.value as Status["reading"];
+    const newValue = event.target.value as unknown as ReadingStatus;
     switch (newValue) {
-      case "gaveUp":
+      case ReadingStatus.gaveUp:
         if (Number(currentPage) < book.pageCount) {
           setReadingStatus(newValue);
         }
         break;
-      case "finished":
+      case ReadingStatus.finished:
         setReadingStatus(newValue);
         setCurrentPage(book.pageCount);
         break;
-      case "notStarted":
+      case ReadingStatus.notStarted:
         setReadingStatus(newValue);
         setCurrentPage(0);
         break;
-      case "started":
-        setReadingStatus(newValue);
+      case ReadingStatus.started:
+        if (Number(currentPage) < book.pageCount) {
+          setReadingStatus(newValue);
+        }
         break;
     }
   };
@@ -82,6 +84,7 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
 
   return (
     <div>
+      {/* <Rate book={book} /> */}
       <form
         className={styles.form}
         id={book.googleId}

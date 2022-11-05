@@ -65,3 +65,9 @@
 .error__message {
   color: red;
 }
+
+@media only screen and (max-width: 380px) {
+  .form {
+    flex-direction: column;
+  }
+}

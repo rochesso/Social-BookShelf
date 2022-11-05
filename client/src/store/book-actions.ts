@@ -23,10 +23,6 @@ export const fetchUserData = () => {
           dispatch(bookActions.replaceBooks(booksData));
           dispatch(bookActions.getFilters());
           dispatch(bookActions.sortBooks());
-
-          break;
-        case 401:
-          dispatch(userActions.logoutUser());
           break;
       }
     } catch (error) {
@@ -48,13 +44,9 @@ export const addBook = (book: CompleteBook) => {
       switch (Number(response.status)) {
         case 201:
           dispatch(googleSearchBooksActions.removeBook(book));
-          dispatch(bookActions.addBook(book));
+          dispatch(fetchUserData());
           dispatch(bookActions.getFilters());
           dispatch(bookActions.sortBooks());
-
-          break;
-        case 401:
-          dispatch(userActions.logoutUser());
           break;
       }
     } catch (error) {
@@ -77,10 +69,6 @@ export const removeBook = (book: CompleteBook) => {
         case 200:
           dispatch(bookActions.removeBook(book));
           dispatch(bookActions.getFilters());
-
-          break;
-        case 401:
-          dispatch(userActions.logoutUser());
           break;
       }
     } catch (error) {
@@ -89,6 +77,9 @@ export const removeBook = (book: CompleteBook) => {
       switch (axiosErrorStatus) {
         case 401:
           dispatch(userActions.logoutUser());
+          break;
+        case 400:
+          dispatch(fetchUserData());
           break;
       }
     }
@@ -103,11 +94,6 @@ export const updateBook = (book: CompleteBook) => {
         case 200:
           dispatch(bookActions.updateBook(book));
           dispatch(bookActions.getFilters());
-          // In case the sort preference is recent, the book will go to the top after being updated.
-          // dispatch(bookActions.sortBooks());
-          break;
-        case 401:
-          dispatch(userActions.logoutUser());
           break;
       }
     } catch (error) {
@@ -141,12 +127,6 @@ export const sortPreferenceAction = (preference: SortPreferences) => {
           dispatch(bookActions.setSortPreference(preference));
           dispatch(bookActions.sortBooks());
           return true;
-
-        // In case the sort preference is recent, the book will go to the top after being updated.
-        // dispatch(bookActions.sortBooks());
-        case 401:
-          dispatch(userActions.logoutUser());
-          return false;
       }
     } catch (error) {
       const axiosError = error as AxiosError;

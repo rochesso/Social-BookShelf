@@ -57,7 +57,7 @@ interface CompleteBook {
   language: string;
   isAdded: boolean;
   lastModified: Date | string;
-  timeAdded: Date;
+  timeAdded: Date | string;
   status: Status;
 }
 

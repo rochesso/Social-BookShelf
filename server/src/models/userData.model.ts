@@ -81,7 +81,11 @@ const changeUserConfig = async (id: string, config: Config) => {
 const addUserBook = async (id: string, book: CompleteBook) => {
   const userData = await searchUserData(id);
   const date = new Date();
-  const newBook: CompleteBook = { ...book, lastModified: date };
+  const newBook: CompleteBook = {
+    ...book,
+    lastModified: date,
+    timeAdded: date,
+  };
   if (userData) {
     const books = userData.books;
     const isRepeated = books.some((item) => item.googleId === newBook.googleId);
@@ -106,16 +110,23 @@ const addUserBook = async (id: string, book: CompleteBook) => {
 // Remove a book from userData
 const removeUserBook = async (userId: string, bookId: string) => {
   const userData = await searchUserData(userId);
+  console.log(bookId);
   if (userData) {
-    const isRemoved = await userData
-      .updateOne({ $pull: { books: { _id: bookId } } })
-      .exec();
-    if (isRemoved) {
-      const message = "Book removed from your collection!";
-      return message;
+    if (bookId && bookId != "undefined") {
+      const isRemoved = await userData
+        .updateOne({ $pull: { books: { _id: bookId } } })
+        .exec();
+      if (isRemoved) {
+        const message = "Book removed from your collection!";
+        return message;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
+  } else {
+    return false;
   }
 };
 

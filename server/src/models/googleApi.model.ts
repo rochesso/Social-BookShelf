@@ -37,9 +37,10 @@ const searchBooks = async (q: string, searchType: string, id?: string) => {
   const key = process.env.GOOGLE_BOOKS_KEY;
   const googleApi = process.env.GOOGLE_BOOKS_API;
   let generalParams = {
-    maxResults: 15,
+    maxResults: 40,
     orderBy: "relevance",
-    langRestrict: "en",
+    filter: "paid-ebooks",
+    langRestrict: "",
     key: key,
   };
 

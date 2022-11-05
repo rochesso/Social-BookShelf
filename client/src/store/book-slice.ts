@@ -51,7 +51,11 @@ const bookSlice = createSlice({
     },
     addBook(state, action: PayloadAction<CompleteBook>) {
       const date = new Date().toString();
-      const newBook = { ...action.payload, lastModified: date };
+      const newBook: CompleteBook = {
+        ...action.payload,
+        lastModified: date,
+        timeAdded: date,
+      };
       const existingBook = state.books.some(
         (item) => item.googleId === newBook.googleId
       );
@@ -128,6 +132,7 @@ const bookSlice = createSlice({
           break;
         case SortPreferences.timeAdded:
           state.filteredBooks.sort((a, b) => {
+            console.log(a.timeAdded);
             if (a.timeAdded > b.timeAdded) {
               return -1;
             } else {

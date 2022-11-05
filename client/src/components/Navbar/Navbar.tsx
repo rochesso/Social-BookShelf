@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../../hooks/useStore";
 import NavItem from "./NavItem";
 
@@ -14,7 +13,7 @@ const Navbar = () => {
         <NavItem to="/search" text="Search" />
 
         {user ? <NavItem to="/user/books" text="My Library" /> : null}
-        {user ? <NavItem to="/user/settings" text="Settings" /> : null}
+        {user ? <NavItem to="/user/tbrRoulette" text="TBR Roulette" /> : null}
       </ul>
     </div>
   );

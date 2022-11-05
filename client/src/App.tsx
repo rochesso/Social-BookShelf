@@ -15,7 +15,7 @@ import ProtectedLayout from "./components/Layouts/ProtectedLayout";
 import Search from "./pages/search/Search";
 import MyLibrary from "./pages/myLibrary/MyLibrary";
 import Home from "./pages/home/Home";
-import Settings from "./pages/settings/Settings";
+import TbrRoulette from "./pages/TbrRoulette/TbrRoulette";
 
 // Server needs to have cors with credentials true
 // Client needs to send withCredentials = true
@@ -45,7 +45,7 @@ function App() {
       </Route>
       <Route path="/user" element={<ProtectedLayout />}>
         <Route path="books" element={<MyLibrary />} />
-        <Route path="settings" element={<Settings />} />
+        <Route path="tbrRoulette" element={<TbrRoulette />} />
       </Route>
     </Routes>
   );

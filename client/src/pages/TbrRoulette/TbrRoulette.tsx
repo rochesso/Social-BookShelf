@@ -13,7 +13,13 @@ const TbrRoulette = () => {
   let rouletteBookIndexToRead: () => void = () => {};
 
   if (Array.isArray(books)) {
-    if (books.length > 0) {
+    if (
+      (books.length > 0 &&
+        books.some(
+          (book) => book.status.reading === ReadingStatus.notStarted
+        )) ||
+      books.some((book) => book.status.reading === ReadingStatus.started)
+    ) {
       const randomBookIndex = (books: CompleteBook[]) => {
         return Math.floor(Math.random() * books.length);
       };
@@ -41,7 +47,7 @@ const TbrRoulette = () => {
         Roulette a book to read!
       </button>
       {chosenBookIndex === 0 || chosenBookIndex ? (
-        <Book book={books[chosenBookIndex]} />
+        <Book hasDelete={false} book={books[chosenBookIndex]} />
       ) : null}
     </div>
   );

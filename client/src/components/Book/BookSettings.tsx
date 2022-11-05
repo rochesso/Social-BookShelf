@@ -8,9 +8,10 @@ import styles from "./BookSettings.module.css";
 type AppProps = {
   book: CompleteBook;
   updatingBookHandler: () => void;
+  hasDelete: boolean;
 };
 
-const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
+const BookSettings = ({ book, updatingBookHandler, hasDelete }: AppProps) => {
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(book.status.currentPage);
   const [isFavorite, setIsFavorite] = useState(book.status.isFavorite);
@@ -51,7 +52,9 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
         break;
       case ReadingStatus.finished:
         setReadingStatus(newValue);
-        setCurrentPage(book.pageCount);
+        if (book.pageCount > 0) {
+          setCurrentPage(book.pageCount);
+        }
         break;
       case ReadingStatus.notStarted:
         setReadingStatus(newValue);
@@ -139,13 +142,15 @@ const BookSettings = ({ book, updatingBookHandler }: AppProps) => {
           >
             Submit
           </button>
-          <button
-            className={`${styles.actions__button} ${styles["actions__button--red"]}`}
-            onClick={removeBookHandler}
-            type="button"
-          >
-            Delete
-          </button>
+          {hasDelete ? (
+            <button
+              className={`${styles.actions__button} ${styles["actions__button--red"]}`}
+              onClick={removeBookHandler}
+              type="button"
+            >
+              Delete
+            </button>
+          ) : null}
         </div>
       </form>
     </div>

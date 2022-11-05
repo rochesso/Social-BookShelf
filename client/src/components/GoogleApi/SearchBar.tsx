@@ -1,9 +1,7 @@
 import { FormEvent, Fragment, useRef } from "react";
 
-import { useAppSelector } from "../../hooks/useStore";
 import useGoogleApi from "../../hooks/useGoogleApi";
 import styles from "./SearchBar.module.css";
-import Book from "../Book/Book";
 import searchIcon from "../../assets/svg/search.svg";
 
 // type AppProps = {
@@ -11,13 +9,10 @@ import searchIcon from "../../assets/svg/search.svg";
 // };
 
 const SearchBar = () => {
-  const searchBookStore = useAppSelector(
-    (state) => state.googleSearchBooksStore
-  );
   const searchTextRef = useRef<HTMLInputElement>(null);
   const searchTypeRef = useRef<HTMLSelectElement>(null);
 
-  const { searchBooksGoogleApi, errorMessage } = useGoogleApi();
+  const { searchBooksGoogleApi } = useGoogleApi();
 
   const searchHandler = async (e: FormEvent) => {
     e.preventDefault();
@@ -27,10 +22,6 @@ const SearchBar = () => {
       await searchBooksGoogleApi(text, type);
     }
   };
-
-  let books = searchBookStore.searchedBooks.map((book) => (
-    <Book key={book.googleId} book={book} />
-  ));
 
   return (
     <Fragment>

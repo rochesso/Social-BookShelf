@@ -6,13 +6,13 @@ import favoriteIcon from "../../assets/svg/lover-favorite-svgrepo-com.svg";
 import styles from "./Book.module.css";
 
 import settingsIcon from "../../assets/svg/settings-svgrepo-com (1).svg";
-import Rate from "./Rate";
 
 type AppProps = {
   book: CompleteBook;
+  hasDelete: boolean;
 };
 
-const Book = ({ book }: AppProps) => {
+const Book = ({ book, hasDelete }: AppProps) => {
   const { imageLinks, status } = book;
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -49,7 +49,11 @@ const Book = ({ book }: AppProps) => {
         <img className={styles.cover} src={cover} alt="Book cover" />
 
         {isUpdating ? (
-          <BookSettings book={book} updatingBookHandler={updatingBookHandler} />
+          <BookSettings
+            hasDelete={hasDelete}
+            book={book}
+            updatingBookHandler={updatingBookHandler}
+          />
         ) : (
           <BookInfo book={book} />
         )}

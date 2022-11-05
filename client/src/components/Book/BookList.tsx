@@ -11,7 +11,7 @@ const BookList = () => {
   const BookStore = useAppSelector((state) => state.bookStore);
 
   const books = BookStore.filteredBooks.map((book) => (
-    <Book key={book.googleId} book={book} />
+    <Book key={book.googleId} book={book} hasDelete={true} />
   ));
 
   return (

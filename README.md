@@ -50,7 +50,7 @@ To install and run the project, execute the following commands in your terminal:
 
 - npm run build
 
-#### Running
+#### Running the Client:
 
 - npm run watch-client
 
@@ -60,7 +60,7 @@ To install and run the project, execute the following commands in your terminal:
 
 - npm run build
 
-#### Running
+#### Running the server:
 
 - npm run watch-ts
 

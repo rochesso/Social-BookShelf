@@ -5,7 +5,7 @@ Full stack application developed by me for practice purposes and to be part of m
 ### Server Folder
 As this project uses mongodb database, google books api and google authentication, you will need to configure the following variables in a '.env' file inside de server folder:
 
-Obs.: I will leave the variables with some examples but you need to change with your details.
+> Obs.: I will leave the variables with some examples but you need to change with your details.
 
 #### Port for the server:
 

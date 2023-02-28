@@ -1,7 +1,7 @@
 # Social-BookShelf
 Full stack application developed by me for practice purposes and to be part of my portfolio. On this project I focused more on the functionality than the design.
 
-## Installation
+## Initial Configuration
 ### Server Folder
 As this project uses mongodb database, google books api and google authentication, you will need to configure the following variables in a '.env' file inside de server folder:
 
@@ -42,7 +42,7 @@ REACT_APP_API_URL='http://your-server.com:8000/api/v1' or 'http://localhost:8000
 
 ## Installation and Running
 
-To install the project run the following commands:
+To install and run the project, execute the following commands in your terminal:
 
 ### Inside the client folder:
 

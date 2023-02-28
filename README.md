@@ -33,6 +33,14 @@ GOOGLE_CLIENT_ID='Your google client id'
 
 GOOGLE_CLIENT_SECRET='Your google client secret'
 
+#### Cookie keys for cookie-session:
+
+COOKIE_KEY_ONE='qWERadfAgASdgGHwhweR' 
+
+COOKIE_KEY_TWO='adsFsdfASDfasDFFSAfg'
+
+> Obs.: These cookie keys can be any random sequence of characters.
+
 ### Client Folder
 Inside the client folder you will need to create another '.env' file with the following variable:
 

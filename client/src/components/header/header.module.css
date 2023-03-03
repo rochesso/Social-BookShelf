@@ -6,9 +6,6 @@
   width: 100%;
 }
 
-.title {
-}
-
 .login {
   justify-self: end;
   margin-right: var(--gap-medium);

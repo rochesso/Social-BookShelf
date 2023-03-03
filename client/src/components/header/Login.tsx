@@ -5,10 +5,6 @@ import anonymous from "../../assets/svg/anonymous-mask.svg";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-// type AppProps = {
-//
-// };
-
 const Login = () => {
   const userStore = useAppSelector((state) => state.userStore);
   const user: User | null = userStore.user;

@@ -1,0 +1,23 @@
+.container {
+  background-color: var(--color-background-quaternary);
+  border: var(--border-primary);
+  display: grid;
+  padding: var(--padding-button);
+  place-items: center;
+  position: relative;
+}
+
+.profile {
+  background-color: var(--color-background-senary);
+  border: var(--border-primary);
+  display: grid;
+  height: 3rem;
+  left: -1.5rem;
+  place-items: center;
+  position: absolute;
+  width: 3rem;
+}
+
+.profile__picture {
+  height: 2.5rem;
+}

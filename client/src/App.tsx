@@ -1,8 +1,6 @@
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
-
-import "./App.css";
 
 import { useAppDispatch } from "./hooks/useStore";
 
@@ -12,10 +10,16 @@ import { fetchUserData } from "./store/book-actions";
 import HomeLayout from "./components/Layouts/HomeLayout";
 import ProtectedLayout from "./components/Layouts/ProtectedLayout";
 
+import Header from "./components/Header/Header";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
+
 import Search from "./pages/search/Search";
 import MyLibrary from "./pages/myLibrary/MyLibrary";
 import Home from "./pages/home/Home";
 import TbrRoulette from "./pages/TbrRoulette/TbrRoulette";
+
+import styles from "./App.module.css";
 
 // Server needs to have cors with credentials true
 // Client needs to send withCredentials = true
@@ -38,16 +42,28 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Routes>
-      <Route element={<HomeLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/search" element={<Search />} />
-      </Route>
-      <Route path="/user" element={<ProtectedLayout />}>
-        <Route path="books" element={<MyLibrary />} />
-        <Route path="tbrRoulette" element={<TbrRoulette />} />
-      </Route>
-    </Routes>
+    <Fragment>
+      <Header />
+      <Navbar />
+
+      <div className={styles.container}>
+        <Routes>
+          <Route element={<HomeLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<Search />} />
+          </Route>
+          <Route path="/user" element={<ProtectedLayout />}>
+            <Route path="books" element={<MyLibrary />} />
+            <Route path="tbrRoulette" element={<TbrRoulette />} />
+          </Route>
+        </Routes>
+      </div>
+
+      {/* Span has 1fr and keeps footer on the bottom of the page even with small contents */}
+      <span></span>
+
+      <Footer />
+    </Fragment>
   );
 }
 

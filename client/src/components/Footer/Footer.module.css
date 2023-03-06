@@ -1,0 +1,12 @@
+.container {
+  background-color: var(--color-background-primary);
+  display: grid;
+  height: 60px; /* Height of the footer */
+  margin-top: var(--gap-medium);
+  place-items: center;
+  width: 100%;
+}
+
+.text {
+  text-align: center;
+}

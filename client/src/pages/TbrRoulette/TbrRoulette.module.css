@@ -1,3 +1,14 @@
 .container {
+  display: grid;
   margin-top: var(--gap-big);
+  place-items: center;
+}
+
+.button {
+  background-color: var(--color-background-secondary);
+  border: var(--border-primary);
+  cursor: pointer;
+  height: var(--big);
+  margin-bottom: var(--gap-medium);
+  padding: 0 var(--small);
 }

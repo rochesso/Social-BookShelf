@@ -9,10 +9,11 @@
   border: var(--border-primary);
   display: grid;
   grid-template-columns: min-content 1fr;
-  height: calc(var(--book-width) * 1.7);
+  height: max(calc(var(--book-width) * 1.7), min-content);
   overflow: clip;
   padding: 0.5rem;
   position: relative;
+  width: min(90vw, 32rem);
 }
 
 .cover {
@@ -31,7 +32,6 @@
   place-items: center;
   position: absolute;
   right: calc(-1 * (var(--add-button) / 2));
-  width: var(--add-button);
 }
 
 .settings__img {

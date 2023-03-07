@@ -10,6 +10,7 @@
   overflow: clip;
   padding: 0.5rem;
   position: relative;
+  width: min(90vw, 32rem);
 }
 
 .cover {
@@ -22,7 +23,6 @@
   grid-template-rows: min-content min-content 1fr min-content;
   height: 100%;
   padding-left: var(--gap-medium);
-  width: min(50vw, 22rem);
 }
 
 .information__title {

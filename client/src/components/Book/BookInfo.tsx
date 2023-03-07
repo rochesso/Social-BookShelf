@@ -69,7 +69,9 @@ const BookInfo = ({ book }: AppProps) => {
       {content()}
       <Rate book={book} />
       <p className={styles.information__categories}>{categories}</p>
-      <p className={styles.information__pageCount}>{pageCount} pages</p>
+      <p className={styles.information__pageCount}>
+        {pageCount ? pageCount : 0} pages
+      </p>
     </div>
   );
 };

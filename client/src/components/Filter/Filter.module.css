@@ -4,6 +4,4 @@
   gap: var(--gap-medium);
   justify-content: center;
   list-style: none;
-  margin-bottom: var(--gap-big);
-  margin-top: var(--gap-big);
 }

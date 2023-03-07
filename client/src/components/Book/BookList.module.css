@@ -12,4 +12,5 @@
   flex-wrap: wrap;
   gap: var(--gap-medium);
   justify-content: center;
+  margin: var(--gap-big) 0;
 }

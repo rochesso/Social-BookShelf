@@ -90,7 +90,11 @@ const SearchedBook = ({ book }: AppProps) => {
         <h3 className={styles.information__title}>{titleString}</h3>
         <h4 className={styles.information__authors}>{authorsToShow}</h4>
         <p className={styles.information__categories}>{categories}</p>
-        <p className={styles.information__pageCount}>{pageCount} pages</p>
+
+        <p className={styles.information__pageCount}>
+          {pageCount ? pageCount : 0} pages
+        </p>
+
         {/* Button to add a book to your library */}
         <div className={styles.add} onClick={addBookHandler}>
           <img

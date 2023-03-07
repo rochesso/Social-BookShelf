@@ -40,7 +40,7 @@ const searchBooks = async (q: string, searchType: string, id?: string) => {
     maxResults: 40,
     orderBy: "relevance",
     filter: "paid-ebooks",
-    langRestrict: "",
+    langRestrict: "en",
     key: key,
   };
 

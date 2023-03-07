@@ -17,7 +17,7 @@
 
 .information {
   display: grid;
-  grid-template-rows: min-content min-content min-content 1fr;
+  grid-template-rows: min-content 1fr min-content min-content;
   height: 100%;
   padding-left: var(--gap-medium);
   width: min(50vw, 20rem);
@@ -35,7 +35,6 @@
   font-family: var(--font-family-secondary), sans-serif;
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-medium);
-  margin-bottom: var(--gap-extra-big);
 }
 
 /* .information__authors > span {
@@ -54,6 +53,7 @@
 
 .information__categories,
 .information__pageCount {
+  align-self: flex-end;
   font-family: var(--font-family-primary), sans-serif;
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-medium);

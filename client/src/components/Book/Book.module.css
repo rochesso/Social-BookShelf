@@ -55,7 +55,7 @@
 .favoriteIcon {
   height: 3rem;
   position: absolute;
-  right: -0.8rem;
-  top: -0.8rem;
+  right: -1.5rem;
+  top: -1rem;
   z-index: 101;
 }

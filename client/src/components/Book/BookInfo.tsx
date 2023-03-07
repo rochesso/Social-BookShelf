@@ -24,7 +24,7 @@ const BookInfo = ({ book }: AppProps) => {
       if (authors.join(", ").length > 40) {
         authorsString = [`${authors.join(", ").substring(0, 40)}...`];
       } else {
-        authorsString = authors;
+        authorsString = [`${authors.join(", ")}`];
       }
     }
   }

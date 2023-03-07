@@ -20,12 +20,8 @@ const SearchedBook = ({ book }: AppProps) => {
   let authorsString: string[] = [];
   if (authors) {
     if (Array.isArray(authors)) {
-      if (authors.length > 1) {
-        if (authors.join(", ").length > 50) {
-          authorsString = [`${authors.join(", ").substring(0, 50)}...`];
-        } else {
-          authorsString = authors;
-        }
+      if (authors.join(", ").length > 40) {
+        authorsString = [`${authors.join(", ").substring(0, 40)}...`];
       } else {
         authorsString = authors;
       }
@@ -56,8 +52,8 @@ const SearchedBook = ({ book }: AppProps) => {
   // Check if the title is too long
   let titleString;
   if (title) {
-    if (title.length > 50) {
-      titleString = `${title.substring(0, 50)}...`;
+    if (title.length > 40) {
+      titleString = `${title.substring(0, 40)}...`;
     } else {
       titleString = `${title}`;
     }

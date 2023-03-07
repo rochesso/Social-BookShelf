@@ -46,7 +46,7 @@ function App() {
       <Header />
       <Navbar />
 
-      <div className={styles.container}>
+      <main className={styles.container}>
         <Routes>
           <Route element={<HomeLayout />}>
             <Route path="/" element={<Home />} />
@@ -57,7 +57,7 @@ function App() {
             <Route path="tbrRoulette" element={<TbrRoulette />} />
           </Route>
         </Routes>
-      </div>
+      </main>
 
       {/* Span has 1fr and keeps footer on the bottom of the page even with small contents */}
       <span></span>

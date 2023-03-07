@@ -17,20 +17,41 @@ const SearchedBook = ({ book }: AppProps) => {
   const dispatch = useAppDispatch();
 
   //check if author is too long
-  let authorsString;
+  let authorsString: string[] = [];
   if (authors) {
     if (Array.isArray(authors)) {
       if (authors.length > 1) {
         if (authors.join(", ").length > 50) {
           authorsString = [`${authors.join(", ").substring(0, 50)}...`];
         } else {
-          authorsString = [`${authors.join(", ")}`];
+          authorsString = authors;
         }
       } else {
         authorsString = authors;
       }
     }
   }
+
+  const authorsToShow = authorsString.map((author) => {
+    const searchByThisAuthor = async () => {
+      const searchType: HTMLSelectElement = document.getElementById(
+        "searchType"
+      ) as HTMLSelectElement;
+
+      const search: HTMLInputElement = document.getElementById(
+        "search"
+      ) as HTMLInputElement;
+
+      const formButton = document.getElementById(
+        "searchFormButton"
+      ) as HTMLFormElement;
+
+      search.value = author;
+      searchType.value = "author";
+      formButton.click();
+    };
+    return <span onClick={searchByThisAuthor}>{author}</span>;
+  });
 
   // Check if the title is too long
   let titleString;
@@ -62,20 +83,12 @@ const SearchedBook = ({ book }: AppProps) => {
     }
   };
 
-  // const removeBookHandler = async () => {
-  //     await removeBook(book);
-  // }
-
-  // const updateBookHandler = async () => {
-  //     await updateBook({...book, status: {currentPage: 12, isFavorite: true, reading: 'started'}});
-  // }
-
   return (
     <div className={styles.container}>
       <img className={styles.cover} src={cover} alt="Book cover" />
       <div className={styles.information}>
         <h3 className={styles.information__title}>{titleString}</h3>
-        <h4 className={styles.information__authors}>{authorsString}</h4>
+        <h4 className={styles.information__authors}>{authorsToShow}</h4>
         <p className={styles.information__categories}>{categories}</p>
         <p className={styles.information__pageCount}>{pageCount} pages</p>
         {/* Button to add a book to your library */}
@@ -85,7 +98,6 @@ const SearchedBook = ({ book }: AppProps) => {
             src={plusIcon}
             alt="Add this book to your library!"
           />
-          {/* <p className={styles.add__text}>A</p> */}
         </div>
       </div>
     </div>

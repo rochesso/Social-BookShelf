@@ -1,12 +1,18 @@
 .container {
+  align-self: end;
   background-color: var(--color-background-primary);
   display: grid;
-  height: 60px; /* Height of the footer */
+  height: min-content;
   margin-top: var(--gap-medium);
+  padding: var(--gap-medium);
   place-items: center;
   width: 100%;
 }
 
 .text {
   text-align: center;
+}
+
+.author {
+  font-weight: bold;
 }

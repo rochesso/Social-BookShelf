@@ -3,9 +3,9 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import "./globals";
-import store from "./store/index";
 import "./indexVariables.css";
 import "./index.css";
+import store from "./store/index";
 import App from "./App";
 
 const root = ReactDOM.createRoot(

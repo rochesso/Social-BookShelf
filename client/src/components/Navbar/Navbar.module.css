@@ -1,7 +1,6 @@
 .container {
   background-color: var(--color-background-secondary);
   border-bottom: 2px solid var(--color-background-primary);
-  width: 100%;
 }
 
 .list {

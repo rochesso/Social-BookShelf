@@ -62,7 +62,12 @@ const SearchBar = () => {
           />
         </div>
 
-        <button className={styles.form__button} form="searchForm" type="submit">
+        <button
+          className={styles.form__button}
+          form="searchForm"
+          type="submit"
+          id="searchFormButton"
+        >
           Search
         </button>
       </form>

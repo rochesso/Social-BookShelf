@@ -23,12 +23,11 @@ body {
 #root {
   display: grid;
 
-  /* Keeps footer on the bottom of the page even with small contents */
+  /* Span has 1fr and keeps footer on the bottom of the page even with small contents */
   grid-template-rows: auto auto auto 1fr auto;
 
   min-height: 100vh;
   overflow: clip;
-  place-items: center;
   position: relative;
 }
 

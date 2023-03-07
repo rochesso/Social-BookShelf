@@ -31,10 +31,25 @@
 }
 
 .information__authors {
+  cursor: pointer;
   font-family: var(--font-family-secondary), sans-serif;
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-medium);
   margin-bottom: var(--gap-extra-big);
+}
+
+/* .information__authors > span {
+  text-decoration: underline;
+} */
+
+.information__authors > span:not(:last-child) {
+  border-right: 1.3px solid black;
+  margin-right: var(--gap-small);
+  padding-right: var(--gap-small);
+}
+
+.information__authors > span:hover {
+  color: var(--color-purple);
 }
 
 .information__categories,

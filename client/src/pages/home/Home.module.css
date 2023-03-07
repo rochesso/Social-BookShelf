@@ -9,3 +9,15 @@
   text-align: justify;
   width: 50%;
 }
+
+.search {
+  color: var(--color-purple);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 475px) {
+  .text {
+    width: 80%;
+  }
+}

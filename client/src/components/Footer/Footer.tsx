@@ -4,7 +4,9 @@ const Header = () => {
   return (
     <footer className={styles.container}>
       <p className={styles.text}>
-        This site was created by Arthur Rochesso for educational purposes only!
+        This website was created by{" "}
+        <span className={styles.author}>Arthur Rochesso</span> for educational
+        purposes only!
       </p>
     </footer>
   );

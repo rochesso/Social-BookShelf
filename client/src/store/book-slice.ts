@@ -34,7 +34,7 @@ const bookSlice = createSlice({
         new Set(state.books.map((book) => book.status.reading))
       );
       if (filters.length > 1) {
-        state.filters = [...filters, "all"];
+        state.filters = [...filters, "all", "favorites"];
       } else {
         state.filters = ["all"];
       }
@@ -163,6 +163,11 @@ const bookSlice = createSlice({
     filterBooks(state, action: PayloadAction<Filter>) {
       if (action.payload === "all") {
         state.filteredBooks = state.books;
+      } else if (action.payload === "favorites") {
+        const filteredBooks = state.books.filter(
+          (book) => book.status.isFavorite === true
+        );
+        state.filteredBooks = filteredBooks;
       } else {
         const filteredBooks = state.books.filter(
           (book) => book.status.reading === action.payload

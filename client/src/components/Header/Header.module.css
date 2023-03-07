@@ -1,9 +1,18 @@
 .container {
-  background-color: var(--color-background-primary);
+  background-image: linear-gradient(
+    to right,
+    var(--color-pink),
+    var(--color-purple)
+  );
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   place-items: center;
-  width: 100%;
+}
+
+.title {
+  color: white;
+  font-size: var(--font-size-extra-big);
+  text-shadow: var(--shadow-normal);
 }
 
 .login {

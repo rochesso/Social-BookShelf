@@ -22,6 +22,9 @@ const FilterItem = ({ filter, isSelected, selectedHandler }: AppProps) => {
     case "all":
       filterName = "All";
       break;
+    case "favorites":
+      filterName = "Favorites";
+      break;
     case ReadingStatus.notStarted:
       filterName = "Not Started";
       break;

@@ -17,6 +17,8 @@ body {
   --color-background-senary: #737373;
   --color-background-septenary: #ff6868;
 
+  --color-pink: #ff69b4;
+  --color-purple: #9370db;
   --color-primary: #161616;
   --color-secondary: #eeeeee;
   --color-tertiary: #505050;
@@ -37,7 +39,7 @@ body {
   --gap-big: 3.5rem;
   --gap-extra-big: 5rem;
   /* Shadows */
-  --shadow-normal: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  --shadow-normal: 2px 2px #888;
   /* Padding */
   --padding-button: 0.5rem 2.5rem;
   /* Borders */

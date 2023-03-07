@@ -36,7 +36,7 @@ interface Config {
   sortPreference: SortPreferences;
 }
 
-type Filter = ReadingStatus | "all";
+type Filter = ReadingStatus | "all" | "favorites";
 
 /////////////////////////////////////////////////////////////////////
 

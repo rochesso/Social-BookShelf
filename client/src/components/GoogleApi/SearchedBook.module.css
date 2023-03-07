@@ -17,7 +17,7 @@
 
 .information {
   display: grid;
-  grid-template-rows: min-content 1fr min-content min-content;
+  grid-template-rows: min-content min-content 1fr min-content;
   height: 100%;
   padding-left: var(--gap-medium);
   width: min(50vw, 20rem);
@@ -31,10 +31,10 @@
 }
 
 .information__authors {
-  cursor: pointer;
   font-family: var(--font-family-secondary), sans-serif;
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-medium);
+  margin-top: var(--gap-small);
 }
 
 /* .information__authors > span {
@@ -49,6 +49,7 @@
 
 .information__authors > span:hover {
   color: var(--color-purple);
+  cursor: pointer;
 }
 
 .information__categories,

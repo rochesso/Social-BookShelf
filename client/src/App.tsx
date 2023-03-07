@@ -59,9 +59,6 @@ function App() {
         </Routes>
       </main>
 
-      {/* Span has 1fr and keeps footer on the bottom of the page even with small contents */}
-      <span></span>
-
       <Footer />
     </Fragment>
   );

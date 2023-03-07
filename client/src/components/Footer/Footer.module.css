@@ -1,5 +1,7 @@
 .container {
+  /* keeps footer on the bottom of the page even with small contents */
   align-self: end;
+
   background-color: var(--color-background-primary);
   display: grid;
   height: min-content;

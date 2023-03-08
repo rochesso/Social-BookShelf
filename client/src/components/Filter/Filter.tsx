@@ -1,17 +1,17 @@
 import { useState } from "react";
-import styles from "./Filter.module.css";
 import { useAppSelector, useAppDispatch } from "../../hooks/useStore";
-import FilterItem from "./FilterItem";
 import { searchMyLibrary } from "../../store/book-actions";
+import FilterItem from "./FilterItem";
+import styles from "./Filter.module.css";
 
 const Filter = () => {
   const dispatch = useAppDispatch();
-
   const bookStore = useAppSelector((state) => state.bookStore);
+
   const [selected, setSelected] = useState<Filter>("all");
+  const [search, setSearch] = useState<string>("");
 
   // Search for a book in your library
-  const [search, setSearch] = useState<string>("");
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
     dispatch(searchMyLibrary(event.target.value, selected));

@@ -94,10 +94,12 @@ const BookSettings = ({ book, updatingBookHandler, hasDelete }: AppProps) => {
         onSubmit={updateBookHandler}
       >
         <div className={styles.reading}>
-          <label htmlFor="readingStatus">Reading Status</label>
+          <label htmlFor={`${book.googleId}_readingStatus`}>
+            Reading Status
+          </label>
           <select
             className={styles.reading__select}
-            id="readingStatus"
+            id={`${book.googleId}_readingStatus`}
             name="readingStatus"
             value={readingStatus}
             onChange={readingStatusHandler}
@@ -110,13 +112,13 @@ const BookSettings = ({ book, updatingBookHandler, hasDelete }: AppProps) => {
         </div>
 
         <div className={styles.currentPage}>
-          <label htmlFor="currentPage">Current Page</label>
+          <label htmlFor={`${book.googleId}_currentPage`}>Current Page</label>
           <input
             className={styles.currentPage__input}
             placeholder="Type your current page!"
             type="number"
             name="currentPage"
-            id="currentPage"
+            id={`${book.googleId}_currentPage`}
             value={currentPage}
             onChange={currentPageHandler}
           />
@@ -128,9 +130,12 @@ const BookSettings = ({ book, updatingBookHandler, hasDelete }: AppProps) => {
             name="isFavorite"
             checked={isFavorite}
             onChange={isFavoriteHandler}
-            id="isFavorite"
+            id={`${book.googleId}_isFavorite`}
           />
-          <label className={styles.favorite__label} htmlFor="isFavorite">
+          <label
+            className={styles.favorite__label}
+            htmlFor={`${book.googleId}_isFavorite`}
+          >
             Favorite?
           </label>
         </div>

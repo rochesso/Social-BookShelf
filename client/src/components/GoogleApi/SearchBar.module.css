@@ -57,7 +57,11 @@
 .form__button {
   background-color: var(--color-background-secondary);
   border: var(--border-primary);
+  color: var(--color-tertiary);
   cursor: pointer;
+  font-family: inherit;
+  font-size: var(--font-size-medium);
+  font-weight: inherit;
   height: var(--big);
   padding: 0 var(--small);
 }

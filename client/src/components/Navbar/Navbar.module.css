@@ -1,6 +1,7 @@
 .container {
   background-color: var(--color-background-secondary);
   border-bottom: 2px solid var(--color-background-primary);
+  font-size: var(--font-size-big);
 }
 
 .list {

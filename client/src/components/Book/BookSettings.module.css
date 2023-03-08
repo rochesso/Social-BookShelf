@@ -2,7 +2,9 @@
   --input-width: 12rem;
   --margin-top: 0.5rem;
   display: grid;
+  font-family: inherit;
   font-size: var(--font-size-medium);
+  font-weight: inherit;
   gap: var(--margin-top);
   margin-right: 2rem;
   place-items: center;
@@ -14,10 +16,15 @@
 }
 
 .reading__select {
+  background-color: white;
+  border: var(--border-primary);
+  border-radius: 0;
+  color: var(--color-primary);
   cursor: pointer;
   font-size: calc(var(--font-size-medium) * 0.9);
   height: var(--medium);
   text-align: center;
+  text-align-last: center;
   width: var(--input-width);
 }
 
@@ -26,6 +33,10 @@
 }
 
 .currentPage__input {
+  background-color: white;
+  border: var(--border-primary);
+  border-radius: 0;
+  color: var(--color-primary);
   font-size: calc(var(--font-size-medium) * 0.9);
   height: var(--medium);
   text-align: center;
@@ -53,8 +64,11 @@
   background-color: var(--color-background-quinary);
   border: var(--border-primary);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+  color: var(--color-primary);
   cursor: pointer;
+  font-family: inherit;
   font-size: calc(var(--font-size-medium) * 0.8);
+  font-weight: inherit;
   transition: all 0.1s ease-in-out;
   width: 5.5rem;
 }

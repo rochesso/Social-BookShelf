@@ -2,6 +2,7 @@
   display: grid;
   grid-template-rows: min-content min-content 1fr min-content min-content min-content;
   height: 100%;
+  line-height: 1.7rem;
   padding-left: var(--gap-medium);
 }
 
@@ -16,6 +17,7 @@
   font-family: var(--font-family-secondary), sans-serif;
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-medium);
+  margin-top: 0.5rem;
 }
 
 .information__categories,

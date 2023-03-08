@@ -4,25 +4,27 @@
   transition: transform 0.2s ease-in-out;
 }
 
-.star:hover {
-  cursor: pointer;
-  height: 2.5rem;
-  transform: scale(1.25);
-}
-
 .star__black {
   filter: brightness(0) opacity(0.1);
-}
-
-.star__black:hover,
-.star__black:hover ~ .star {
-  filter: brightness(1) opacity(1);
 }
 
 .star__colored {
   filter: brightness(1) opacity(1);
 }
 
-.star__colored:hover ~ .star {
-  filter: brightness(0) opacity(0.1);
+@media (hover: hover) {
+  .star:hover {
+    cursor: pointer;
+    height: 2.5rem;
+    transform: scale(1.25);
+  }
+
+  .star__black:hover,
+  .star__black:hover ~ .star {
+    filter: brightness(1) opacity(1);
+  }
+
+  .star__colored:hover ~ .star {
+    filter: brightness(0) opacity(0.1);
+  }
 }

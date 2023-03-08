@@ -179,8 +179,13 @@ const bookSlice = createSlice({
       if (action.payload === "") {
         state.filteredBooks = state.books;
       } else {
-        const filteredBooks = state.books.filter((book) =>
-          book.title.toLowerCase().includes(action.payload.toLowerCase())
+        const filteredBooks = state.books.filter(
+          (book) =>
+            book.title.toLowerCase().includes(action.payload.toLowerCase()) ||
+            book.authors
+              .join(", ")
+              .toLowerCase()
+              .includes(action.payload.toLowerCase())
         );
         state.filteredBooks = filteredBooks;
       }

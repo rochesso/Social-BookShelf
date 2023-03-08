@@ -15,6 +15,7 @@
   background-color: var(--color-background-quaternary);
   border: var(--border-primary);
   color: var(--color-tertiary);
+  cursor: pointer;
   display: inline-block;
   height: var(--big);
   text-align: center;

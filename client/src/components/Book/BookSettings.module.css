@@ -14,6 +14,7 @@
 }
 
 .reading__select {
+  cursor: pointer;
   font-size: calc(var(--font-size-medium) * 0.9);
   height: var(--medium);
   text-align: center;
@@ -34,7 +35,13 @@
 .favorite {
 }
 
+.favorite__label {
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
 .favorite__checkbox {
+  cursor: pointer;
 }
 .actions {
   display: flex;
@@ -45,8 +52,21 @@
 .actions__button {
   background-color: var(--color-background-quinary);
   border: var(--border-primary);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
   font-size: calc(var(--font-size-medium) * 0.9);
+  transition: all 0.1s ease-in-out;
   width: 5.5rem;
+}
+
+.actions__button:hover {
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.actions__button:active {
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+  transform: translateY(2px);
 }
 
 .actions__button--red {

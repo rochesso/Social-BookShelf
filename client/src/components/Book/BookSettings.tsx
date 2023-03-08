@@ -128,9 +128,9 @@ const BookSettings = ({ book, updatingBookHandler, hasDelete }: AppProps) => {
             name="isFavorite"
             checked={isFavorite}
             onChange={isFavoriteHandler}
+            id="isFavorite"
           />
           <label className={styles.favorite__label} htmlFor="isFavorite">
-            {" "}
             Favorite?
           </label>
         </div>

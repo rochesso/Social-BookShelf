@@ -14,11 +14,12 @@
 .type__select {
   background-color: var(--color-background-quaternary);
   border: var(--border-primary);
+  border-radius: 0;
   color: var(--color-tertiary);
   cursor: pointer;
-  display: inline-block;
   height: var(--big);
   text-align: center;
+  text-align-last: center;
   width: 10rem;
 }
 
@@ -46,6 +47,7 @@
 .search__input {
   background-color: var(--color-background-quaternary);
   border: var(--border-primary);
+  border-radius: 0;
   color: var(--color-tertiary);
   height: var(--big);
   text-align: center;

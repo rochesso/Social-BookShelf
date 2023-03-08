@@ -1,7 +1,8 @@
 .container {
   --gap: 0.3rem;
-  display: flex;
+  display: grid;
   gap: var(--gap);
+  grid-template-columns: min-content min-content;
   margin-bottom: var(--gap-small);
 }
 

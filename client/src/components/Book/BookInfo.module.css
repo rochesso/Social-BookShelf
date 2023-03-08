@@ -1,6 +1,6 @@
 .information {
   display: grid;
-  grid-template-rows: min-content min-content 1fr min-content min-content;
+  grid-template-rows: min-content min-content 1fr min-content min-content min-content;
   height: 100%;
   padding-left: var(--gap-medium);
 }

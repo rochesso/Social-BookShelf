@@ -10,8 +10,15 @@
 .search {
   background-color: var(--color-background-quinary);
   border: none;
-  color: var(--color-tertiary);
+  border-radius: 0;
+  color: var(--color-primary);
+  font-size: var(--font-size-medium);
   padding: 1rem;
   text-align: center;
-  width: 15rem;
+  width: 15.5rem;
+}
+
+.search::placeholder {
+  color: var(--color-tertiary);
+  font-size: var(--font-size-small);
 }

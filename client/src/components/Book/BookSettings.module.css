@@ -2,7 +2,7 @@
   --input-width: 12rem;
   --margin-top: 0.5rem;
   display: grid;
-  font-size: calc(var(--font-size-medium) * 1.1);
+  font-size: var(--font-size-medium);
   gap: var(--margin-top);
   margin-right: 2rem;
   place-items: center;
@@ -54,7 +54,7 @@
   border: var(--border-primary);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4);
   cursor: pointer;
-  font-size: calc(var(--font-size-medium) * 0.9);
+  font-size: calc(var(--font-size-medium) * 0.8);
   transition: all 0.1s ease-in-out;
   width: 5.5rem;
 }

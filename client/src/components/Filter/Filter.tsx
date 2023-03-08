@@ -50,7 +50,7 @@ const Filter = () => {
           onChange={searchHandler}
           value={search}
           id="searchMyLibrary"
-          placeholder="Search in your Library!"
+          placeholder="Search in your Library"
         />
       </li>
       {/* All filters */}

@@ -7,11 +7,14 @@
 .select {
   background-color: var(--color-background-quinary);
   border: none;
+  border-radius: 0;
+  color: var(--color-primary);
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
   padding: var(--padding-button);
+  text-align-last: center;
   transition: all 0.2s ease-in-out;
 }
 

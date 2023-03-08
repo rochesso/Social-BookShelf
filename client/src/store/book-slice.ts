@@ -175,6 +175,16 @@ const bookSlice = createSlice({
         state.filteredBooks = filteredBooks;
       }
     },
+    searchMyLibrary(state, action: PayloadAction<string>) {
+      if (action.payload === "") {
+        state.filteredBooks = state.books;
+      } else {
+        const filteredBooks = state.books.filter((book) =>
+          book.title.toLowerCase().includes(action.payload.toLowerCase())
+        );
+        state.filteredBooks = filteredBooks;
+      }
+    },
   },
 });
 

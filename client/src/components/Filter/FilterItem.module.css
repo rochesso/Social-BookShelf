@@ -2,6 +2,7 @@
   background-color: var(--color-background-quinary);
   cursor: pointer;
   padding: var(--padding-button);
+  transition: all 0.2s ease-in-out;
 }
 .item:hover {
   background-color: var(--color-background-primary);

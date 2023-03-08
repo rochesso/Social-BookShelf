@@ -115,6 +115,13 @@ export const filterBooks = (filter: Filter) => {
   };
 };
 
+export const searchMyLibrary = (string: string) => {
+  return async (dispatch: (arg: any) => void) => {
+    dispatch(bookActions.searchMyLibrary(string));
+    dispatch(bookActions.sortBooks());
+  };
+};
+
 export const sortPreferenceAction = (preference: SortPreferences) => {
   return async (dispatch: (arg: any) => void) => {
     try {

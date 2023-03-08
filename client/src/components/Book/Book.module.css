@@ -9,7 +9,7 @@
   border: var(--border-primary);
   display: grid;
   grid-template-columns: min-content 1fr;
-  height: max(calc(var(--book-width) * 1.7), min-content);
+  height: calc(var(--book-width) * 1.8);
   overflow: clip;
   padding: 0.5rem;
   position: relative;

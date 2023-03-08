@@ -111,13 +111,13 @@ export const updateBook = (book: CompleteBook) => {
 export const filterBooks = (filter: Filter) => {
   return async (dispatch: (arg: any) => void) => {
     dispatch(bookActions.filterBooks(filter));
-    dispatch(bookActions.sortBooks());
   };
 };
 
-export const searchMyLibrary = (string: string) => {
+export const searchMyLibrary = (search: string, filter: Filter) => {
   return async (dispatch: (arg: any) => void) => {
-    dispatch(bookActions.searchMyLibrary(string));
+    dispatch(bookActions.filterBooks(filter));
+    dispatch(bookActions.searchMyLibrary(search));
     dispatch(bookActions.sortBooks());
   };
 };

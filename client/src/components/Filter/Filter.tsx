@@ -4,8 +4,6 @@ import { useAppSelector, useAppDispatch } from "../../hooks/useStore";
 import FilterItem from "./FilterItem";
 import { searchMyLibrary } from "../../store/book-actions";
 
-type AppProps = {};
-
 const Filter = () => {
   const dispatch = useAppDispatch();
 
@@ -16,7 +14,7 @@ const Filter = () => {
   const [search, setSearch] = useState<string>("");
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
-    dispatch(searchMyLibrary(event.target.value));
+    dispatch(searchMyLibrary(event.target.value, selected));
   };
 
   // Select a filter
@@ -35,6 +33,7 @@ const Filter = () => {
       <FilterItem
         key={filter}
         filter={filter}
+        search={search}
         isSelected={isSelected}
         selectedHandler={selectedHandler}
       />

@@ -176,19 +176,15 @@ const bookSlice = createSlice({
       }
     },
     searchMyLibrary(state, action: PayloadAction<string>) {
-      if (action.payload === "") {
-        state.filteredBooks = state.books;
-      } else {
-        const filteredBooks = state.books.filter(
-          (book) =>
-            book.title.toLowerCase().includes(action.payload.toLowerCase()) ||
-            book.authors
-              .join(", ")
-              .toLowerCase()
-              .includes(action.payload.toLowerCase())
-        );
-        state.filteredBooks = filteredBooks;
-      }
+      const searchedBooks = state.filteredBooks.filter(
+        (book) =>
+          book.title.toLowerCase().includes(action.payload.toLowerCase()) ||
+          book.authors
+            .join(", ")
+            .toLowerCase()
+            .includes(action.payload.toLowerCase())
+      );
+      state.filteredBooks = searchedBooks;
     },
   },
 });

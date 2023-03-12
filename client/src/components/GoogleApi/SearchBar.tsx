@@ -33,14 +33,15 @@ const SearchBar = () => {
             ref={searchTypeRef}
             id="searchType"
             name="searchType"
-            defaultValue="title"
+            defaultValue="all"
           >
             <option value="default" disabled>
               Search by:
             </option>
+            <option value="all">All</option>
             <option value="title">Title</option>
             <option value="author">Author</option>
-            <option value="all">All</option>
+            <option value="isbn">Isbn</option>
           </select>
         </div>
         <div className={styles.search}>

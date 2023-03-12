@@ -39,7 +39,6 @@ const searchBooks = async (q: string, searchType: string, id?: string) => {
   let generalParams = {
     maxResults: 40,
     orderBy: "relevance",
-    filter: "paid-ebooks",
     langRestrict: "en",
     key: key,
   };
@@ -55,6 +54,12 @@ const searchBooks = async (q: string, searchType: string, id?: string) => {
     params = {
       // q is the searched text
       q: `inauthor:${q}`,
+      ...generalParams,
+    };
+  } else if (searchType == "isbn") {
+    params = {
+      // q is the searched text
+      q: `isbn:${q}`,
       ...generalParams,
     };
   } else {

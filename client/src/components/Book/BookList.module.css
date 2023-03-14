@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   gap: var(--gap-big);
   justify-content: center;
+
   width: 90%;
 }
 

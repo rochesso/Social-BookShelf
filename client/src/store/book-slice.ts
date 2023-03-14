@@ -36,7 +36,7 @@ const bookSlice = createSlice({
       if (filters.length > 1) {
         state.filters = [...filters, "all", "favorites"];
       } else {
-        state.filters = ["all"];
+        state.filters = ["all", "favorites"];
       }
     },
     replaceBooks(state, action: PayloadAction<CompleteBook[]>) {

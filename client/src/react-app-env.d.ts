@@ -23,6 +23,7 @@ interface User {
   firstName: string;
   lastName: string;
   email: string;
+  picture: string;
 }
 
 // Data for a single user.

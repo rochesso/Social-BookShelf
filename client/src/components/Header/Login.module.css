@@ -2,14 +2,14 @@
   background-color: var(--color-background-quaternary);
   border: var(--border-primary);
   display: grid;
-  padding: var(--padding-button);
+  height: 100%;
   place-items: center;
   position: relative;
+  width: 100%;
 }
 
 .profile {
   background-color: var(--color-background-senary);
-  border: var(--border-primary);
   display: grid;
   height: 3rem;
   left: -1.5rem;
@@ -19,5 +19,10 @@
 }
 
 .profile__picture {
-  height: 2.5rem;
+  border: var(--border-primary);
+  height: 3rem;
+}
+
+.login {
+  padding: var(--padding-button);
 }

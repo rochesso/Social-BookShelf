@@ -13,6 +13,7 @@ const httpGetLoggedUser = async (req: Request, res: Response) => {
         firstName: response.firstName,
         lastName: response.lastName,
         email: response.email,
+        picture: response.picture,
       };
 
       return res.status(200).json(user);

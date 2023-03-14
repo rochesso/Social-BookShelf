@@ -5,11 +5,7 @@ import { sortPreferenceAction } from "../../store/book-actions";
 
 import styles from "./SortingPreference.module.css";
 
-type AppProps = {
-  label: boolean;
-};
-
-const SortingPreference = ({ label }: AppProps) => {
+const SortingPreference = () => {
   const dispatch = useAppDispatch();
   const bookStore = useAppSelector((state) => state.bookStore);
   const [sortPreference, setSorPreference] = useState<Config["sortPreference"]>(
@@ -28,11 +24,9 @@ const SortingPreference = ({ label }: AppProps) => {
 
   return (
     <div className={styles.container}>
-      {label ? (
-        <label className={styles.label} htmlFor="sortingPreference">
-          Library sorting preference:{" "}
-        </label>
-      ) : null}
+      <label className={styles.label} htmlFor="sortingPreference">
+        Library sorting preference:
+      </label>
       <select
         className={styles.select}
         id="sortingPreference"

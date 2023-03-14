@@ -1,31 +1,38 @@
 .container {
+  background-color: var(--color-background-primary);
+  box-shadow: var(--shadow-normal);
   text-align: center;
   transition: all 0.2s ease-in-out;
-}
-
-.container:hover {
-  background-color: var(--color-background-primary);
 }
 
 .link {
   padding: 0 2rem;
 }
 
+.container:hover {
+  background-color: var(--color-purple);
+  box-shadow: var(--shadow-high);
+  color: white;
+  transform: scale(1.04) translateY(-2px) translateX(-2px);
+}
+
+.container:active {
+  box-shadow: var(--shadow-low);
+  transform: scale(1.04) translateY(0px) translateX(0px);
+}
+
 .active {
-  background-color: var(--color-background-primary);
+  background-color: var(--color-purple);
+  color: white;
 }
 
 .text {
 }
 
-@media only screen and (max-width: 435px) {
-  .container {
-    width: 100%;
-  }
-
+@media only screen and (max-width: 545px) {
   .link {
     display: inline-block;
     padding: 0.5rem 2rem;
-    width: inherit;
+    width: 17rem;
   }
 }

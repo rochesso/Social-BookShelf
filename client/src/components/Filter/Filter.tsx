@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAppSelector, useAppDispatch } from "../../hooks/useStore";
 import { searchMyLibrary } from "../../store/book-actions";
 import FilterItem from "./FilterItem";
+import clearIcon from "../../assets/svg/close.svg";
 import styles from "./Filter.module.css";
 
 const Filter = () => {
@@ -9,12 +10,13 @@ const Filter = () => {
   const bookStore = useAppSelector((state) => state.bookStore);
 
   const [selected, setSelected] = useState<Filter>("all");
-  const [search, setSearch] = useState<string>("");
+  const searchTextRef = useRef<HTMLInputElement>(null);
 
   // Search for a book in your library
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-    dispatch(searchMyLibrary(event.target.value, selected));
+    if (searchTextRef.current) {
+      dispatch(searchMyLibrary(searchTextRef.current.value, selected));
+    }
   };
 
   // Select a filter
@@ -22,36 +24,59 @@ const Filter = () => {
     setSelected(filter);
   };
 
+  // Clear the search input
+  const clearSearch = () => {
+    if (searchTextRef.current) {
+      searchTextRef.current.value = "";
+      dispatch(searchMyLibrary(searchTextRef.current.value, selected));
+      searchTextRef.current.focus();
+    }
+  };
+
   // Get all filters and return them with the FilterItem component
   const filters = bookStore.filters;
   const filterItems = filters.map((filter) => {
-    let isSelected = false;
-    if (filter === selected) {
-      isSelected = true;
+    if (searchTextRef.current) {
+      const search = searchTextRef.current.value;
+      let isSelected = false;
+      if (filter === selected) {
+        isSelected = true;
+      }
+      return (
+        <FilterItem
+          key={filter}
+          filter={filter}
+          search={search}
+          isSelected={isSelected}
+          selectedHandler={selectedHandler}
+        />
+      );
     }
-    return (
-      <FilterItem
-        key={filter}
-        filter={filter}
-        search={search}
-        isSelected={isSelected}
-        selectedHandler={selectedHandler}
-      />
-    );
+    return null;
   });
 
   return (
     <ul className={styles.container}>
       {/* Search for a book in your library */}
-      <li>
-        <label htmlFor="searchMyLibrary"></label>
+      <li className={styles.search}>
+        <label className={styles.search__label} htmlFor="searchMyLibrary">
+          Search in your Library
+        </label>
         <input
-          className={styles.search}
+          className={styles.search__input}
           onChange={searchHandler}
-          value={search}
+          ref={searchTextRef}
           id="searchMyLibrary"
-          placeholder="Search in your Library"
+          placeholder="Search"
         />
+        <div className={styles.search__clear}>
+          <img
+            className={styles.search__clearIcon}
+            src={clearIcon}
+            alt="Cross"
+            onClick={clearSearch}
+          />
+        </div>
       </li>
       {/* All filters */}
       {filterItems}

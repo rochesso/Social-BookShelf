@@ -1,7 +1,9 @@
 .container {
+  box-shadow: var(--shadow-normal);
 }
 
 .label {
+  display: none;
 }
 
 .select {

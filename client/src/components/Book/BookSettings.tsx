@@ -87,7 +87,6 @@ const BookSettings = ({ book, updatingBookHandler, hasDelete }: AppProps) => {
 
   return (
     <div>
-      {/* <Rate book={book} /> */}
       <form
         className={styles.form}
         id={book.googleId}

@@ -36,7 +36,7 @@ const Login = () => {
       <div className={styles.profile}>
         <img
           className={styles.profile__picture}
-          src={user ? picture : anonymous}
+          src={user ? (user.picture ? user.picture : picture) : anonymous}
           alt="Profile"
         />
       </div>

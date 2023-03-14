@@ -1,5 +1,6 @@
 .book {
   --book-width: 12rem;
+  box-shadow: var(--shadow-normal);
   position: relative;
 }
 

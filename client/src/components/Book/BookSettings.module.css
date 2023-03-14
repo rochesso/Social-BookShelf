@@ -43,9 +43,6 @@
   width: var(--input-width);
 }
 
-.favorite {
-}
-
 .favorite__label {
   cursor: pointer;
   margin-left: 0.5rem;

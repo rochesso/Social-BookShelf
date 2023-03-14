@@ -1,5 +1,6 @@
 .item {
   background-color: var(--color-background-quinary);
+  box-shadow: var(--shadow-normal);
   cursor: pointer;
   padding: var(--padding-button);
   transition: all 0.2s ease-in-out;

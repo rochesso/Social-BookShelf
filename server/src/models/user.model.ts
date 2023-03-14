@@ -8,6 +8,7 @@ const addUser = async (googleProfile: any) => {
     return existingUser;
   } else {
     let user: NewUser;
+    console.log(googleProfile);
     if (
       googleProfile.name?.givenName &&
       googleProfile.name?.familyName &&
@@ -18,6 +19,7 @@ const addUser = async (googleProfile: any) => {
         lastName: googleProfile.name.familyName,
         email: googleProfile.emails[0].value,
         googleId: googleProfile.id,
+        picture: googleProfile.photos[0].value,
       };
       await usersCollection.create(user);
       console.log("User created!");
@@ -46,7 +48,7 @@ const searchUserById = async (_id: string) => {
   try {
     const result = await usersCollection
       .findById(_id)
-      .select({ firstName: 1, lastName: 1, email: 1 })
+      .select({ firstName: 1, lastName: 1, email: 1, picture: 1 })
       .exec();
     if (result) {
       const user: User = result;

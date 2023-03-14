@@ -6,6 +6,7 @@ declare namespace Express {
     firstName: string;
     lastName: string;
     email: string;
+    picture: string;
   }
 }
 
@@ -68,6 +69,7 @@ interface NewUser {
   firstName: string;
   lastName: string;
   email: string;
+  picture: string;
 }
 
 interface NewBook {

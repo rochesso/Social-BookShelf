@@ -6,6 +6,12 @@
   margin-bottom: var(--gap-small);
 }
 
+/* When rating the books for the first time, the stars were moving a little to the left 
+because the empty array with the colored stars are in the beginning */
+.container-initial {
+  grid-gap: 0;
+}
+
 /* tilde will select the antecedent siblings */
 .container__black {
   direction: rtl;

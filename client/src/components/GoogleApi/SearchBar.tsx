@@ -3,10 +3,7 @@ import { FormEvent, Fragment, useRef } from "react";
 import useGoogleApi from "../../hooks/useGoogleApi";
 import styles from "./SearchBar.module.css";
 import searchIcon from "../../assets/svg/search.svg";
-
-// type AppProps = {
-//
-// };
+import clearIcon from "../../assets/svg/close.svg";
 
 const SearchBar = () => {
   const searchTextRef = useRef<HTMLInputElement>(null);
@@ -23,11 +20,20 @@ const SearchBar = () => {
     }
   };
 
+  const clearSearch = () => {
+    if (searchTextRef.current) {
+      searchTextRef.current.value = "";
+      searchTextRef.current.focus();
+    }
+  };
+
   return (
     <Fragment>
       <form className={styles.form} id="searchForm" onSubmit={searchHandler}>
         <div className={styles.type}>
-          {/* <label htmlFor="searchType"></label> */}
+          <label className={styles.type__label} htmlFor="searchType">
+            Search Type
+          </label>
           <select
             className={styles.type__select}
             ref={searchTypeRef}
@@ -45,7 +51,9 @@ const SearchBar = () => {
           </select>
         </div>
         <div className={styles.search}>
-          {/* <label htmlFor="search"></label> */}
+          <label className={styles.search__label} htmlFor="search">
+            Search for a book
+          </label>
           <div className={styles.search__icon}>
             <img
               className={styles.search__img}
@@ -61,6 +69,14 @@ const SearchBar = () => {
             name="search"
             id="search"
           />
+          <div className={styles.search__clear}>
+            <img
+              className={styles.search__clearIcon}
+              src={clearIcon}
+              alt="Cross"
+              onClick={clearSearch}
+            />
+          </div>
         </div>
 
         <button

@@ -1,4 +1,5 @@
 import { useAppSelector } from "../../hooks/useStore";
+import NavbarMobile from "../Navbar/NavbarMobile";
 import styles from "./Header.module.css";
 import Login from "./Login";
 
@@ -8,10 +9,12 @@ const Header = () => {
 
   return (
     <header className={styles.container}>
-      <span className={styles.span}></span>
-      <h1 className={styles.title}>
+      <h2 className={styles.name}>
         Welcome {user ? user.firstName : "Guest"}!
-      </h1>
+      </h2>
+      <span className={styles.span}>
+        <h1 className={styles.title}>Social Bookshelf</h1>
+      </span>
       <span className={styles.login}>
         <Login />
       </span>

@@ -18,7 +18,7 @@ const BookList = () => {
     <Fragment>
       <div className={styles.actions}>
         <Filter />
-        <SortingPreference label={false} />
+        <SortingPreference />
       </div>
       <div className={styles.container}>{books}</div>
     </Fragment>

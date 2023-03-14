@@ -8,6 +8,7 @@ type AppProps = {
 const Rate = ({ book }: AppProps) => {
   let starsColored: any = [];
   let starsBlack: any = [];
+
   const stars = () => {
     for (let i = 1; i < 6; i++) {
       if (i <= book.status.rate) {
@@ -27,7 +28,13 @@ const Rate = ({ book }: AppProps) => {
   };
   stars();
   return (
-    <div className={styles.container}>
+    <div
+      className={
+        starsColored.length > 0
+          ? styles.container
+          : `${styles.container} ${styles["container-initial"]}`
+      }
+    >
       <div className={styles.container__colored}>{starsColored}</div>
       <div className={styles.container__black}>{starsBlack}</div>
     </div>

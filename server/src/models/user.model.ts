@@ -48,7 +48,7 @@ const searchUserById = async (_id: string) => {
   try {
     const result = await usersCollection
       .findById(_id)
-      .select({ firstName: 1, lastName: 1, email: 1, picture: 1 })
+      .select({ firstName: 1, lastName: 1, email: 1, picture: 1, googleId: 1 })
       .exec();
     if (result) {
       const user: User = result;
@@ -61,4 +61,21 @@ const searchUserById = async (_id: string) => {
   }
 };
 
-export { addUser, searchUserByGoogleId, searchUserById };
+const getAllUsers = async () => {
+  try {
+    const result = await usersCollection
+      .find()
+      .select({ firstName: 1, lastName: 1, googleId: 1, _id: 0 })
+      .exec();
+    if (result) {
+      const users: User[] = result;
+      return users;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Error getting all users!");
+  }
+};
+
+export { addUser, searchUserByGoogleId, searchUserById, getAllUsers };

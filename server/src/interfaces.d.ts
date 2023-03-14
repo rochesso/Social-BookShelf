@@ -14,6 +14,7 @@ interface User extends Express.User {}
 
 interface UserData {
   user: User._id;
+  googleId: string;
   books: CompleteBook[];
   config: Config;
 }

@@ -7,6 +7,7 @@ const createUserData = async (_id: string) => {
   if (user) {
     const userData: UserData = {
       user: _id,
+      googleId: user.googleId,
       books: [],
       config: { sortPreference: "recent" },
     };
@@ -31,6 +32,21 @@ const searchUserData = async (_id: string) => {
     } else {
       return false;
     }
+  } else {
+    return false;
+  }
+};
+
+// search user books by googleId
+const searchUserBooksByGoogleId = async (googleId: string) => {
+  const response = await userDataCollection
+    .findOne({
+      googleId: googleId,
+    })
+    .exec();
+  if (response) {
+    const userBooks = response.books;
+    return userBooks;
   } else {
     return false;
   }
@@ -169,4 +185,5 @@ export {
   searchUserData,
   changeUserConfig,
   updateUserBook,
+  searchUserBooksByGoogleId,
 };

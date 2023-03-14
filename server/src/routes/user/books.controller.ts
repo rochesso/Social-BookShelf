@@ -6,7 +6,7 @@ import {
   updateUserBook,
 } from "../../models/userData.model";
 
-// - v1/user/books/:userId get request
+// - v1/user/books get request
 const httpGetAllUserBooks = async (req: Request, res: Response) => {
   if (req.user) {
     const user = req.user;
@@ -37,7 +37,7 @@ const httpAddUserBooks = async (req: Request, res: Response) => {
   }
 };
 
-// - v1/user/books/:userId/:bookId delete request - Remove and book from user collection
+// - v1/user/books/:bookId delete request - Remove and book from user collection
 const httpRemoveUserBooks = async (req: Request, res: Response) => {
   if (req.user) {
     const bookId = req.params.bookId;
@@ -53,7 +53,7 @@ const httpRemoveUserBooks = async (req: Request, res: Response) => {
   }
 };
 
-// v1/user/books/:userId patch request
+// v1/user/books patch request
 const httpUpdateUserBooks = async (req: Request, res: Response) => {
   if (req.user != null) {
     const book = req.body.book;

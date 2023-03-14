@@ -25,6 +25,7 @@ const bookSchema = new mongoose.Schema({
 
 const userDataSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
+  googleId: { type: String, required: true },
   books: [bookSchema],
   config: {
     sortPreference: { type: String, required: true },

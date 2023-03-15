@@ -21,6 +21,7 @@ const Navbar = () => {
       <ul className={styles.list} id={styles.list}>
         <NavItem to="/" text="Home" />
         <NavItem to="/search" text="Search" />
+        <NavItem to="/users" text="Social" />
 
         {user ? <NavItem to="/user/books" text="My Library" /> : null}
         {user ? <NavItem to="/user/tbrRoulette" text="TBR Roulette" /> : null}

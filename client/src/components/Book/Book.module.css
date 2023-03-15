@@ -60,3 +60,29 @@
   top: -1rem;
   z-index: 101;
 }
+
+.add {
+  background-color: var(--color-background-tertiary);
+  border-radius: 50%;
+  bottom: calc(-1 * (var(--add-button) / 2));
+  cursor: pointer;
+  display: grid;
+  height: var(--add-button);
+  padding: 0.5rem 1rem;
+  place-items: center;
+  position: absolute;
+  right: calc(-1 * (var(--add-button) / 2));
+  transition: all 0.2s ease-in-out;
+  width: var(--add-button);
+}
+
+.add:hover {
+  background-color: var(--color-pink);
+}
+
+.add__img {
+  fill: white;
+  height: calc(var(--add-button) / 3);
+  margin-bottom: calc((var(--add-button) / 2) / 1.25);
+  margin-right: calc((var(--add-button) / 2) / 1.25);
+}

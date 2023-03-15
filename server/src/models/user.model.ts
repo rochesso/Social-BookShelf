@@ -65,7 +65,7 @@ const getAllUsers = async () => {
   try {
     const result = await usersCollection
       .find()
-      .select({ firstName: 1, lastName: 1, googleId: 1, _id: 0 })
+      .select({ firstName: 1, lastName: 1, googleId: 1, picture: 1, _id: 0 })
       .exec();
     if (result) {
       const users: User[] = result;

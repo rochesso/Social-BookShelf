@@ -1,15 +1,14 @@
 .container {
   /* keeps footer on the bottom of the page even with small contents */
   align-self: end;
-
   background-color: var(--color-purple);
   box-shadow: var(--shadow-normal);
   color: white;
   display: grid;
   height: min-content;
-  margin-top: var(--gap-medium);
   padding: var(--gap-medium);
   place-items: center;
+  position: relative;
   width: 100%;
   z-index: 100;
 }

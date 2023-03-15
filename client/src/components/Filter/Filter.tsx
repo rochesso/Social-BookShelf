@@ -1,13 +1,17 @@
 import { useState, useRef } from "react";
-import { useAppSelector, useAppDispatch } from "../../hooks/useStore";
-import { searchMyLibrary } from "../../store/book-actions";
+import { useAppDispatch } from "../../hooks/useStore";
 import FilterItem from "./FilterItem";
 import clearIcon from "../../assets/svg/close.svg";
 import styles from "./Filter.module.css";
 
-const Filter = () => {
+type AppProps = {
+  store: any;
+  handler: any;
+  from?: string;
+};
+
+const Filter = ({ store, handler }: AppProps) => {
   const dispatch = useAppDispatch();
-  const bookStore = useAppSelector((state) => state.bookStore);
 
   const [selected, setSelected] = useState<Filter>("all");
   const searchTextRef = useRef<HTMLInputElement>(null);
@@ -15,7 +19,7 @@ const Filter = () => {
   // Search for a book in your library
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (searchTextRef.current) {
-      dispatch(searchMyLibrary(searchTextRef.current.value, selected));
+      dispatch(handler(searchTextRef.current.value, selected));
     }
   };
 
@@ -28,13 +32,13 @@ const Filter = () => {
   const clearSearch = () => {
     if (searchTextRef.current) {
       searchTextRef.current.value = "";
-      dispatch(searchMyLibrary(searchTextRef.current.value, selected));
+      dispatch(handler(searchTextRef.current.value, selected));
       searchTextRef.current.focus();
     }
   };
 
   // Get all filters and return them with the FilterItem component
-  const filters = bookStore.filters;
+  const filters: Filter[] = store.filters;
   const filterItems = filters.map((filter) => {
     if (searchTextRef.current) {
       const search = searchTextRef.current.value;
@@ -49,6 +53,7 @@ const Filter = () => {
           search={search}
           isSelected={isSelected}
           selectedHandler={selectedHandler}
+          handler={handler}
         />
       );
     }

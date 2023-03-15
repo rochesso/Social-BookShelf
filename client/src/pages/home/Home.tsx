@@ -11,7 +11,7 @@ const Home = () => {
         <NavLink className={styles.search} to={"/search"}>
           click here
         </NavLink>
-        . Add it to your library, rate, mark as favorite, change the reading
+        . Add it to your library, rate it, mark as favourite, change the reading
         status or save which page you are! This is where you keep track of all
         your books :)
       </p>

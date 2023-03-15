@@ -1,5 +1,4 @@
 import styles from "./FilterItem.module.css";
-import { searchMyLibrary } from "../../store/book-actions";
 import { useAppDispatch } from "../../hooks/useStore";
 import { ReadingStatus } from "../../globals";
 
@@ -8,6 +7,7 @@ type AppProps = {
   search: string;
   isSelected: boolean;
   selectedHandler: (filter: Filter) => void;
+  handler: any;
 };
 
 // Filter by Reading Status.
@@ -17,11 +17,12 @@ const FilterItem = ({
   search,
   isSelected,
   selectedHandler,
+  handler,
 }: AppProps) => {
   const dispatch = useAppDispatch();
 
   const filterHandler = (e: any) => {
-    dispatch(searchMyLibrary(search, filter));
+    dispatch(handler(search, filter));
     selectedHandler(filter);
   };
   let filterName = null;

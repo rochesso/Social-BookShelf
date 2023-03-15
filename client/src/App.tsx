@@ -14,12 +14,14 @@ import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 
-import Search from "./pages/search/Search";
-import MyLibrary from "./pages/myLibrary/MyLibrary";
-import Home from "./pages/home/Home";
+import Search from "./pages/Search/Search";
+import MyLibrary from "./pages/MyLibrary/MyLibrary";
+import Home from "./pages/Home/Home";
 import TbrRoulette from "./pages/TbrRoulette/TbrRoulette";
 
 import styles from "./App.module.css";
+import SocialUsers from "./pages/Social/SocialUsers";
+import SocialBooks from "./pages/Social/SocialBooks";
 
 // Server needs to have cors with credentials true
 // Client needs to send withCredentials = true
@@ -51,6 +53,8 @@ function App() {
           <Route element={<HomeLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/users/:googleId" element={<SocialBooks />} />
+            <Route path="/users" element={<SocialUsers />} />
           </Route>
           <Route path="/user" element={<ProtectedLayout />}>
             <Route path="books" element={<MyLibrary />} />

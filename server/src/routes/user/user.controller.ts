@@ -14,6 +14,7 @@ const httpGetLoggedUser = async (req: Request, res: Response) => {
         lastName: response.lastName,
         email: response.email,
         picture: response.picture,
+        googleId: response.googleId,
       };
 
       return res.status(200).json(user);

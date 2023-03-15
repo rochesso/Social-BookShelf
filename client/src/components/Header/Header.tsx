@@ -1,5 +1,4 @@
 import { useAppSelector } from "../../hooks/useStore";
-import NavbarMobile from "../Navbar/NavbarMobile";
 import styles from "./Header.module.css";
 import Login from "./Login";
 

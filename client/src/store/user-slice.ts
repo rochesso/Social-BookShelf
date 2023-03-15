@@ -18,7 +18,9 @@ const userSlice = createSlice({
       const user = action.payload;
       if (user) {
         state.user = user;
-        sessionStorage.setItem("user", user.firstName);
+        if (user.googleId) {
+          sessionStorage.setItem("user", user.googleId);
+        }
       } else {
         state.user = null;
         sessionStorage.removeItem("user");

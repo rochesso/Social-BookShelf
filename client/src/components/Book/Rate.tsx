@@ -3,9 +3,10 @@ import RateItem from "./RateItem";
 
 type AppProps = {
   book: CompleteBook;
+  from: string;
 };
 
-const Rate = ({ book }: AppProps) => {
+const Rate = ({ book, from }: AppProps) => {
   let starsColored: any = [];
   let starsBlack: any = [];
 
@@ -15,13 +16,19 @@ const Rate = ({ book }: AppProps) => {
         // push because the order is not modified by css
         // result will be 1, 2, 3...
         starsColored.push(
-          <RateItem key={i} rate={i} book={book} isColored={true} />
+          <RateItem key={i} rate={i} book={book} isColored={true} from={from} />
         );
       } else {
         // unshift because the order is modified by css so the tilde can select the antecedent siblings
         // result will be 6, 5, 4... but because css is reversing the order, you will see 4, 5, 6... when it renders
         starsBlack.unshift(
-          <RateItem key={i} rate={i} book={book} isColored={false} />
+          <RateItem
+            key={i}
+            rate={i}
+            book={book}
+            isColored={false}
+            from={from}
+          />
         );
       }
     }

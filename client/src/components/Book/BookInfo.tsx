@@ -11,9 +11,10 @@ import { ReadingStatus } from "../../globals";
 
 type AppProps = {
   book: CompleteBook;
+  from: string;
 };
 
-const BookInfo = ({ book }: AppProps) => {
+const BookInfo = ({ book, from }: AppProps) => {
   const { authors, title, categories, pageCount, status } = book;
   const reading = status.reading;
 
@@ -67,7 +68,7 @@ const BookInfo = ({ book }: AppProps) => {
       <h3 className={styles.information__title}>{titleString}</h3>
       <h4 className={styles.information__authors}>{authorsString}</h4>
       {content()}
-      <Rate book={book} />
+      <Rate book={book} from={from} />
       <p className={styles.information__categories}>{categories}</p>
       <p className={styles.information__pageCount}>
         {pageCount ? pageCount : 0} pages

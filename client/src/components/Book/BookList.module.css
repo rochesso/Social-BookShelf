@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   gap: var(--gap-big);
   justify-content: center;
-
+  margin-bottom: var(--gap-medium);
   width: 90%;
 }
 

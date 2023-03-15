@@ -12,6 +12,18 @@
   filter: brightness(1) opacity(1);
 }
 
+.starSocial {
+  height: 2.5rem;
+}
+
+.starSocial__black {
+  filter: brightness(0) opacity(0.1);
+}
+
+.starSocial__colored {
+  filter: brightness(1) opacity(1);
+}
+
 @media (hover: hover) {
   .star:hover {
     cursor: pointer;

@@ -1,0 +1,32 @@
+.user {
+  color: var(--color-purple);
+  font-size: var(--font-size-big);
+  margin-top: var(--gap-big);
+  text-align: center;
+}
+
+.backIcon {
+  cursor: pointer;
+  filter: saturate(0.2) hue-rotate(190deg);
+  height: 6rem;
+  left: 2rem;
+  position: absolute;
+  top: 2rem;
+}
+
+.backIcon:hover {
+  filter: saturate(1) hue-rotate(190deg);
+}
+
+@media only screen and (max-width: 450px) {
+  .backIcon {
+    left: 0;
+    margin-top: var(--gap-medium);
+    position: relative;
+    top: 0;
+  }
+
+  .user {
+    margin-top: var(--gap-medium);
+  }
+}

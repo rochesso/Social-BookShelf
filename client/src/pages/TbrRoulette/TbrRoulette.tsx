@@ -47,7 +47,7 @@ const TbrRoulette = () => {
         Roulette a book to read!
       </button>
       {chosenBookIndex === 0 || chosenBookIndex ? (
-        <Book hasDelete={false} book={books[chosenBookIndex]} />
+        <Book hasDelete={false} book={books[chosenBookIndex]} from="user" />
       ) : null}
     </div>
   );

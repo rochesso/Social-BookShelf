@@ -46,7 +46,11 @@ const SearchedBook = ({ book }: AppProps) => {
       searchType.value = "author";
       formButton.click();
     };
-    return <span onClick={searchByThisAuthor}>{author}</span>;
+    return (
+      <span key={author} onClick={searchByThisAuthor}>
+        {author}
+      </span>
+    );
   });
 
   // Check if the title is too long
@@ -71,7 +75,7 @@ const SearchedBook = ({ book }: AppProps) => {
 
   const addBookHandler = async () => {
     if (user) {
-      dispatch(addBook({ ...book, isAdded: true }));
+      await dispatch(addBook({ ...book, isAdded: true }));
     } else {
       if (API_URL) {
         window.location.replace(API_URL + "/auth/google");

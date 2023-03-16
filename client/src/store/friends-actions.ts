@@ -55,8 +55,7 @@ export const removeFriend = (googleId: string) => {
       const response = await axios.delete(API_URL + `/users/${googleId}`);
       switch (Number(response.status)) {
         case 200:
-          const friend = response.data;
-          dispatch(friendsActions.removeFriends(friend));
+          dispatch(friendsActions.removeFriends(googleId));
           break;
       }
     } catch (error) {

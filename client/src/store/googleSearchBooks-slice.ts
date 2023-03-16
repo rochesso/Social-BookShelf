@@ -46,7 +46,7 @@ const googleSearchBooksSlice = createSlice({
         );
         state.totalQuantity--;
       } else {
-        return console.log("Book not removed!");
+        return undefined;
       }
     },
   },

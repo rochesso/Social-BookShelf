@@ -38,17 +38,17 @@ const friendsSlice = createSlice({
         return console.log("Friend already exists!");
       }
     },
-    removeFriends(state, action: PayloadAction<User>) {
-      const friend = action.payload;
+    removeFriends(state, action: PayloadAction<string>) {
+      const friendGoogleId = action.payload;
       const existingFriend = state.friends.some(
-        (item) => item.googleId === friend.googleId
+        (item) => item.googleId === friendGoogleId
       );
       if (existingFriend) {
         state.friends = state.friends.filter(
-          (item) => item.googleId !== friend.googleId
+          (item) => item.googleId !== friendGoogleId
         );
       } else {
-        return console.log("Book not removed!");
+        return console.log("Friend not removed!");
       }
     },
   },

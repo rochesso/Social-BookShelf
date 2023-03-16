@@ -17,6 +17,7 @@ interface UserData {
   user: User._id;
   googleId: string;
   books: CompleteBook[];
+  friends: User[];
   config: Config;
 }
 

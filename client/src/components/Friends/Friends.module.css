@@ -1,13 +1,8 @@
 .container {
-  margin-bottom: var(--gap-medium);
-  margin-top: var(--gap-big);
-}
-
-.title {
-  color: var(--color-purple);
-  font-size: var(--font-size-big);
-  margin: 0rem 2rem;
-  text-align: center;
+  align-content: flex-start;
+  display: grid;
+  margin-bottom: var(--gap-big);
+  margin-top: var(--gap-medium);
 }
 
 .users {
@@ -17,7 +12,6 @@
   gap: var(--gap-big);
   justify-content: center;
   margin: 0 2rem;
-  margin-top: var(--gap-big);
 }
 
 .user {

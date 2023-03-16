@@ -4,6 +4,7 @@ import bookSlice from "./book-slice";
 import googleSearchBooksSlice from "./googleSearchBooks-slice";
 import userSlice from "./user-slice";
 import usersSlice from "./users-slice";
+import friendsSlice from "./friends-slice";
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     googleSearchBooksStore: googleSearchBooksSlice.reducer,
     userStore: userSlice.reducer,
     usersStore: usersSlice.reducer,
+    friendsStore: friendsSlice.reducer,
   },
   devTools: true,
 });

@@ -15,9 +15,6 @@ const Navbar = () => {
   };
   return (
     <nav className={styles.container}>
-      <div onClick={expandMenu} className={styles.menu}>
-        Teste
-      </div>
       <ul className={styles.list} id={styles.list}>
         <NavItem to="/" text="Home" />
         <NavItem to="/search" text="Search" />
@@ -25,6 +22,7 @@ const Navbar = () => {
 
         {user ? <NavItem to="/user/books" text="My Library" /> : null}
         {user ? <NavItem to="/user/tbrRoulette" text="TBR Roulette" /> : null}
+        {user ? <NavItem to="/user/friends" text="Friends" /> : null}
       </ul>
     </nav>
   );

@@ -20,10 +20,7 @@ export const fetchUsers = () => {
         case 200:
           // remove yourself from the social users list
           // sessionStorage.getItem("user") has the googleId saved
-          const user = sessionStorage.getItem("user");
-          const socialUsers: User[] = response.data.filter(
-            (socialUser: User) => socialUser.googleId !== user
-          );
+          const socialUsers: User[] = response.data;
           dispatch(usersActions.replaceUsers(socialUsers));
           break;
       }
@@ -39,7 +36,7 @@ export const fetchUsers = () => {
   };
 };
 
-export const fetchBooks = (googleId: string) => {
+export const fetchSocialUserData = (googleId: string) => {
   return async (dispatch: (arg: any) => void) => {
     const fetchData = async () => {
       const response = await axios.get(`${API_URL}/users/${googleId}`);
@@ -50,8 +47,10 @@ export const fetchBooks = (googleId: string) => {
       const response = await fetchData();
       switch (Number(response.status)) {
         case 200:
-          const books: CompleteBook[] = response.data;
+          const books: CompleteBook[] = response.data.SocialUserBooks;
+          const friends: User[] = response.data.filteredSocialUserFriends;
           dispatch(usersActions.replaceBooks(books));
+          dispatch(usersActions.replaceFriends(friends));
           dispatch(usersActions.getFilters());
           dispatch(usersActions.sortBooks());
           break;

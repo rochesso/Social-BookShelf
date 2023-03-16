@@ -1,5 +1,5 @@
 import userDataCollection from "./userData.mongo";
-import { searchUserById } from "./user.model";
+import { searchUserById, searchUserByGoogleId } from "./user.model";
 
 // create a userData inside userDataCollection
 const createUserData = async (_id: string) => {
@@ -9,6 +9,7 @@ const createUserData = async (_id: string) => {
       user: _id,
       googleId: user.googleId,
       books: [],
+      friends: [],
       config: { sortPreference: "recent" },
     };
     await userDataCollection.create(userData);
@@ -25,6 +26,7 @@ const searchUserData = async (_id: string) => {
       .findOne({
         user: _id,
       })
+      .populate("friends")
       .exec();
     if (response) {
       const userData = response;
@@ -38,15 +40,18 @@ const searchUserData = async (_id: string) => {
 };
 
 // search user books by googleId
-const searchUserBooksByGoogleId = async (googleId: string) => {
+const searchFriendDataByGoogleId = async (googleId: string) => {
   const response = await userDataCollection
     .findOne({
       googleId: googleId,
     })
+    .populate("friends")
     .exec();
   if (response) {
-    const userBooks = response.books;
-    return userBooks;
+    const friendBooks = response.books;
+    const friendFriends = response.friends;
+    const friendData = { friendBooks, friendFriends };
+    return friendData;
   } else {
     return false;
   }
@@ -177,6 +182,53 @@ const updateUserBook = async (userId: string, book: CompleteBook) => {
   }
 };
 
+const addFriend = async (user: User, friendGoogleId: string) => {
+  const userData = await searchUserData(user.id);
+  const friend = await searchUserByGoogleId(friendGoogleId);
+  if (userData && friend) {
+    const isRepeated = userData.friends.some(
+      (friend) => friend.googleId === friendGoogleId
+    );
+    if (!isRepeated) {
+      const isAdded = await userData
+        .updateOne({ $push: { friends: [friend] } })
+        .exec();
+      if (isAdded) {
+        return friend.toJSON();
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  } else {
+    // const message = "User not found!";
+    return false;
+  }
+};
+
+const removeFriend = async (userId: string, friendGoogleId: string) => {
+  const userData = await searchUserData(userId);
+  const friend = await searchUserByGoogleId(friendGoogleId);
+  if (userData && friend) {
+    if (friendGoogleId && friendGoogleId != "undefined") {
+      const isRemoved = await userData
+        .updateOne({ $pull: { friends: friend._id } })
+        .exec();
+      if (isRemoved) {
+        const message = "Friend removed from your collection!";
+        return message;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+};
+
 export {
   getUserData,
   addUserBook,
@@ -185,5 +237,7 @@ export {
   searchUserData,
   changeUserConfig,
   updateUserBook,
-  searchUserBooksByGoogleId,
+  searchFriendDataByGoogleId,
+  addFriend,
+  removeFriend,
 };

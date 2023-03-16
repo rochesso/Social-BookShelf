@@ -17,6 +17,8 @@ import Footer from "./components/Footer/Footer";
 import Search from "./pages/Search/Search";
 import MyLibrary from "./pages/MyLibrary/MyLibrary";
 import Home from "./pages/Home/Home";
+import Friends from "./pages/Friends/Friends";
+
 import TbrRoulette from "./pages/TbrRoulette/TbrRoulette";
 
 import styles from "./App.module.css";
@@ -59,6 +61,7 @@ function App() {
           <Route path="/user" element={<ProtectedLayout />}>
             <Route path="books" element={<MyLibrary />} />
             <Route path="tbrRoulette" element={<TbrRoulette />} />
+            <Route path="friends" element={<Friends />} />
           </Route>
         </Routes>
       </main>

@@ -14,16 +14,6 @@
   list-style: none;
 }
 
-.menu {
-  background-color: var(--color-background-primary);
-  box-shadow: var(--shadow-normal);
-  display: none;
-  padding: 0 2rem;
-  text-align: center;
-  transition: all 0.2s ease-in-out;
-  width: max-content;
-}
-
 /* @media only screen and (max-width: 435px) {
   .list {
   }

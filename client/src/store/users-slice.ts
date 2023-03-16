@@ -5,18 +5,20 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SortPreferences } from "../globals";
 
 // Define a type for the slice state
-interface bookState {
+interface socialUsersState {
   users: User[];
   books: CompleteBook[];
+  friends: User[];
   filters: Filter[];
   filteredBooks: CompleteBook[];
   sortPreference: Config["sortPreference"];
 }
 
 // Define the initial state using that type
-const initialState: bookState = {
+const initialState: socialUsersState = {
   books: [],
   users: [],
+  friends: [],
   filters: [],
   filteredBooks: [],
   sortPreference: SortPreferences.lastModified,
@@ -31,6 +33,18 @@ const usersSlice = createSlice({
       if (Array.isArray(users)) {
         if (users.length > 0) {
           state.users = users;
+        } else {
+          state.users = [];
+        }
+      }
+    },
+    replaceFriends(state, action: PayloadAction<User[]>) {
+      const friends = action.payload;
+      if (Array.isArray(friends)) {
+        if (friends.length > 0) {
+          state.friends = friends;
+        } else {
+          state.friends = [];
         }
       }
     },

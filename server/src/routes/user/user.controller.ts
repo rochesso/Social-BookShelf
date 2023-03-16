@@ -47,6 +47,7 @@ const httpGetUserData = async (req: Request, res: Response) => {
       const userData = {
         books: data.books,
         config: data.config,
+        friends: data.friends,
       };
       return res.status(200).json(userData);
     }

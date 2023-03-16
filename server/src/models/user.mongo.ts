@@ -6,6 +6,7 @@ const usersSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   picture: { type: String, required: true },
+  lastLogon: { type: Date, required: true },
 });
 
 export default mongoose.model<User>("user", usersSchema, "users");

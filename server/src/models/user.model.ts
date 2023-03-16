@@ -1,14 +1,17 @@
 import usersCollection from "./user.mongo";
 
 const addUser = async (googleProfile: any) => {
+  const date = new Date();
   const response = await searchUserByGoogleId(googleProfile.id);
   if (response) {
-    const existingUser: User = response;
-    console.log("User already exist!");
+    const existingUser = response;
+
+    // Only needs the updated user later when you get all users
+    await existingUser.updateOne({ lastLogon: date });
+
     return existingUser;
   } else {
     let user: NewUser;
-    console.log(googleProfile);
     if (
       googleProfile.name?.givenName &&
       googleProfile.name?.familyName &&
@@ -20,6 +23,7 @@ const addUser = async (googleProfile: any) => {
         email: googleProfile.emails[0].value,
         googleId: googleProfile.id,
         picture: googleProfile.photos[0].value,
+        lastLogon: date,
       };
       await usersCollection.create(user);
       console.log("User created!");
@@ -37,7 +41,7 @@ const searchUserByGoogleId = async (googleId: string) => {
     googleId: googleId,
   });
   if (result) {
-    const user: User = result;
+    const user = result;
     return user;
   } else {
     return false;
@@ -65,7 +69,15 @@ const getAllUsers = async () => {
   try {
     const result = await usersCollection
       .find()
-      .select({ firstName: 1, lastName: 1, googleId: 1, picture: 1, _id: 0 })
+      .select({
+        firstName: 1,
+        lastName: 1,
+        googleId: 1,
+        picture: 1,
+        lastLogon: 1,
+        _id: 0,
+      })
+      .sort({ lastLogon: "desc" })
       .exec();
     if (result) {
       const users: User[] = result;

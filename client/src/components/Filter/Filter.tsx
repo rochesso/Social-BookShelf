@@ -1,16 +1,17 @@
 import { useState, useRef } from "react";
 import { useAppDispatch } from "../../hooks/useStore";
 import FilterItem from "./FilterItem";
+import SortingPreference from "../SortingPreference/SortingPreference";
 import clearIcon from "../../assets/svg/close.svg";
 import styles from "./Filter.module.css";
 
 type AppProps = {
   store: any;
-  handler: any;
-  from?: string;
+  searchAction: any;
+  sortAction: any;
 };
 
-const Filter = ({ store, handler }: AppProps) => {
+const Filter = ({ store, searchAction, sortAction }: AppProps) => {
   const dispatch = useAppDispatch();
 
   const [selected, setSelected] = useState<Filter>("all");
@@ -19,7 +20,7 @@ const Filter = ({ store, handler }: AppProps) => {
   // Search for a book in your library
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (searchTextRef.current) {
-      dispatch(handler(searchTextRef.current.value, selected));
+      dispatch(searchAction(searchTextRef.current.value, selected));
     }
   };
 
@@ -32,7 +33,7 @@ const Filter = ({ store, handler }: AppProps) => {
   const clearSearch = () => {
     if (searchTextRef.current) {
       searchTextRef.current.value = "";
-      dispatch(handler(searchTextRef.current.value, selected));
+      dispatch(searchAction(searchTextRef.current.value, selected));
       searchTextRef.current.focus();
     }
   };
@@ -53,7 +54,7 @@ const Filter = ({ store, handler }: AppProps) => {
           search={search}
           isSelected={isSelected}
           selectedHandler={selectedHandler}
-          handler={handler}
+          searchAction={searchAction}
         />
       );
     }
@@ -85,6 +86,11 @@ const Filter = ({ store, handler }: AppProps) => {
       </li>
       {/* All filters */}
       {filterItems}
+
+      {/* Sort preference */}
+      <li>
+        <SortingPreference store={store} sortAction={sortAction} />
+      </li>
     </ul>
   );
 };

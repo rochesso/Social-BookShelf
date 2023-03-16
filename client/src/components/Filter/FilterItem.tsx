@@ -7,7 +7,7 @@ type AppProps = {
   search: string;
   isSelected: boolean;
   selectedHandler: (filter: Filter) => void;
-  handler: any;
+  searchAction: any;
 };
 
 // Filter by Reading Status.
@@ -17,12 +17,12 @@ const FilterItem = ({
   search,
   isSelected,
   selectedHandler,
-  handler,
+  searchAction,
 }: AppProps) => {
   const dispatch = useAppDispatch();
 
   const filterHandler = (e: any) => {
-    dispatch(handler(search, filter));
+    dispatch(searchAction(search, filter));
     selectedHandler(filter);
   };
   let filterName = null;

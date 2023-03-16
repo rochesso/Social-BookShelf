@@ -23,6 +23,7 @@ const corsOptions = {
     "http://192.168.0.99:3000",
     "http://rochesso.ddnsfree.com",
     "http://127.0.0.1:3000",
+    "http://rochesso-api.ddnsfree.com:3000",
   ],
   // Needs to be true as Client and Server are in different domains
   credentials: true,

@@ -1,5 +1,7 @@
 .container {
+  --height: 3.56rem;
   box-shadow: var(--shadow-normal);
+  height: var(--height);
 }
 
 .label {
@@ -15,7 +17,7 @@
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
-  height: 3.56rem;
+  height: inherit;
   text-align-last: center;
   transition: all 0.2s ease-in-out;
 }

@@ -2,6 +2,7 @@
 // users will be all users registered in the website
 // books will be the books of a selected user in the social page
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { SortPreferences } from "../globals";
 
 // Define a type for the slice state
 interface bookState {
@@ -9,6 +10,7 @@ interface bookState {
   books: CompleteBook[];
   filters: Filter[];
   filteredBooks: CompleteBook[];
+  sortPreference: Config["sortPreference"];
 }
 
 // Define the initial state using that type
@@ -17,6 +19,7 @@ const initialState: bookState = {
   users: [],
   filters: [],
   filteredBooks: [],
+  sortPreference: SortPreferences.lastModified,
 };
 
 const usersSlice = createSlice({
@@ -77,6 +80,50 @@ const usersSlice = createSlice({
             .includes(action.payload.toLowerCase())
       );
       state.filteredBooks = searchedBooks;
+    },
+    setSortPreference(state, action: PayloadAction<SortPreferences>) {
+      state.sortPreference = action.payload;
+      sessionStorage.setItem("sortPreference", action.payload);
+    },
+    sortBooks(state) {
+      switch (state.sortPreference) {
+        case SortPreferences.lastModified:
+          state.filteredBooks.sort((a, b) => {
+            if (a.lastModified > b.lastModified) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          break;
+        case SortPreferences.timeAdded:
+          state.filteredBooks.sort((a, b) => {
+            if (a.timeAdded > b.timeAdded) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          break;
+        case SortPreferences.title:
+          state.filteredBooks.sort((a, b) => {
+            if (a.title < b.title) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          break;
+        case SortPreferences.author:
+          state.filteredBooks.sort((a, b) => {
+            if (a.authors < b.authors) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          break;
+      }
     },
   },
 });

@@ -1,22 +1,25 @@
 import { useState } from "react";
 import { SortPreferences } from "../../globals";
-import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
-import { sortPreferenceAction } from "../../store/book-actions";
+import { useAppDispatch } from "../../hooks/useStore";
 
 import styles from "./SortingPreference.module.css";
 
-const SortingPreference = () => {
+type AppProps = {
+  store: any;
+  sortAction: any;
+};
+
+const SortingPreference = ({ store, sortAction }: AppProps) => {
   const dispatch = useAppDispatch();
-  const bookStore = useAppSelector((state) => state.bookStore);
   const [sortPreference, setSorPreference] = useState<Config["sortPreference"]>(
-    bookStore.sortPreference
+    store.sortPreference
   );
 
   const sortPreferenceHandler = async (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const newValue = event.target.value as SortPreferences;
-    const response = await dispatch(sortPreferenceAction(newValue));
+    const response = await dispatch(sortAction(newValue));
     if (response) {
       setSorPreference(newValue);
     }

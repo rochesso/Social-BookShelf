@@ -53,7 +53,7 @@ export const fetchBooks = (googleId: string) => {
           const books: CompleteBook[] = response.data;
           dispatch(usersActions.replaceBooks(books));
           dispatch(usersActions.getFilters());
-
+          dispatch(usersActions.sortBooks());
           break;
       }
     } catch (error) {
@@ -78,5 +78,19 @@ export const searchSocialLibrary = (search: string, filter: Filter) => {
   return async (dispatch: (arg: any) => void) => {
     dispatch(usersActions.filterSocialBooks(filter));
     dispatch(usersActions.searchSocialLibrary(search));
+    dispatch(usersActions.sortBooks());
+  };
+};
+
+export const sortSocialAction = (preference: SortPreferences) => {
+  return async (dispatch: (arg: any) => void) => {
+    try {
+      dispatch(usersActions.setSortPreference(preference));
+      dispatch(usersActions.sortBooks());
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   };
 };

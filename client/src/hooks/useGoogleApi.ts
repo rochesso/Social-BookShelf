@@ -24,7 +24,7 @@ function useGoogleApi() {
         setErrorMessage(result.data);
       }
     },
-    []
+    [dispatch]
   );
 
   return {

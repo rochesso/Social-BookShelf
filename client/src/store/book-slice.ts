@@ -132,7 +132,6 @@ const bookSlice = createSlice({
           break;
         case SortPreferences.timeAdded:
           state.filteredBooks.sort((a, b) => {
-            console.log(a.timeAdded);
             if (a.timeAdded > b.timeAdded) {
               return -1;
             } else {

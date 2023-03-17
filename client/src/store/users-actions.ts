@@ -47,8 +47,10 @@ export const fetchSocialUserData = (googleId: string) => {
       const response = await fetchData();
       switch (Number(response.status)) {
         case 200:
-          const books: CompleteBook[] = response.data.SocialUserBooks;
-          const friends: User[] = response.data.filteredSocialUserFriends;
+          const selectedUser: User = await response.data.socialUser;
+          const books: CompleteBook[] = await response.data.socialUserBooks;
+          const friends: User[] = await response.data.filteredSocialUserFriends;
+          dispatch(usersActions.replaceSelectedUser(selectedUser));
           dispatch(usersActions.replaceBooks(books));
           dispatch(usersActions.replaceFriends(friends));
           dispatch(usersActions.getFilters());

@@ -7,6 +7,7 @@ import { SortPreferences } from "../globals";
 // Define a type for the slice state
 interface socialUsersState {
   users: User[];
+  selectedUser: User | undefined;
   books: CompleteBook[];
   friends: User[];
   filters: Filter[];
@@ -16,6 +17,7 @@ interface socialUsersState {
 
 // Define the initial state using that type
 const initialState: socialUsersState = {
+  selectedUser: undefined,
   books: [],
   users: [],
   friends: [],
@@ -38,6 +40,15 @@ const usersSlice = createSlice({
         }
       }
     },
+    replaceSelectedUser(state, action: PayloadAction<User>) {
+      const selectedUser = action.payload;
+      if (selectedUser) {
+        state.selectedUser = selectedUser;
+      } else {
+        state.selectedUser = undefined;
+      }
+    },
+
     replaceFriends(state, action: PayloadAction<User[]>) {
       const friends = action.payload;
       if (Array.isArray(friends)) {

@@ -3,6 +3,7 @@ import { SortPreferences } from "../globals";
 import { bookActions } from "./book-slice";
 import { googleSearchBooksActions } from "./googleSearchBooks-slice";
 import { userActions } from "./user-slice";
+import { friendsActions } from "./friends-slice";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -19,8 +20,10 @@ export const fetchUserData = () => {
         case 200:
           const booksData: CompleteBook[] = response.data.books;
           const configData: Config = response.data.config;
+          const friendsData: User[] = response.data.friends;
           dispatch(bookActions.setSortPreference(configData.sortPreference));
           dispatch(bookActions.replaceBooks(booksData));
+          dispatch(friendsActions.replaceFriends(friendsData));
           dispatch(bookActions.getFilters());
           dispatch(bookActions.sortBooks());
           break;

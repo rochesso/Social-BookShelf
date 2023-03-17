@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import {
   fetchSocialUserData,
   searchSocialLibrary,
-  fetchUsers,
 } from "../../store/users-actions";
 import { fetchFriends } from "../../store/friends-actions";
 import { addFriend, removeFriend } from "../../store/friends-actions";
@@ -21,23 +20,17 @@ const SocialBooks = () => {
   const usersStore = useAppSelector((state) => state.usersStore);
   const friendsStore = useAppSelector((state) => state.friendsStore);
 
-  const user: User | undefined = usersStore.users.find(
-    (user) => user.googleId === googleId
-  );
+  const socialUser = usersStore.selectedUser;
 
   useEffect(() => {
     const getData = async () => {
       if (googleId) {
         await dispatch(fetchSocialUserData(googleId));
         await dispatch(searchSocialLibrary("", "all"));
-        await dispatch(fetchFriends());
-        if (usersStore.users.length === 0) {
-          await dispatch(fetchUsers());
-        }
       }
     };
     getData();
-  }, [dispatch, googleId, usersStore.users.length]);
+  }, [dispatch, googleId]);
 
   const navigateBack = () => {
     navigate(-1);
@@ -86,12 +79,14 @@ const SocialBooks = () => {
       )}
 
       <h3 className={styles.user}>
-        Welcome to {user ? user.lastName : null}'s Library!
+        Welcome to {socialUser ? socialUser.lastName : null}'s Library!
       </h3>
 
       <BookList bookList={books} from={"social"} />
 
-      <h3 className={styles.user}>{user ? user.lastName : null}'s Friends!</h3>
+      <h3 className={styles.user}>
+        {socialUser ? socialUser.lastName : null}'s Friends!
+      </h3>
 
       <Friends userList={usersStore.friends} />
     </Fragment>

@@ -29,14 +29,19 @@ const httpGetSocialUserData = async (req: Request, res: Response) => {
   const googleId = req.params.googleId;
   const response = await searchFriendDataByGoogleId(googleId);
   if (response) {
-    const SocialUserBooks = response.friendBooks;
+    const socialUser = response.friend;
+    const socialUserBooks = response.friendBooks;
 
     // Remove yourself from the friends list
-    const filteredSocialUserFriends: User[] = response.friendFriends.filter(
+    const filteredSocialUserFriends: User[] = response.friendsOfFriend.filter(
       (friend) => friend.googleId !== req.user?.googleId
     );
 
-    const socialUserData = { SocialUserBooks, filteredSocialUserFriends };
+    const socialUserData = {
+      socialUser,
+      socialUserBooks,
+      filteredSocialUserFriends,
+    };
     return res.status(200).json(socialUserData);
   }
   return res.status(400).json("Error while fetching data!");

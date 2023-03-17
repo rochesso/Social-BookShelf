@@ -26,7 +26,7 @@ const searchUserData = async (_id: string) => {
       .findOne({
         user: _id,
       })
-      .populate("friends")
+      .populate("friends", "firstName lastName picture googleId lastLogon -_id")
       .exec();
     if (response) {
       const userData = response;
@@ -45,12 +45,14 @@ const searchFriendDataByGoogleId = async (googleId: string) => {
     .findOne({
       googleId: googleId,
     })
-    .populate("friends")
+    .populate("user", "firstName lastName picture googleId lastLogon -_id")
+    .populate("friends", "firstName lastName picture googleId lastLogon -_id")
     .exec();
   if (response) {
+    const friend = response.user;
     const friendBooks = response.books;
-    const friendFriends = response.friends;
-    const friendData = { friendBooks, friendFriends };
+    const friendsOfFriend = response.friends;
+    const friendData = { friend, friendBooks, friendsOfFriend };
     return friendData;
   } else {
     return false;

@@ -1,0 +1,32 @@
+.title {
+  color: var(--color-purple);
+  display: grid;
+  font-size: var(--font-size-big);
+  height: inherit;
+  padding-bottom: 2rem;
+  place-items: center;
+  position: relative;
+  text-align: center;
+  width: 100%;
+  z-index: 100;
+}
+
+.title::after {
+  align-self: flex-end;
+  animation: border-grow 0.3s 0.2s both;
+  border-bottom: 0.4rem solid var(--color-pink);
+  content: "";
+  position: absolute;
+  width: calc(100% + 2rem);
+  z-index: 100;
+}
+
+@keyframes border-grow {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 80%;
+  }
+}

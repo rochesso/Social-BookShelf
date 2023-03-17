@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import {
@@ -9,9 +9,9 @@ import { fetchFriends } from "../../store/friends-actions";
 import { addFriend, removeFriend } from "../../store/friends-actions";
 
 import BookList from "../../components/Book/BookList";
-import backIcon from "../../assets/svg/back-arrows-svgrepo-com.svg";
 import styles from "./SocialBooks.module.css";
 import Friends from "../../components/Friends/Friends";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 const SocialBooks = () => {
   const dispatch = useAppDispatch();
@@ -61,35 +61,36 @@ const SocialBooks = () => {
   const books = usersStore.filteredBooks;
 
   return (
-    <Fragment>
-      <img
-        className={styles.backIcon}
-        onClick={navigateBack}
-        src={backIcon}
-        alt="Go back"
-      />
-      {!isAdded ? (
-        <button className={styles.follow} onClick={addFriendHandler}>
-          Follow
+    <div className={styles.container}>
+      <div className={styles.actions}>
+        <button className={styles.backIcon} onClick={navigateBack}>
+          Go back
         </button>
-      ) : (
-        <button className={styles.follow} onClick={removeFriendHandler}>
-          Unfollow
-        </button>
-      )}
 
-      <h3 className={styles.user}>
-        Welcome to {socialUser ? socialUser.lastName : null}'s Library!
-      </h3>
+        {!isAdded ? (
+          <button className={styles.follow} onClick={addFriendHandler}>
+            Follow
+          </button>
+        ) : (
+          <button className={styles.unfollow} onClick={removeFriendHandler}>
+            Unfollow
+          </button>
+        )}
+        <span className={styles.title}>
+          <PageTitle>{`Welcome to ${
+            socialUser ? socialUser.lastName : null
+          }'s Library!`}</PageTitle>
+        </span>
+      </div>
 
       <BookList bookList={books} from={"social"} />
 
-      <h3 className={styles.user}>
-        {socialUser ? socialUser.lastName : null}'s Friends!
-      </h3>
+      <PageTitle>{`${
+        socialUser ? socialUser.lastName : null
+      }'s Friends!`}</PageTitle>
 
       <Friends userList={usersStore.friends} />
-    </Fragment>
+    </div>
   );
 };
 

@@ -13,39 +13,3 @@
   justify-content: center;
   list-style: none;
 }
-
-/* @media only screen and (max-width: 435px) {
-  .list {
-  }
-} */
-
-/* @media only screen and (max-width: 600px) {
-  .container {
-    display: grid;
-    place-items: center;
-  }
-  .menu {
-    background-color: var(--color-background-primary);
-    box-shadow: var(--shadow-normal);
-    display: block;
-    padding: 0 2rem;
-    text-align: center;
-    transition: all 0.2s ease-in-out;
-    width: max-content;
-  }
-
-  .list {
-    display: grid;
-    grid-template-columns: 1fr;
-    height: 0;
-    overflow: clip;
-    transition: all 0.2s ease-in-out;
-  }
-
-  .list.listOpen {
-    height: 19rem;
-    margin-top: var(--gap-medium);
-    padding: 1rem;
-    transition: all 0.2s ease-in-out;
-  }
-} */

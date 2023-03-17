@@ -5,8 +5,15 @@ const Header = () => {
     <footer className={styles.container}>
       <p className={styles.text}>
         This website was created by{" "}
-        <span className={styles.author}>Arthur Rochesso</span> for educational
-        purposes only!
+        <a
+          href="https://www.linkedin.com/in/rochesso/"
+          className={styles.author}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Arthur Rochesso
+        </a>{" "}
+        for educational purposes only!
       </p>
     </footer>
   );

@@ -1,21 +1,51 @@
-.user {
-  color: var(--color-purple);
-  font-size: var(--font-size-big);
+.container {
+  align-items: flex-start;
+  display: grid;
+  justify-items: center;
+  margin-bottom: var(--gap-medium);
   margin-top: var(--gap-big);
+  position: relative;
+  width: 100%;
+}
+
+.actions {
+  display: grid;
+  grid-template-areas:
+    "back follow"
+    "title title";
+  place-items: center;
+  position: relative;
   text-align: center;
+  width: 100%;
+}
+
+.title {
+  grid-area: title;
+  height: 8rem;
+  margin-top: -5rem;
+  width: 100%;
+  z-index: 100;
 }
 
 .backIcon {
+  background-color: var(--color-background-quinary);
+  border: none;
+  border-radius: 5rem;
+  color: black;
   cursor: pointer;
-  filter: saturate(0.2) hue-rotate(190deg);
-  height: 6rem;
-  left: 2rem;
-  position: absolute;
-  top: 2rem;
+  font-size: var(--font-size-medium);
+  grid-area: back;
+  justify-self: start;
+  margin-left: 3rem;
+  padding: 1rem 0;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  width: 10rem;
+  z-index: 101;
 }
 
 .backIcon:hover {
-  filter: saturate(1) hue-rotate(190deg);
+  background-color: var(--color-background-primary);
 }
 
 .follow {
@@ -25,48 +55,60 @@
   color: black;
   cursor: pointer;
   font-size: var(--font-size-medium);
-  padding: 1rem 3rem;
-  position: absolute;
-  right: 2rem;
+  grid-area: follow;
+  justify-self: end;
+  margin-right: 3rem;
+  padding: 1rem 0;
   text-align: center;
-  top: 2.9rem;
   transition: all 0.2s ease-in-out;
+  width: 10rem;
+  z-index: 101;
 }
 
 .follow:hover {
   background-color: var(--color-background-primary);
 }
 
-@media only screen and (max-width: 550px) {
-  .backIcon {
-    left: 5rem;
-  }
+.unfollow {
+  background-color: rgb(252, 70, 70);
+  border: none;
+  border-radius: 5rem;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size-medium);
+  grid-area: follow;
+  justify-self: end;
+  margin-right: 3rem;
+  padding: 1rem 0;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  width: 10rem;
+  z-index: 101;
+}
 
-  .follow {
-    right: 6rem;
-  }
+.unfollow:hover {
+  background-color: rgb(194, 45, 45);
+}
 
-  .user {
-    margin-top: 9rem;
+@media only screen and (max-width: 650px) {
+  .title {
+    height: 5rem;
+    margin-top: 1.5rem;
   }
 }
 
-@media only screen and (max-width: 300px) {
-  .backIcon {
-    left: 0;
-    margin-top: var(--gap-medium);
-    position: relative;
-    top: 0;
+@media only screen and (max-width: 314px) {
+  .title {
+    height: 8rem;
+  }
+}
+
+@keyframes border-grow {
+  0% {
+    width: 0;
   }
 
-  .follow {
-    margin-top: var(--gap-medium);
-    position: relative;
-    right: 0;
-    top: 0;
-  }
-
-  .user {
-    margin-top: var(--gap-medium);
+  100% {
+    width: 100%;
   }
 }

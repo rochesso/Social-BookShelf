@@ -31,7 +31,6 @@ const TbrRoulette = () => {
         ) {
           bookToReadIndex = randomBookIndex(books);
         }
-        console.log(bookToReadIndex);
         return bookToReadIndex;
       };
 

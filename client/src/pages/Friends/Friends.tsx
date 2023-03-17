@@ -1,4 +1,5 @@
 import Friends from "../../components/Friends/Friends";
+import PageTitle from "../../components/PageTitle/PageTitle";
 import { useAppSelector } from "../../hooks/useStore";
 
 import styles from "./Friends.module.css";
@@ -8,7 +9,7 @@ const SocialUsers = () => {
 
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>Discover what your friends are reading!</h3>
+      <PageTitle>Discover what your friends are reading!</PageTitle>
       <div className={styles.users}>
         <Friends userList={friendsStore.friends} />
       </div>

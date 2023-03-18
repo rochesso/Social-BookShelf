@@ -21,7 +21,6 @@ import Friends from "./pages/Friends/Friends";
 
 import TbrRoulette from "./pages/TbrRoulette/TbrRoulette";
 
-import styles from "./App.module.css";
 import SocialUsers from "./pages/Social/SocialUsers";
 import SocialBooks from "./pages/Social/SocialBooks";
 
@@ -50,21 +49,19 @@ function App() {
       <Header />
       <Navbar />
 
-      <main className={styles.container}>
-        <Routes>
-          <Route element={<HomeLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/users/:googleId" element={<SocialBooks />} />
-            <Route path="/users" element={<SocialUsers />} />
-          </Route>
-          <Route path="/user" element={<ProtectedLayout />}>
-            <Route path="books" element={<MyLibrary />} />
-            <Route path="tbrRoulette" element={<TbrRoulette />} />
-            <Route path="friends" element={<Friends />} />
-          </Route>
-        </Routes>
-      </main>
+      <Routes>
+        <Route element={<HomeLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/users/:googleId" element={<SocialBooks />} />
+          <Route path="/users" element={<SocialUsers />} />
+        </Route>
+        <Route path="/user" element={<ProtectedLayout />}>
+          <Route path="books" element={<MyLibrary />} />
+          <Route path="tbrRoulette" element={<TbrRoulette />} />
+          <Route path="friends" element={<Friends />} />
+        </Route>
+      </Routes>
 
       <Footer />
     </Fragment>

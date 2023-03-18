@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { useAppSelector } from "../../hooks/useStore";
 import styles from "./SearchList.module.css";
 
@@ -12,11 +11,7 @@ const SearchList = () => {
     <SearchedBook key={book.googleId} book={book} />
   ));
 
-  return (
-    <Fragment>
-      <div className={styles.container}>{books}</div>
-    </Fragment>
-  );
+  return <section className={styles.container}>{books}</section>;
 };
 
 export default SearchList;

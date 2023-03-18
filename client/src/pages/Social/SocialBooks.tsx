@@ -64,26 +64,33 @@ const SocialBooks = () => {
     (friend) => friend.googleId === googleId
   );
 
+  const isLoggedIn = sessionStorage.getItem("user") as unknown as string;
+
   return (
     <Fragment>
       {usersStore.isLoading ? (
         <Loading />
       ) : (
-        <div className={styles.container}>
+        <main className={styles.container}>
           <div className={styles.actions}>
             <button className={styles.backIcon} onClick={navigateBack}>
               Go back
             </button>
 
-            {!isAdded ? (
-              <button className={styles.follow} onClick={addFriendHandler}>
-                Follow
-              </button>
-            ) : (
-              <button className={styles.unfollow} onClick={removeFriendHandler}>
-                Unfollow
-              </button>
-            )}
+            {isLoggedIn ? (
+              !isAdded ? (
+                <button className={styles.follow} onClick={addFriendHandler}>
+                  Follow
+                </button>
+              ) : (
+                <button
+                  className={styles.unfollow}
+                  onClick={removeFriendHandler}
+                >
+                  Unfollow
+                </button>
+              )
+            ) : null}
             <span className={styles.title}>
               <PageTitle>{`Welcome to ${
                 socialUser ? socialUser.user.lastName : null
@@ -98,7 +105,7 @@ const SocialBooks = () => {
           }'s Friends!`}</PageTitle>
 
           <Friends userList={socialUser ? socialUser.friends : []} />
-        </div>
+        </main>
       )}
     </Fragment>
   );

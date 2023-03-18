@@ -1,13 +1,9 @@
-.book {
-  --book-width: 12rem;
-  box-shadow: var(--shadow-normal);
-  position: relative;
-}
-
 .container {
+  --book-width: 12rem;
   align-items: center;
   background-color: var(--color-background-quaternary);
   border: var(--border-primary);
+  box-shadow: var(--shadow-normal);
   display: grid;
   grid-template-columns: min-content 1fr;
   height: calc(var(--book-width) * 1.9);

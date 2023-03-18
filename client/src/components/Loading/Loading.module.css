@@ -1,7 +1,13 @@
+.container {
+  display: grid;
+  grid-template-rows: 1fr;
+  min-height: 100%;
+  place-items: center;
+}
+
 .loading {
   animation: rotation 2s infinite linear;
   height: 10rem;
-  margin-top: var(--gap-big);
 }
 
 @keyframes rotation {

@@ -11,12 +11,8 @@ const Header = () => {
       <h2 className={styles.name}>
         Welcome {user ? user.firstName : "Guest"}!
       </h2>
-      <span className={styles.span}>
-        <h1 className={styles.title}>Social Bookshelf</h1>
-      </span>
-      <span className={styles.login}>
-        <Login />
-      </span>
+      <h1 className={styles.title}>Social Bookshelf</h1>
+      <Login />
     </header>
   );
 };

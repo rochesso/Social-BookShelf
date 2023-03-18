@@ -50,7 +50,7 @@ const BookList = ({ bookList, from }: AppProps) => {
   return (
     <Fragment>
       <div className={styles.actions}>{filter}</div>
-      <div className={styles.container}>{books}</div>
+      <section className={styles.container}>{books}</section>
     </Fragment>
   );
 };

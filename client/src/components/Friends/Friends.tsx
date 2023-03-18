@@ -15,14 +15,12 @@ const Friends = ({ userList }: AppProps) => {
           className={styles.user}
           to={`/users/${user.googleId}`}
         >
-          <div className={styles.user__profile}>
-            <img
-              className={styles.user__picture}
-              src={user.picture}
-              alt={`${user.lastName} profile`}
-            />
-          </div>
-          <p className={styles.user__name}>{user.lastName}</p>
+          <img
+            className={styles.picture}
+            src={user.picture}
+            alt={`${user.lastName} profile`}
+          />
+          <p className={styles.name}>{user.lastName}</p>
         </Link>
       );
     } else {
@@ -30,11 +28,7 @@ const Friends = ({ userList }: AppProps) => {
     }
   });
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.users}>{users}</div>
-    </div>
-  );
+  return <section className={styles.users}>{users}</section>;
 };
 
 export default Friends;

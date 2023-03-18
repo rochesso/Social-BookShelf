@@ -4,7 +4,7 @@ import library from "../../assets/svg/library-study/1749-min-cropped.jpg";
 
 const Home = () => {
   return (
-    <section className={styles.container}>
+    <main className={styles.container}>
       <img className={styles.image} src={library} alt="library"></img>
       <p className={styles.text}>
         Start your virtual shelf by searching for a book on the search page or{" "}
@@ -15,7 +15,7 @@ const Home = () => {
         status or save which page you are! This is where you keep track of all
         your books :)
       </p>
-    </section>
+    </main>
   );
 };
 

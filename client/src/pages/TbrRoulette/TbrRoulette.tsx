@@ -41,14 +41,14 @@ const TbrRoulette = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <button className={styles.button} onClick={rouletteBookIndexToRead}>
         Roulette a book to read!
       </button>
       {chosenBookIndex === 0 || chosenBookIndex ? (
         <Book hasDelete={false} book={books[chosenBookIndex]} from="user" />
       ) : null}
-    </div>
+    </main>
   );
 };
 

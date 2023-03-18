@@ -1,8 +1,10 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import { searchMyLibrary } from "../../store/book-actions";
 
 import BookList from "../../components/Book/BookList";
+
+import styles from "./MyLibrary.module.css";
 
 const MyLibrary = () => {
   const dispatch = useAppDispatch();
@@ -15,9 +17,9 @@ const MyLibrary = () => {
   const books = BookStore.filteredBooks;
 
   return (
-    <Fragment>
+    <main className={styles.container}>
       <BookList bookList={books} from={"user"} />
-    </Fragment>
+    </main>
   );
 };
 

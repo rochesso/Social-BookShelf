@@ -1,5 +1,6 @@
 .container {
   display: grid;
+  grid-template-rows: min-content 1fr;
   margin-bottom: var(--gap-medium);
   margin-top: var(--gap-big);
   place-items: center;

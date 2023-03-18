@@ -87,8 +87,8 @@ const SearchedBook = ({ book }: AppProps) => {
     <div className={styles.container}>
       <img className={styles.cover} src={cover} alt="Book cover" />
       <div className={styles.information}>
-        <h3 className={styles.information__title}>{titleString}</h3>
-        <h4 className={styles.information__authors}>{authorsToShow}</h4>
+        <h4 className={styles.information__title}>{titleString}</h4>
+        <h5 className={styles.information__authors}>{authorsToShow}</h5>
         <p className={styles.information__categories}>{categories}</p>
 
         <p className={styles.information__pageCount}>

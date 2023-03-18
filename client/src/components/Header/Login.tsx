@@ -33,13 +33,11 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.profile}>
-        <img
-          className={styles.profile__picture}
-          src={user ? (user.picture ? user.picture : picture) : anonymous}
-          alt="Profile"
-        />
-      </div>
+      <img
+        className={styles.picture}
+        src={user ? (user.picture ? user.picture : picture) : anonymous}
+        alt="Profile"
+      />
       {content}
     </div>
   );

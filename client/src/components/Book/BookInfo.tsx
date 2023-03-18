@@ -65,8 +65,8 @@ const BookInfo = ({ book, from }: AppProps) => {
 
   return (
     <div className={styles.information}>
-      <h3 className={styles.information__title}>{titleString}</h3>
-      <h4 className={styles.information__authors}>{authorsString}</h4>
+      <h4 className={styles.information__title}>{titleString}</h4>
+      <h5 className={styles.information__authors}>{authorsString}</h5>
       {content()}
       <Rate book={book} from={from} />
       <p className={styles.information__categories}>{categories}</p>

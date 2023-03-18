@@ -1,15 +1,16 @@
 .container {
   align-items: flex-start;
   display: grid;
+  grid-template-rows: min-content 1fr;
   justify-items: center;
   margin-bottom: var(--gap-medium);
   margin-top: var(--gap-big);
+  min-height: 100%;
   position: relative;
   width: 100%;
 }
 
 .users {
-  align-self: flex-start;
   display: flex;
   flex-wrap: wrap;
   gap: var(--gap-big);

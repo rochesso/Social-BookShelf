@@ -21,16 +21,14 @@ const SocialUsers = () => {
   }, [dispatch, usersStore.users.length]);
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <PageTitle> Discover what is being read by other users!</PageTitle>
       {!usersStore.isLoading ? (
-        <div className={styles.users}>
-          <Users userList={usersStore.users} />
-        </div>
+        <Users userList={usersStore.users} />
       ) : (
         <Loading />
       )}
-    </div>
+    </main>
   );
 };
 

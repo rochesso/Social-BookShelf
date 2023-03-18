@@ -1,28 +1,30 @@
 .container {
   background-color: var(--color-background-quaternary);
   border: var(--border-primary);
+  box-shadow: var(--shadow-normal);
   display: grid;
-  height: 100%;
+  justify-self: end;
+  margin-right: var(--gap-medium);
   place-items: center;
   position: relative;
-  width: 100%;
 }
 
-.profile {
+.picture {
   background-color: var(--color-background-senary);
-  display: grid;
+  border: var(--border-primary);
   height: 3rem;
   left: -1.5rem;
-  place-items: center;
   position: absolute;
   width: 3rem;
 }
 
-.profile__picture {
-  border: var(--border-primary);
-  height: 3rem;
-}
-
 .login {
   padding: var(--padding-button);
+}
+
+@media only screen and (max-width: 410px) {
+  .container {
+    justify-self: center;
+    margin: 0.5rem 0;
+  }
 }

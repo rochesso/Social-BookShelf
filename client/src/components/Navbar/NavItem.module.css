@@ -26,9 +26,6 @@
   color: white;
 }
 
-.text {
-}
-
 @media only screen and (max-width: 545px) {
   .link {
     display: inline-block;

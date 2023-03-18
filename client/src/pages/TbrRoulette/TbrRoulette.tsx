@@ -4,6 +4,7 @@ import Book from "../../components/Book/Book";
 import { useAppSelector } from "../../hooks/useStore";
 
 import styles from "./TbrRoulette.module.css";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 const TbrRoulette = () => {
   const bookStore = useAppSelector((state) => state.bookStore);
@@ -42,6 +43,7 @@ const TbrRoulette = () => {
 
   return (
     <main className={styles.container}>
+      <PageTitle>Choose a new book to read!</PageTitle>
       <button className={styles.button} onClick={rouletteBookIndexToRead}>
         Roulette a book to read!
       </button>

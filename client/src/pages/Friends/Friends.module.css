@@ -2,8 +2,21 @@
   display: grid;
   grid-template-rows: min-content 1fr;
   justify-items: center;
-  margin-bottom: var(--gap-medium);
+  margin-bottom: var(--gap-big);
   margin-top: var(--gap-big);
   position: relative;
   width: 100%;
+}
+
+.warning {
+  color: var(--color-background-septenary);
+  font-size: var(--font-size-big);
+  margin: 0 3rem;
+  margin-top: var(--gap-medium);
+  text-align: center;
+}
+
+.search {
+  font-weight: bold;
+  text-decoration: underline;
 }

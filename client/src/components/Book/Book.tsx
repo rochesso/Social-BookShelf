@@ -64,7 +64,7 @@ const Book = ({ book, hasDelete, from }: AppProps) => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.book}>
       {/* Favorite heart icon */}
       {status.isFavorite ? (
         <img
@@ -73,37 +73,38 @@ const Book = ({ book, hasDelete, from }: AppProps) => {
           alt="Favorite icon, heart."
         />
       ) : null}
+      <div className={styles.container}>
+        <img className={styles.cover} src={cover} alt="Book cover" />
 
-      <img className={styles.cover} src={cover} alt="Book cover" />
-
-      {isUpdating ? (
-        <BookSettings
-          hasDelete={hasDelete}
-          book={book}
-          updatingBookHandler={updatingBookHandler}
-        />
-      ) : (
-        <BookInfo book={book} from={from} />
-      )}
-      {/* Button to open the form to updated a book */}
-      {/* or if in social page add button */}
-      {from === "user" ? (
-        <div className={styles.settings} onClick={updatingBookHandler}>
-          <img
-            className={styles.settings__img}
-            src={settingsIcon}
-            alt="Settings icon!"
+        {isUpdating ? (
+          <BookSettings
+            hasDelete={hasDelete}
+            book={book}
+            updatingBookHandler={updatingBookHandler}
           />
-        </div>
-      ) : userBooks.find((item) => item.googleId === book.googleId) ? null : (
-        <div className={styles.add} onClick={addBookHandler}>
-          <img
-            className={styles.add__img}
-            src={plusIcon}
-            alt="Add this book to your library!"
-          />
-        </div>
-      )}
+        ) : (
+          <BookInfo book={book} from={from} />
+        )}
+        {/* Button to open the form to updated a book */}
+        {/* or if in social page add button */}
+        {from === "user" ? (
+          <div className={styles.settings} onClick={updatingBookHandler}>
+            <img
+              className={styles.settings__img}
+              src={settingsIcon}
+              alt="Settings icon!"
+            />
+          </div>
+        ) : userBooks.find((item) => item.googleId === book.googleId) ? null : (
+          <div className={styles.add} onClick={addBookHandler}>
+            <img
+              className={styles.add__img}
+              src={plusIcon}
+              alt="Add this book to your library!"
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,5 +1,9 @@
-.container {
+.book {
+  position: relative;
   --book-width: 12rem;
+}
+
+.container {
   align-items: center;
   background-color: var(--color-background-quaternary);
   border: var(--border-primary);

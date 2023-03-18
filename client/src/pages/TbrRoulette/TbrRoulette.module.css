@@ -1,9 +1,9 @@
 .container {
   display: grid;
   grid-template-rows: min-content 1fr;
-  margin-bottom: var(--gap-medium);
+  justify-items: center;
+  margin-bottom: var(--gap-big);
   margin-top: var(--gap-big);
-  place-items: center;
 }
 
 .button {
@@ -14,17 +14,19 @@
   cursor: pointer;
   font-size: var(--font-size-medium);
   height: var(--big);
-  margin-bottom: var(--gap-medium);
+  margin-bottom: var(--gap-big);
+  margin-top: var(--gap-big);
   padding: 0 var(--small);
   transition: all 0.2s ease-in-out;
 }
 
-.button:hover {
-  box-shadow: var(--shadow-high);
-  transform: scale(1.03) translateY(-1px) translateX(-1px);
-}
-
-.button:active {
-  box-shadow: var(--shadow-low);
-  transform: scale(1.03) translateY(0px) translateX(0px);
+@media (hover: hover) {
+  .button:hover {
+    box-shadow: var(--shadow-high);
+    transform: scale(1.03) translateY(-1px) translateX(-1px);
+  }
+  .button:active {
+    box-shadow: var(--shadow-low);
+    transform: scale(1.03) translateY(0px) translateX(0px);
+  }
 }

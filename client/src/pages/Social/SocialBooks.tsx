@@ -66,6 +66,21 @@ const SocialBooks = () => {
 
   const isLoggedIn = sessionStorage.getItem("user") as unknown as string;
 
+  let friends: User[] = [];
+  const hasFriends = () => {
+    if (socialUser) {
+      if (socialUser.friends.length > 0) {
+        friends = socialUser.friends;
+        return true;
+      } else {
+        friends = [];
+        return false;
+      }
+    }
+    friends = [];
+    return false;
+  };
+
   return (
     <Fragment>
       {usersStore.isLoading ? (
@@ -98,13 +113,21 @@ const SocialBooks = () => {
             </span>
           </div>
 
-          <BookList bookList={books} from={"social"} />
+          {books.length > 0 ? (
+            <BookList bookList={books} from={"social"} />
+          ) : (
+            <p className={styles.warning}>No books yet</p>
+          )}
 
           <PageTitle>{`${
             socialUser ? socialUser.user.lastName : null
           }'s Friends!`}</PageTitle>
 
-          <Friends userList={socialUser ? socialUser.friends : []} />
+          {hasFriends() ? (
+            <Friends userList={friends} />
+          ) : (
+            <p className={styles.warning}>No friends yet</p>
+          )}
         </main>
       )}
     </Fragment>

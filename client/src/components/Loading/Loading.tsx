@@ -4,7 +4,7 @@ import styles from "./Loading.module.css";
 const Loading = () => {
   return (
     <div className={styles.container}>
-      <img className={styles.loading} src={loadingIcon} alt="Loading" />;
+      <img className={styles.loading} src={loadingIcon} alt="Loading" />
     </div>
   );
 };

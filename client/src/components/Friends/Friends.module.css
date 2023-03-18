@@ -19,10 +19,6 @@
   width: 20rem;
 }
 
-.user:hover {
-  background-color: var(--color-background-primary);
-}
-
 .picture {
   background-color: var(--color-background-senary);
   border: var(--border-primary);
@@ -36,4 +32,10 @@
 
 .name {
   padding: var(--padding-button);
+}
+
+@media (hover: hover) {
+  .user:hover {
+    background-color: var(--color-background-primary);
+  }
 }

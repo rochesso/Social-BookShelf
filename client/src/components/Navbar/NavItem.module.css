@@ -9,21 +9,23 @@
   padding: 0 2rem;
 }
 
-.container:hover {
-  background-color: var(--color-purple);
-  box-shadow: var(--shadow-high);
-  color: white;
-  transform: scale(1.04) translateY(-2px) translateX(-2px);
-}
-
-.container:active {
-  box-shadow: var(--shadow-low);
-  transform: scale(1.04) translateY(0px) translateX(0px);
-}
-
 .active {
   background-color: var(--color-purple);
   color: white;
+}
+
+@media (hover: hover) {
+  .container:hover {
+    background-color: var(--color-purple);
+    box-shadow: var(--shadow-high);
+    color: white;
+    transform: scale(1.04) translateY(-2px) translateX(-2px);
+  }
+
+  .container:active {
+    box-shadow: var(--shadow-low);
+    transform: scale(1.04) translateY(0px) translateX(0px);
+  }
 }
 
 @media only screen and (max-width: 545px) {

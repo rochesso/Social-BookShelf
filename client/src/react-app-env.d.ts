@@ -24,6 +24,7 @@ interface User {
   lastName: string;
   email: string;
   picture: string;
+  lastLogon: Date;
 }
 
 // Data for a single user.
@@ -31,6 +32,12 @@ interface UserData {
   user: User._id;
   books: CompleteBook[];
   config: Config;
+}
+
+interface SocialUser {
+  user: User;
+  books: CompleteBook[];
+  friends: User[];
 }
 
 interface Config {

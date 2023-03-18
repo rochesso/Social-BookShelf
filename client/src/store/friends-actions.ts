@@ -27,14 +27,14 @@ export const fetchFriends = () => {
   };
 };
 
-export const addFriend = (googleId: string) => {
+export const addFriend = (friend: User) => {
   return async (dispatch: (arg: any) => void) => {
     try {
-      const response = await axios.post(API_URL + `/users/${googleId}`);
+      dispatch(friendsActions.addFriends(friend));
+      const response = await axios.post(API_URL + `/users/${friend.googleId}`);
       switch (Number(response.status)) {
         case 201:
-          dispatch(friendsActions.addFriends(response.data));
-          dispatch(fetchFriends());
+          // dispatch(fetchFriends());
           break;
       }
     } catch (error) {
@@ -52,10 +52,11 @@ export const addFriend = (googleId: string) => {
 export const removeFriend = (googleId: string) => {
   return async (dispatch: (arg: any) => void) => {
     try {
+      dispatch(friendsActions.removeFriends(googleId));
       const response = await axios.delete(API_URL + `/users/${googleId}`);
       switch (Number(response.status)) {
         case 200:
-          dispatch(friendsActions.removeFriends(googleId));
+          // dispatch(fetchFriends());
           break;
       }
     } catch (error) {

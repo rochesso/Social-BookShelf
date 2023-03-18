@@ -6,10 +6,11 @@ import { SortPreferences } from "../globals";
 
 // Define a type for the slice state
 interface socialUsersState {
+  isLoading: boolean;
   users: User[];
-  selectedUser: User | undefined;
+  loadedUsers: SocialUser[];
+  selectedUser: SocialUser | undefined;
   books: CompleteBook[];
-  friends: User[];
   filters: Filter[];
   filteredBooks: CompleteBook[];
   sortPreference: Config["sortPreference"];
@@ -17,19 +18,54 @@ interface socialUsersState {
 
 // Define the initial state using that type
 const initialState: socialUsersState = {
+  // Related to the selected user
   selectedUser: undefined,
   books: [],
-  users: [],
-  friends: [],
   filters: [],
   filteredBooks: [],
   sortPreference: SortPreferences.lastModified,
+  isLoading: false,
+  // All users with an account
+  users: [],
+  // Users with data already downloaded
+  loadedUsers: [],
 };
 
 const usersSlice = createSlice({
   name: "usersStore",
   initialState,
   reducers: {
+    // Save the downloaded data so it doesn't need to be download again later, unless the page is refreshed
+    addLoadedUser(state, action: PayloadAction<SocialUser>) {
+      const loadedUsers = state.loadedUsers;
+      const isLoaded = state.loadedUsers.some(
+        (loadedUser) =>
+          loadedUser.user.googleId === action.payload.user.googleId
+      );
+      if (!isLoaded) {
+        loadedUsers.push(action.payload);
+      }
+    },
+
+    // Check if the user data is already downloaded
+    selectLoadedUser(state, action: PayloadAction<string>) {
+      const loadedUsers = state.loadedUsers;
+      const selectedUser = loadedUsers.find(
+        (loadedUser) => loadedUser.user.googleId === action.payload
+      );
+      if (selectedUser) {
+        state.selectedUser = selectedUser;
+        state.books = selectedUser.books;
+      } else {
+        state.selectedUser = undefined;
+        state.books = [];
+      }
+    },
+
+    isLoadingToggle(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload;
+    },
+
     replaceUsers(state, action: PayloadAction<User[]>) {
       const users = action.payload;
       if (Array.isArray(users)) {
@@ -40,7 +76,7 @@ const usersSlice = createSlice({
         }
       }
     },
-    replaceSelectedUser(state, action: PayloadAction<User>) {
+    replaceSelectedUser(state, action: PayloadAction<SocialUser>) {
       const selectedUser = action.payload;
       if (selectedUser) {
         state.selectedUser = selectedUser;
@@ -49,16 +85,6 @@ const usersSlice = createSlice({
       }
     },
 
-    replaceFriends(state, action: PayloadAction<User[]>) {
-      const friends = action.payload;
-      if (Array.isArray(friends)) {
-        if (friends.length > 0) {
-          state.friends = friends;
-        } else {
-          state.friends = [];
-        }
-      }
-    },
     replaceBooks(state, action: PayloadAction<CompleteBook[]>) {
       const books = action.payload;
       if (Array.isArray(books)) {

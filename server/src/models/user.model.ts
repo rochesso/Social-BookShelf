@@ -1,4 +1,5 @@
 import usersCollection from "./user.mongo";
+import { createUserData } from "./userData.model";
 
 const addUser = async (googleProfile: any) => {
   const date = new Date();
@@ -30,6 +31,7 @@ const addUser = async (googleProfile: any) => {
       const response = await searchUserByGoogleId(googleProfile.id);
       if (response) {
         const createdUser: User = response;
+        await createUserData(createdUser._id);
         return createdUser;
       }
     }
@@ -37,9 +39,12 @@ const addUser = async (googleProfile: any) => {
 };
 
 const searchUserByGoogleId = async (googleId: string) => {
-  const result = await usersCollection.findOne({
-    googleId: googleId,
-  });
+  const result = await usersCollection
+    .findOne({
+      googleId: googleId,
+    })
+    .select({ firstName: 1, lastName: 1, email: 1, picture: 1, googleId: 1 })
+    .exec();
   if (result) {
     const user = result;
     return user;
@@ -52,7 +57,13 @@ const searchUserById = async (_id: string) => {
   try {
     const result = await usersCollection
       .findById(_id)
-      .select({ firstName: 1, lastName: 1, email: 1, picture: 1, googleId: 1 })
+      .select({
+        firstName: 1,
+        lastName: 1,
+        email: 1,
+        picture: 1,
+        googleId: 1,
+      })
       .exec();
     if (result) {
       const user: User = result;

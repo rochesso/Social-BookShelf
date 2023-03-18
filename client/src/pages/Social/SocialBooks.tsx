@@ -1,17 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, Fragment } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import {
   fetchSocialUserData,
   searchSocialLibrary,
 } from "../../store/users-actions";
-import { fetchFriends } from "../../store/friends-actions";
+import { usersActions } from "../../store/users-slice";
 import { addFriend, removeFriend } from "../../store/friends-actions";
 
 import BookList from "../../components/Book/BookList";
 import styles from "./SocialBooks.module.css";
 import Friends from "../../components/Friends/Friends";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import Loading from "../../components/Loading/Loading";
 
 const SocialBooks = () => {
   const dispatch = useAppDispatch();
@@ -21,25 +22,31 @@ const SocialBooks = () => {
   const friendsStore = useAppSelector((state) => state.friendsStore);
 
   const socialUser = usersStore.selectedUser;
+  const books = usersStore.filteredBooks;
 
   useEffect(() => {
     const getData = async () => {
       if (googleId) {
-        await dispatch(fetchSocialUserData(googleId));
-        await dispatch(searchSocialLibrary("", "all"));
+        dispatch(usersActions.selectLoadedUser(googleId));
+        const selectedUser = usersStore.selectedUser;
+        if (!selectedUser || selectedUser === undefined) {
+          await dispatch(fetchSocialUserData(googleId));
+          await dispatch(searchSocialLibrary("", "all"));
+        } else {
+          await dispatch(searchSocialLibrary("", "all"));
+        }
       }
     };
     getData();
-  }, [dispatch, googleId]);
+  }, [dispatch, googleId, usersStore.selectedUser]);
 
   const navigateBack = () => {
     navigate(-1);
   };
 
   const addFriendHandler = async () => {
-    if (googleId) {
-      await dispatch(addFriend(googleId));
-      await dispatch(fetchFriends());
+    if (socialUser) {
+      await dispatch(addFriend(socialUser.user));
     } else {
       return false;
     }
@@ -48,7 +55,6 @@ const SocialBooks = () => {
   const removeFriendHandler = async () => {
     if (googleId) {
       await dispatch(removeFriend(googleId));
-      await dispatch(fetchFriends());
     } else {
       return false;
     }
@@ -58,39 +64,43 @@ const SocialBooks = () => {
     (friend) => friend.googleId === googleId
   );
 
-  const books = usersStore.filteredBooks;
-
   return (
-    <div className={styles.container}>
-      <div className={styles.actions}>
-        <button className={styles.backIcon} onClick={navigateBack}>
-          Go back
-        </button>
+    <Fragment>
+      {usersStore.isLoading ? (
+        <Loading />
+      ) : (
+        <div className={styles.container}>
+          <div className={styles.actions}>
+            <button className={styles.backIcon} onClick={navigateBack}>
+              Go back
+            </button>
 
-        {!isAdded ? (
-          <button className={styles.follow} onClick={addFriendHandler}>
-            Follow
-          </button>
-        ) : (
-          <button className={styles.unfollow} onClick={removeFriendHandler}>
-            Unfollow
-          </button>
-        )}
-        <span className={styles.title}>
-          <PageTitle>{`Welcome to ${
-            socialUser ? socialUser.lastName : null
-          }'s Library!`}</PageTitle>
-        </span>
-      </div>
+            {!isAdded ? (
+              <button className={styles.follow} onClick={addFriendHandler}>
+                Follow
+              </button>
+            ) : (
+              <button className={styles.unfollow} onClick={removeFriendHandler}>
+                Unfollow
+              </button>
+            )}
+            <span className={styles.title}>
+              <PageTitle>{`Welcome to ${
+                socialUser ? socialUser.user.lastName : null
+              }'s Library!`}</PageTitle>
+            </span>
+          </div>
 
-      <BookList bookList={books} from={"social"} />
+          <BookList bookList={books} from={"social"} />
 
-      <PageTitle>{`${
-        socialUser ? socialUser.lastName : null
-      }'s Friends!`}</PageTitle>
+          <PageTitle>{`${
+            socialUser ? socialUser.user.lastName : null
+          }'s Friends!`}</PageTitle>
 
-      <Friends userList={usersStore.friends} />
-    </div>
+          <Friends userList={socialUser ? socialUser.friends : []} />
+        </div>
+      )}
+    </Fragment>
   );
 };
 

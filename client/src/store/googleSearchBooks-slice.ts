@@ -4,10 +4,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface bookState {
   searchedBooks: CompleteBook[];
   totalQuantity: number;
+  isSearching: boolean;
 }
 
 // Define the initial state using that type
 const initialState: bookState = {
+  isSearching: false,
   searchedBooks: [],
   totalQuantity: 0,
 };
@@ -16,6 +18,9 @@ const googleSearchBooksSlice = createSlice({
   name: "googleSearchBooksStore",
   initialState,
   reducers: {
+    isSearchingToggle(state, action: PayloadAction<boolean>) {
+      state.isSearching = action.payload;
+    },
     replaceBooks(state, action: PayloadAction<CompleteBook[]>) {
       const books = action.payload;
       if (books.length >= 0) {

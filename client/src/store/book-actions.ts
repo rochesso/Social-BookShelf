@@ -43,16 +43,19 @@ export const fetchUserData = () => {
 export const addBook = (book: CompleteBook) => {
   return async (dispatch: (arg: any) => void) => {
     try {
+      dispatch(bookActions.addBook(book));
+      dispatch(googleSearchBooksActions.removeBook(book));
       const response = await axios.post(API_URL + "/user/books", { book });
       switch (Number(response.status)) {
         case 201:
-          dispatch(googleSearchBooksActions.removeBook(book));
-          dispatch(fetchUserData());
+          // dispatch(fetchUserData());
           dispatch(bookActions.getFilters());
           dispatch(bookActions.sortBooks());
           break;
       }
     } catch (error) {
+      dispatch(googleSearchBooksActions.addBook(book));
+      dispatch(bookActions.removeBook(book));
       const axiosError = error as AxiosError;
       const axiosErrorStatus = axiosError.response?.status;
       switch (axiosErrorStatus) {
@@ -67,14 +70,15 @@ export const addBook = (book: CompleteBook) => {
 export const removeBook = (book: CompleteBook) => {
   return async (dispatch: (arg: any) => void) => {
     try {
+      dispatch(bookActions.removeBook(book));
       const response = await axios.delete(API_URL + "/user/books/" + book._id);
       switch (Number(response.status)) {
         case 200:
-          dispatch(bookActions.removeBook(book));
           dispatch(bookActions.getFilters());
           break;
       }
     } catch (error) {
+      dispatch(bookActions.addBook(book));
       const axiosError = error as AxiosError;
       const axiosErrorStatus = axiosError.response?.status;
       switch (axiosErrorStatus) {
@@ -92,10 +96,10 @@ export const removeBook = (book: CompleteBook) => {
 export const updateBook = (book: CompleteBook) => {
   return async (dispatch: (arg: any) => void) => {
     try {
+      dispatch(bookActions.updateBook(book));
       const response = await axios.patch(API_URL + "/user/books/", { book });
       switch (Number(response.status)) {
         case 200:
-          dispatch(bookActions.updateBook(book));
           dispatch(bookActions.getFilters());
           break;
       }
@@ -129,13 +133,13 @@ export const sortPreferenceAction = (preference: SortPreferences) => {
   return async (dispatch: (arg: any) => void) => {
     try {
       const sortPreference: Config["sortPreference"] = preference;
+      dispatch(bookActions.setSortPreference(preference));
+      dispatch(bookActions.sortBooks());
       const response = await axios.patch(API_URL + "/user/config", {
         sortPreference,
       });
       switch (Number(response.status)) {
         case 200:
-          dispatch(bookActions.setSortPreference(preference));
-          dispatch(bookActions.sortBooks());
           return true;
       }
     } catch (error) {

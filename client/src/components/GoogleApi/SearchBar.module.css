@@ -4,7 +4,6 @@
   flex-wrap: wrap;
   gap: var(--gap-medium);
   justify-content: center;
-  margin-bottom: var(--gap-big);
   margin-top: var(--gap-big);
 }
 

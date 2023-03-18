@@ -15,16 +15,17 @@ export const fetchUsers = () => {
     };
 
     try {
+      dispatch(usersActions.isLoadingToggle(true));
       const response = await fetchData();
       switch (Number(response.status)) {
         case 200:
-          // remove yourself from the social users list
-          // sessionStorage.getItem("user") has the googleId saved
+          dispatch(usersActions.isLoadingToggle(false));
           const socialUsers: User[] = response.data;
           dispatch(usersActions.replaceUsers(socialUsers));
           break;
       }
     } catch (error) {
+      dispatch(usersActions.isLoadingToggle(false));
       const axiosError = error as AxiosError;
       const axiosErrorStatus = axiosError.response?.status;
       switch (axiosErrorStatus) {
@@ -44,20 +45,22 @@ export const fetchSocialUserData = (googleId: string) => {
     };
 
     try {
+      dispatch(usersActions.isLoadingToggle(true));
       const response = await fetchData();
       switch (Number(response.status)) {
         case 200:
-          const selectedUser: User = await response.data.socialUser;
-          const books: CompleteBook[] = await response.data.socialUserBooks;
-          const friends: User[] = await response.data.filteredSocialUserFriends;
+          const selectedUser: SocialUser = await response.data;
           dispatch(usersActions.replaceSelectedUser(selectedUser));
-          dispatch(usersActions.replaceBooks(books));
-          dispatch(usersActions.replaceFriends(friends));
+          // Save the downloaded data so it doesn't need to be download again later, unless the page is refreshed
+          dispatch(usersActions.addLoadedUser(selectedUser));
+          dispatch(usersActions.replaceBooks(selectedUser.books));
           dispatch(usersActions.getFilters());
           dispatch(usersActions.sortBooks());
+          dispatch(usersActions.isLoadingToggle(false));
           break;
       }
     } catch (error) {
+      dispatch(usersActions.isLoadingToggle(false));
       const axiosError = error as AxiosError;
       const axiosErrorStatus = axiosError.response?.status;
       switch (axiosErrorStatus) {

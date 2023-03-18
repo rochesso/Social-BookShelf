@@ -77,8 +77,8 @@ const BookSettings = ({ book, updatingBookHandler, hasDelete }: AppProps) => {
       rate: book.status.rate,
     };
     const updatedBook = { ...book, status: config };
-    await dispatch(updateBook(updatedBook));
     updatingBookHandler();
+    await dispatch(updateBook(updatedBook));
   };
 
   const removeBookHandler = async () => {

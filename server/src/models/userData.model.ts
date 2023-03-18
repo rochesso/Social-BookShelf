@@ -196,7 +196,7 @@ const addFriend = async (user: User, friendGoogleId: string) => {
         .updateOne({ $push: { friends: [friend] } })
         .exec();
       if (isAdded) {
-        return friend.toJSON();
+        return "Friend added!";
       } else {
         return false;
       }

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Loading from "../../components/Loading/Loading";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import Users from "../../components/Users/Users";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
@@ -12,17 +13,23 @@ const SocialUsers = () => {
 
   useEffect(() => {
     const getData = async () => {
-      await dispatch(fetchUsers());
+      if (usersStore.users.length === 0) {
+        await dispatch(fetchUsers());
+      }
     };
     getData();
-  }, [dispatch]);
+  }, [dispatch, usersStore.users.length]);
 
   return (
     <div className={styles.container}>
       <PageTitle> Discover what is being read by other users!</PageTitle>
-      <div className={styles.users}>
-        <Users userList={usersStore.users} />
-      </div>
+      {!usersStore.isLoading ? (
+        <div className={styles.users}>
+          <Users userList={usersStore.users} />
+        </div>
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 };

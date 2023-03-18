@@ -19,10 +19,8 @@ const SortingPreference = ({ store, sortAction }: AppProps) => {
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const newValue = event.target.value as SortPreferences;
-    const response = await dispatch(sortAction(newValue));
-    if (response) {
-      setSorPreference(newValue);
-    }
+    setSorPreference(newValue);
+    await dispatch(sortAction(newValue));
   };
 
   return (

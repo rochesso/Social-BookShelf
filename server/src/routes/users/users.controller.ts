@@ -38,9 +38,9 @@ const httpGetSocialUserData = async (req: Request, res: Response) => {
     );
 
     const socialUserData = {
-      socialUser,
-      socialUserBooks,
-      filteredSocialUserFriends,
+      user: socialUser,
+      books: socialUserBooks,
+      friends: filteredSocialUserFriends,
     };
     return res.status(200).json(socialUserData);
   }
@@ -53,7 +53,7 @@ const httpAddFriend = async (req: Request, res: Response) => {
     const user = req.user;
     const response = await addFriend(user, friendGoogleId);
     if (response) {
-      return res.status(200).json(response);
+      return res.status(201).json(response);
     }
     return res.status(304).json("Friend already exist");
   } else {

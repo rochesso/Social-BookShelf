@@ -1,4 +1,10 @@
 .container {
+  display: grid;
+  justify-items: center;
+  width: 100%;
+}
+
+.books {
   animation: books-grow 0.3s both;
   display: flex;
   flex-wrap: wrap;
@@ -16,6 +22,13 @@
   gap: var(--gap-medium);
   justify-content: center;
   margin: var(--gap-big) 0;
+}
+
+.warning {
+  color: var(--color-background-septenary);
+  font-size: var(--font-size-big);
+  margin: var(--gap-big);
+  text-align: center;
 }
 
 @keyframes books-grow {

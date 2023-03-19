@@ -3,7 +3,7 @@
   display: grid;
   font-size: var(--font-size-big);
   height: inherit;
-  margin: 0 2rem;
+  padding: 0 1rem;
   padding-bottom: 2rem;
   place-items: center;
   position: relative;

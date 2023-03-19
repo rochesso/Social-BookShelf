@@ -16,13 +16,14 @@ const MyLibrary = () => {
     dispatch(searchMyLibrary("", "all"));
   }, [dispatch]);
 
-  const books = BookStore.filteredBooks;
+  const filteredBooks = BookStore.filteredBooks;
+  const books = BookStore.books;
 
   return (
     <main className={styles.container}>
       <PageTitle>Your Library</PageTitle>
       {books.length > 0 ? (
-        <BookList bookList={books} from={"user"} />
+        <BookList bookList={filteredBooks} from={"user"} />
       ) : (
         <p className={styles.warning}>
           What are you waiting to add a book?{" "}

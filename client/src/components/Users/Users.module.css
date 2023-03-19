@@ -3,6 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--gap-big);
+  height: auto;
   justify-content: center;
   margin: 0 2rem;
   margin-top: var(--gap-big);

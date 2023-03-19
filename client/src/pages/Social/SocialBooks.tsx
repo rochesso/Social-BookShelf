@@ -22,7 +22,8 @@ const SocialBooks = () => {
   const friendsStore = useAppSelector((state) => state.friendsStore);
 
   const socialUser = usersStore.selectedUser;
-  const books = usersStore.filteredBooks;
+  const filteredBooks = usersStore.filteredBooks;
+  const books = usersStore.books;
 
   useEffect(() => {
     const getData = async () => {
@@ -114,7 +115,7 @@ const SocialBooks = () => {
           </div>
 
           {books.length > 0 ? (
-            <BookList bookList={books} from={"social"} />
+            <BookList bookList={filteredBooks} from={"social"} />
           ) : (
             <p className={styles.warning}>No books yet</p>
           )}

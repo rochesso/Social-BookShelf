@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { useAppSelector } from "../../hooks/useStore";
 
 import styles from "./BookList.module.css";
@@ -48,10 +47,14 @@ const BookList = ({ bookList, from }: AppProps) => {
   ));
 
   return (
-    <Fragment>
+    <section className={styles.container}>
       <div className={styles.actions}>{filter}</div>
-      <section className={styles.container}>{books}</section>
-    </Fragment>
+      {bookList.length > 0 ? (
+        <div className={styles.books}>{books}</div>
+      ) : (
+        <p className={styles.warning}>No books found</p>
+      )}
+    </section>
   );
 };
 

@@ -11,8 +11,7 @@
 .warning {
   color: var(--color-background-septenary);
   font-size: var(--font-size-big);
-  margin: 0 3rem;
-  margin-top: var(--gap-medium);
+  margin: var(--gap-big);
   text-align: center;
 }
 

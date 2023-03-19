@@ -10,6 +10,13 @@
   height: 10rem;
 }
 
+@media only screen and (max-width: 500px) {
+  .loading {
+    height: 8rem;
+    margin-top: 5rem;
+  }
+}
+
 @keyframes rotation {
   from {
     transform: rotate(0deg);

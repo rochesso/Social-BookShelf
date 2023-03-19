@@ -18,6 +18,7 @@ export const fetchUserData = () => {
       const response = await fetchData();
       switch (Number(response.status)) {
         case 200:
+          dispatch(bookActions.fetchedDataToggle(true));
           const booksData: CompleteBook[] = response.data.books;
           const configData: Config = response.data.config;
           const friendsData: User[] = response.data.friends;

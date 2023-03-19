@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAppDispatch } from "../../hooks/useStore";
 import FilterItem from "./FilterItem";
 import SortingPreference from "../SortingPreference/SortingPreference";
@@ -14,8 +14,14 @@ type AppProps = {
 const Filter = ({ store, searchAction, sortAction }: AppProps) => {
   const dispatch = useAppDispatch();
 
+  const [filters, setFilters] = useState<Filter[]>([]);
   const [selected, setSelected] = useState<Filter>("all");
+
   const searchTextRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setFilters(store.filters);
+  }, [store.filters]);
 
   // Search for a book in your library
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +45,6 @@ const Filter = ({ store, searchAction, sortAction }: AppProps) => {
   };
 
   // Get all filters and return them with the FilterItem component
-  const filters: Filter[] = store.filters;
   const filterItems = filters.map((filter) => {
     if (searchTextRef.current) {
       const search = searchTextRef.current.value;

@@ -8,6 +8,7 @@ interface bookState {
   filters: Filter[];
   filteredBooks: CompleteBook[];
   sortPreference: Config["sortPreference"];
+  fetchedData: boolean;
 }
 
 // Define the initial state using that type
@@ -19,12 +20,17 @@ const initialState: bookState = {
   sortPreference:
     (sessionStorage.getItem("sortPreference") as SortPreferences) ||
     SortPreferences.title,
+  fetchedData: false,
 };
 
 const bookSlice = createSlice({
   name: "configStore",
   initialState,
   reducers: {
+    fetchedDataToggle(state, action: PayloadAction<boolean>) {
+      state.fetchedData = action.payload;
+    },
+
     setSortPreference(state, action: PayloadAction<SortPreferences>) {
       state.sortPreference = action.payload;
       sessionStorage.setItem("sortPreference", action.payload);

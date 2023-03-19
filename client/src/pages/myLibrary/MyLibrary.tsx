@@ -1,37 +1,47 @@
 import { useEffect } from "react";
+
 import { NavLink } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
+import { useAppSelector, useAppDispatch } from "../../hooks/useStore";
+
 import { searchMyLibrary } from "../../store/book-actions";
 
 import BookList from "../../components/Book/BookList";
 
 import styles from "./MyLibrary.module.css";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import Loading from "../../components/Loading/Loading";
 
 const MyLibrary = () => {
+  const bookStore = useAppSelector((state) => state.bookStore);
   const dispatch = useAppDispatch();
-  const BookStore = useAppSelector((state) => state.bookStore);
+
+  const filteredBooks = bookStore.filteredBooks;
+  const books = bookStore.books;
 
   useEffect(() => {
-    dispatch(searchMyLibrary("", "all"));
+    const getData = async () => {
+      await dispatch(searchMyLibrary("", "all"));
+    };
+    getData();
   }, [dispatch]);
-
-  const filteredBooks = BookStore.filteredBooks;
-  const books = BookStore.books;
 
   return (
     <main className={styles.container}>
       <PageTitle>Your Library</PageTitle>
-      {books.length > 0 ? (
-        <BookList bookList={filteredBooks} from={"user"} />
+      {bookStore.fetchedData ? (
+        books.length > 0 ? (
+          <BookList bookList={filteredBooks} from={"user"} />
+        ) : (
+          <p className={styles.warning}>
+            What are you waiting to add a book?{" "}
+            <NavLink className={styles.search} to={"/search"}>
+              Click here
+            </NavLink>{" "}
+            to start!
+          </p>
+        )
       ) : (
-        <p className={styles.warning}>
-          What are you waiting to add a book?{" "}
-          <NavLink className={styles.search} to={"/search"}>
-            Click here
-          </NavLink>{" "}
-          to start!
-        </p>
+        <Loading />
       )}
     </main>
   );

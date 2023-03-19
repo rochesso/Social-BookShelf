@@ -31,9 +31,6 @@ axios.defaults.withCredentials = true;
 function App() {
   const dispatch = useAppDispatch();
 
-  // const userStore = useAppSelector((state) => state.userStore);
-  // const user = userStore.user;
-
   useEffect(() => {
     const getData = async () => {
       const user = await dispatch(fetchUser());

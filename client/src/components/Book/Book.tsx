@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import { addBook } from "../../store/book-actions";
 import { ReadingStatus } from "../../globals";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import BookInfo from "./BookInfo";
 import BookSettings from "./BookSettings";
@@ -67,14 +68,20 @@ const Book = ({ book, hasDelete, from }: AppProps) => {
     <div className={styles.book}>
       {/* Favorite heart icon */}
       {status.isFavorite ? (
-        <img
+        <LazyLoadImage
           className={styles.favoriteIcon}
           src={favoriteIcon}
           alt="Favorite icon, heart."
+          loading="lazy"
         />
       ) : null}
       <div className={styles.container}>
-        <img className={styles.cover} src={cover} alt="Book cover" />
+        <LazyLoadImage
+          className={styles.cover}
+          src={cover}
+          alt="Book cover"
+          loading="lazy"
+        />
 
         {isUpdating ? (
           <BookSettings
@@ -89,18 +96,20 @@ const Book = ({ book, hasDelete, from }: AppProps) => {
         {/* or if in social page add button */}
         {from === "user" ? (
           <div className={styles.settings} onClick={updatingBookHandler}>
-            <img
+            <LazyLoadImage
               className={styles.settings__img}
               src={settingsIcon}
               alt="Settings icon!"
+              loading="lazy"
             />
           </div>
         ) : userBooks.find((item) => item.googleId === book.googleId) ? null : (
           <div className={styles.add} onClick={addBookHandler}>
-            <img
+            <LazyLoadImage
               className={styles.add__img}
               src={plusIcon}
               alt="Add this book to your library!"
+              loading="lazy"
             />
           </div>
         )}

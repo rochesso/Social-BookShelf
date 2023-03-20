@@ -2,6 +2,8 @@ import plusIcon from "../../assets/svg/plus-white.png";
 import styles from "./SearchedBook.module.css";
 import { addBook } from "../../store/book-actions";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import LazyLoad from "react-lazy-load";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -84,27 +86,35 @@ const SearchedBook = ({ book }: AppProps) => {
   };
 
   return (
-    <div className={styles.container}>
-      <img className={styles.cover} src={cover} alt="Book cover" />
-      <div className={styles.information}>
-        <h4 className={styles.information__title}>{titleString}</h4>
-        <h5 className={styles.information__authors}>{authorsToShow}</h5>
-        <p className={styles.information__categories}>{categories}</p>
+    <LazyLoad>
+      <div className={styles.container}>
+        <LazyLoadImage
+          className={styles.cover}
+          src={cover}
+          alt="Book cover"
+          loading="lazy"
+        />
+        <div className={styles.information}>
+          <h4 className={styles.information__title}>{titleString}</h4>
+          <h5 className={styles.information__authors}>{authorsToShow}</h5>
+          <p className={styles.information__categories}>{categories}</p>
 
-        <p className={styles.information__pageCount}>
-          {pageCount ? pageCount : 0} pages
-        </p>
+          <p className={styles.information__pageCount}>
+            {pageCount ? pageCount : 0} pages
+          </p>
 
-        {/* Button to add a book to your library */}
-        <div className={styles.add} onClick={addBookHandler}>
-          <img
-            className={styles.add__img}
-            src={plusIcon}
-            alt="Add this book to your library!"
-          />
+          {/* Button to add a book to your library */}
+          <div className={styles.add} onClick={addBookHandler}>
+            <LazyLoadImage
+              className={styles.add__img}
+              src={plusIcon}
+              alt="Add this book to your library!"
+              loading="lazy"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </LazyLoad>
   );
 };
 export default SearchedBook;

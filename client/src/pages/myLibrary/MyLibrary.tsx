@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import LazyLoad from "react-lazy-load";
 
 import { NavLink } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../hooks/useStore";
@@ -30,7 +31,9 @@ const MyLibrary = () => {
       <PageTitle>Your Library</PageTitle>
       {bookStore.fetchedData ? (
         books.length > 0 ? (
-          <BookList bookList={filteredBooks} from={"user"} />
+          <LazyLoad>
+            <BookList bookList={filteredBooks} from={"user"} />
+          </LazyLoad>
         ) : (
           <p className={styles.warning}>
             What are you waiting to add a book?{" "}

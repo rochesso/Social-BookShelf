@@ -1,4 +1,5 @@
 import { useAppSelector } from "../../hooks/useStore";
+import LazyLoad from "react-lazy-load";
 
 import styles from "./BookList.module.css";
 
@@ -43,7 +44,9 @@ const BookList = ({ bookList, from }: AppProps) => {
   }
 
   const books = bookList.map((book) => (
-    <Book key={book.googleId} book={book} hasDelete={true} from={from} />
+    <LazyLoad>
+      <Book key={book.googleId} book={book} hasDelete={true} from={from} />
+    </LazyLoad>
   ));
 
   return (

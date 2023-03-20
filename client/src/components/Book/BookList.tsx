@@ -1,5 +1,6 @@
 import { useAppSelector } from "../../hooks/useStore";
 import LazyLoad from "react-lazy-load";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import styles from "./BookList.module.css";
 
@@ -14,6 +15,7 @@ import {
   searchSocialLibrary,
   sortSocialAction,
 } from "../../store/users-actions";
+import { useEffect, useState } from "react";
 
 type AppProps = {
   bookList: CompleteBook[];
@@ -23,6 +25,43 @@ type AppProps = {
 const BookList = ({ bookList, from }: AppProps) => {
   const bookStore = useAppSelector((state) => state.bookStore);
   const usersStore = useAppSelector((state) => state.usersStore);
+  const books = bookStore.filteredBooks;
+
+  const [slice, setSlice] = useState(10);
+  const [displayBooks, setDisplayBooks] = useState<any[]>([]);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+
+  useEffect(() => {
+    setDisplayBooks(
+      books.slice(0, slice).map((book: CompleteBook) => (
+        <LazyLoad>
+          <Book key={book.googleId} book={book} hasDelete={true} from={from} />
+        </LazyLoad>
+      ))
+    );
+    if (books.length < 11) {
+      setHasMore(false);
+    } else {
+      setHasMore(true);
+    }
+  }, [books, from, slice]);
+
+  const addSlice = () => {
+    setDisplayBooks([...displayBooks, ...nextSlice()]);
+
+    setSlice(slice + 3);
+    if (slice >= books.length) {
+      setHasMore(false);
+    }
+  };
+
+  const nextSlice = () => {
+    return books.slice(slice, slice + 3).map((book: CompleteBook) => (
+      <LazyLoad>
+        <Book key={book.googleId} book={book} hasDelete={true} from={from} />
+      </LazyLoad>
+    ));
+  };
 
   let filter: JSX.Element = <ul></ul>;
   if (from === "user") {
@@ -43,17 +82,22 @@ const BookList = ({ bookList, from }: AppProps) => {
     );
   }
 
-  const books = bookList.map((book) => (
-    <LazyLoad>
-      <Book key={book.googleId} book={book} hasDelete={true} from={from} />
-    </LazyLoad>
-  ));
-
   return (
     <section className={styles.container}>
       <div className={styles.actions}>{filter}</div>
+
       {bookList.length > 0 ? (
-        <div className={styles.books}>{books}</div>
+        <InfiniteScroll
+          dataLength={displayBooks.length}
+          scrollableTarget="scrollable-div"
+          next={addSlice}
+          className={styles.books}
+          scrollThreshold={0.8}
+          hasMore={hasMore}
+          loader={"Loading more Books..."}
+        >
+          {displayBooks}
+        </InfiniteScroll>
       ) : (
         <p className={styles.warning}>No books found</p>
       )}

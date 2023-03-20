@@ -137,7 +137,7 @@ const removeUserBook = async (userId: string, bookId: string) => {
   if (userData) {
     if (bookId && bookId != "undefined") {
       const isRemoved = await userData
-        .updateOne({ $pull: { books: { _id: bookId } } })
+        .updateOne({ $pull: { books: { googleId: bookId } } })
         .exec();
       if (isRemoved) {
         const message = "Book removed from your collection!";
@@ -169,7 +169,7 @@ const updateUserBook = async (userId: string, book: CompleteBook) => {
         {
           arrayFilters: [
             {
-              "element._id": book._id,
+              "element.googleId": book.googleId,
             },
           ],
         }

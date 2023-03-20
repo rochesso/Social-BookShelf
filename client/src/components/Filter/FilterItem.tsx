@@ -4,6 +4,7 @@ import { ReadingStatus } from "../../globals";
 
 type AppProps = {
   filter: Filter;
+  count: number;
   search: string;
   isSelected: boolean;
   selectedHandler: (filter: Filter) => void;
@@ -13,6 +14,7 @@ type AppProps = {
 // Filter by Reading Status.
 // Added later the option to search for a book
 const FilterItem = ({
+  count,
   filter,
   search,
   isSelected,
@@ -52,7 +54,7 @@ const FilterItem = ({
       onClick={filterHandler}
       className={isSelected ? `${styles.item} ${styles.selected}` : styles.item}
     >
-      {filterName}
+      {filterName} <span className={styles.count}>{count ? count : 0}</span>
     </li>
   );
 };

@@ -47,7 +47,7 @@ const SearchedBook = ({ book }: AppProps) => {
       formButton.click();
     };
     return (
-      <span key={author} onClick={searchByThisAuthor}>
+      <span className={styles.author} key={author} onClick={searchByThisAuthor}>
         {author}
       </span>
     );

@@ -16,6 +16,7 @@ const BookSettings = ({ book, updatingBookHandler, hasDelete }: AppProps) => {
   const [currentPage, setCurrentPage] = useState(book.status.currentPage);
   const [isFavorite, setIsFavorite] = useState(book.status.isFavorite);
   const [readingStatus, setReadingStatus] = useState(book.status.reading);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const currentPageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(event.target.value);
@@ -81,6 +82,10 @@ const BookSettings = ({ book, updatingBookHandler, hasDelete }: AppProps) => {
     await dispatch(updateBook(updatedBook));
   };
 
+  const isDeletingHandler = async () => {
+    setIsDeleting((prevState) => !prevState);
+  };
+
   const removeBookHandler = async () => {
     await dispatch(removeBook(book));
   };
@@ -138,24 +143,48 @@ const BookSettings = ({ book, updatingBookHandler, hasDelete }: AppProps) => {
             Favorite?
           </label>
         </div>
-        <div className={styles.actions}>
-          <button
-            className={styles.actions__button}
-            form={book.googleId}
-            type="submit"
-          >
-            Submit
-          </button>
-          {hasDelete ? (
+        {/* Submit and Delete */}
+        {!isDeleting ? (
+          <div className={styles.actions}>
+            <button
+              className={styles.actions__button}
+              form={book.googleId}
+              type="submit"
+            >
+              Submit
+            </button>
+
+            {hasDelete ? (
+              <button
+                className={`${styles.actions__button} ${styles["actions__button--red"]}`}
+                onClick={isDeletingHandler}
+                type="button"
+              >
+                Delete
+              </button>
+            ) : null}
+          </div>
+        ) : (
+          <div className={styles.actions}>
+            {/* Delete or Cancel */}
             <button
               className={`${styles.actions__button} ${styles["actions__button--red"]}`}
+              form={book.googleId}
               onClick={removeBookHandler}
               type="button"
             >
               Delete
             </button>
-          ) : null}
-        </div>
+
+            <button
+              className={`${styles.actions__button}`}
+              onClick={isDeletingHandler}
+              type="button"
+            >
+              Cancel
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );

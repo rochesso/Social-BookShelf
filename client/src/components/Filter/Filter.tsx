@@ -11,17 +11,37 @@ type AppProps = {
   sortAction: any;
 };
 
+interface Counts {
+  [key: string]: number;
+}
+
 const Filter = ({ store, searchAction, sortAction }: AppProps) => {
   const dispatch = useAppDispatch();
 
   const [filters, setFilters] = useState<Filter[]>([]);
   const [selected, setSelected] = useState<Filter>("all");
+  const [counts, setCounts] = useState<Counts>({});
 
   const searchTextRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    const books: CompleteBook[] = store.books;
+    const counts: Counts = {};
+    counts["all"] = 0;
+    counts["favorites"] = 0;
+
+    for (const book of books) {
+      counts["all"] += 1;
+      counts[book.status.reading] = counts[book.status.reading]
+        ? counts[book.status.reading] + 1
+        : 1;
+      if (book.status.isFavorite) {
+        counts["favorites"] += 1;
+      }
+    }
     setFilters(store.filters);
-  }, [store.filters]);
+    setCounts(counts);
+  }, [store.filters, store.books]);
 
   // Search for a book in your library
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,6 +76,7 @@ const Filter = ({ store, searchAction, sortAction }: AppProps) => {
         <FilterItem
           key={filter}
           filter={filter}
+          count={counts[filter]}
           search={search}
           isSelected={isSelected}
           selectedHandler={selectedHandler}

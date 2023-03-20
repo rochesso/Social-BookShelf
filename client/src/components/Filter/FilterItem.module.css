@@ -2,7 +2,10 @@
   background-color: var(--color-background-quinary);
   box-shadow: var(--shadow-normal);
   cursor: pointer;
+  display: grid;
   padding: var(--padding-button);
+  place-items: center;
+  position: relative;
   transition: all 0.2s ease-in-out;
 }
 .item:hover {
@@ -10,4 +13,18 @@
 }
 .selected {
   background-color: var(--color-background-primary);
+}
+
+.count {
+  --size: 2rem;
+  background-color: var(--color-background-tertiary);
+  border-radius: 50%;
+  display: grid;
+  font-size: var(--font-size-small);
+  height: var(--size);
+  place-items: center;
+  position: absolute;
+  right: calc(var(--size) / -3);
+  top: calc(var(--size) / -3);
+  width: var(--size);
 }

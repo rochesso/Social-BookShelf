@@ -99,7 +99,7 @@ const usersSlice = createSlice({
       const filters = Array.from(
         new Set(state.books.map((book) => book.status.reading))
       );
-      if (filters.length > 1) {
+      if (filters.length > 0) {
         state.filters = [...filters, "all", "favorites"];
       } else {
         state.filters = ["all", "favorites"];

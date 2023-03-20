@@ -45,13 +45,13 @@ export const addBook = (book: CompleteBook) => {
   return async (dispatch: (arg: any) => void) => {
     try {
       dispatch(bookActions.addBook(book));
+      dispatch(bookActions.getFilters());
+      dispatch(bookActions.sortBooks());
       dispatch(googleSearchBooksActions.removeBook(book));
       const response = await axios.post(API_URL + "/user/books", { book });
       switch (Number(response.status)) {
         case 201:
           // dispatch(fetchUserData());
-          dispatch(bookActions.getFilters());
-          dispatch(bookActions.sortBooks());
           break;
       }
     } catch (error) {
@@ -63,6 +63,9 @@ export const addBook = (book: CompleteBook) => {
         case 401:
           dispatch(userActions.logoutUser());
           break;
+        case 400:
+          dispatch(fetchUserData());
+          break;
       }
     }
   };
@@ -72,10 +75,12 @@ export const removeBook = (book: CompleteBook) => {
   return async (dispatch: (arg: any) => void) => {
     try {
       dispatch(bookActions.removeBook(book));
-      const response = await axios.delete(API_URL + "/user/books/" + book._id);
+      dispatch(bookActions.getFilters());
+      const response = await axios.delete(
+        API_URL + "/user/books/" + book.googleId
+      );
       switch (Number(response.status)) {
         case 200:
-          dispatch(bookActions.getFilters());
           break;
       }
     } catch (error) {
@@ -98,10 +103,10 @@ export const updateBook = (book: CompleteBook) => {
   return async (dispatch: (arg: any) => void) => {
     try {
       dispatch(bookActions.updateBook(book));
+      dispatch(bookActions.getFilters());
       const response = await axios.patch(API_URL + "/user/books/", { book });
       switch (Number(response.status)) {
         case 200:
-          dispatch(bookActions.getFilters());
           break;
       }
     } catch (error) {
@@ -110,6 +115,9 @@ export const updateBook = (book: CompleteBook) => {
       switch (axiosErrorStatus) {
         case 401:
           dispatch(userActions.logoutUser());
+          break;
+        case 400:
+          dispatch(fetchUserData());
           break;
       }
     }

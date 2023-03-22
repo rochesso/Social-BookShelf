@@ -5,6 +5,7 @@
   gap: var(--gap-medium);
   justify-content: center;
   list-style: none;
+  padding: 0 var(--gap-small);
 }
 
 .search {

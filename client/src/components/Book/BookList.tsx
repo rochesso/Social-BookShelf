@@ -32,7 +32,7 @@ const BookList = memo(
     const usersStore = useAppSelector((state) => state.usersStore);
 
     // Quantity of books to render as you scroll down
-    const increment = 15;
+    const increment = 8;
 
     const [displayBooks, setDisplayBooks] = useState<JSX.Element[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(true);
@@ -70,19 +70,29 @@ const BookList = memo(
     }, [bookStore, from, usersStore, initialSlice, setSlice]);
 
     useEffect(() => {
-      setDisplayBooks(
-        books.slice(0, slice).map((book: CompleteBook) => (
-          <LazyLoad key={book.googleId}>
-            <Book book={book} hasDelete={true} from={from} />
-          </LazyLoad>
-        ))
-      );
-      if (books.length < 11) {
-        setHasMore(false);
+      if (slice === initialSlice) {
+        setDisplayBooks(
+          books.slice(0, slice).map((book: CompleteBook) => (
+            <LazyLoad key={book.googleId}>
+              <Book book={book} hasDelete={true} from={from} />
+            </LazyLoad>
+          ))
+        );
+        if (books.length <= initialSlice) {
+          setHasMore(false);
+        } else {
+          setHasMore(true);
+        }
       } else {
-        setHasMore(true);
+        setDisplayBooks(
+          books.slice(0, slice).map((book: CompleteBook) => (
+            <LazyLoad key={book.googleId}>
+              <Book book={book} hasDelete={true} from={from} />
+            </LazyLoad>
+          ))
+        );
       }
-    }, [books, from, slice]);
+    }, [books, from, slice, initialSlice]);
 
     const nextSlice = useCallback(() => {
       return books.slice(slice, slice + increment).map((book: CompleteBook) => (
@@ -95,9 +105,10 @@ const BookList = memo(
     const addSlice = useCallback(() => {
       const newBooks = [...displayBooks, ...nextSlice()];
       setDisplayBooks(newBooks);
-      console.log(books.length);
 
       setSlice(slice + increment);
+      console.log(books.length);
+      console.log(slice + increment);
       if (slice + increment >= books.length) {
         setHasMore(false);
       }

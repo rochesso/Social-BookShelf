@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import styles from "./ProgressBar.module.css";
 import percentageIcon from "../../assets/svg/percentage-percent-svgrepo-com.svg";
 
@@ -6,7 +8,7 @@ type AppProps = {
   pageCount: number;
 };
 
-const ProgressBar = ({ currentPage, pageCount }: AppProps) => {
+const ProgressBar = memo(({ currentPage, pageCount }: AppProps) => {
   let barFillWidth = "0%";
 
   if (pageCount > 0) {
@@ -28,6 +30,6 @@ const ProgressBar = ({ currentPage, pageCount }: AppProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default ProgressBar;

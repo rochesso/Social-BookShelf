@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, memo, useState } from "react";
 import LazyLoad from "react-lazy-load";
 
 import { NavLink } from "react-router-dom";
@@ -12,7 +12,11 @@ import styles from "./MyLibrary.module.css";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import Loading from "../../components/Loading/Loading";
 
-const MyLibrary = () => {
+const MyLibrary = memo(() => {
+  // Quantity of books that is showed on the initial render
+  const initialSlice = 10;
+  const [slice, setSlice] = useState(initialSlice);
+
   const bookStore = useAppSelector((state) => state.bookStore);
   const dispatch = useAppDispatch();
 
@@ -21,33 +25,48 @@ const MyLibrary = () => {
 
   useEffect(() => {
     const getData = async () => {
+      setSlice(initialSlice);
       await dispatch(searchMyLibrary("", "all"));
     };
     getData();
   }, [dispatch]);
+
+  const bookListToRender = (
+    <LazyLoad>
+      <BookList
+        initialSlice={initialSlice}
+        slice={slice}
+        setSlice={setSlice}
+        bookList={filteredBooks}
+        from={"user"}
+      />
+    </LazyLoad>
+  );
+
+  const warning = (
+    <p className={styles.warning}>
+      What are you waiting for to add a book?{" "}
+      <NavLink className={styles.search} to={"/search"}>
+        Click here
+      </NavLink>{" "}
+      to add new books!
+    </p>
+  );
 
   return (
     <main className={styles.container}>
       <PageTitle>Your Library</PageTitle>
       {bookStore.fetchedData ? (
         books.length > 0 ? (
-          <LazyLoad>
-            <BookList bookList={filteredBooks} from={"user"} />
-          </LazyLoad>
+          bookListToRender
         ) : (
-          <p className={styles.warning}>
-            What are you waiting to add a book?{" "}
-            <NavLink className={styles.search} to={"/search"}>
-              Click here
-            </NavLink>{" "}
-            to start!
-          </p>
+          warning
         )
       ) : (
         <Loading />
       )}
     </main>
   );
-};
+});
 
 export default MyLibrary;

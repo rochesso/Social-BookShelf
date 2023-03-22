@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 import Loading from "../../components/Loading/Loading";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import Users from "../../components/Users/Users";
@@ -7,7 +7,7 @@ import { fetchUsers } from "../../store/users-actions";
 
 import styles from "./SocialUsers.module.css";
 
-const SocialUsers = () => {
+const SocialUsers = memo(() => {
   const dispatch = useAppDispatch();
   const usersStore = useAppSelector((state) => state.usersStore);
 
@@ -30,6 +30,6 @@ const SocialUsers = () => {
       )}
     </main>
   );
-};
+});
 
 export default SocialUsers;

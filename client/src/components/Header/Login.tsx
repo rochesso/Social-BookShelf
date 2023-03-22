@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { useAppSelector } from "../../hooks/useStore";
 import styles from "./Login.module.css";
 import picture from "../../assets/svg/login-profile.svg";
@@ -5,7 +7,7 @@ import anonymous from "../../assets/svg/anonymous-mask.svg";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const Login = () => {
+const Login = memo(() => {
   const userStore = useAppSelector((state) => state.userStore);
   const user: User | null = userStore.user;
 
@@ -41,6 +43,6 @@ const Login = () => {
       {content}
     </div>
   );
-};
+});
 
 export default Login;

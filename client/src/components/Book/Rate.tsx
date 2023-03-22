@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import styles from "./Rate.module.css";
 import RateItem from "./RateItem";
 
@@ -6,7 +8,7 @@ type AppProps = {
   from: string;
 };
 
-const Rate = ({ book, from }: AppProps) => {
+const Rate = memo(({ book, from }: AppProps) => {
   let starsColored: any = [];
   let starsBlack: any = [];
 
@@ -46,6 +48,6 @@ const Rate = ({ book, from }: AppProps) => {
       <div className={styles.container__black}>{starsBlack}</div>
     </div>
   );
-};
+});
 
 export default Rate;

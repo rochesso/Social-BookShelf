@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { NavLink } from "react-router-dom";
 
 import styles from "./NavItem.module.css";
@@ -7,7 +9,7 @@ type AppProps = {
   text: string;
 };
 
-const NavItem = ({ text, to }: AppProps) => {
+const NavItem = memo(({ text, to }: AppProps) => {
   return (
     <li className={styles.container}>
       <NavLink
@@ -21,6 +23,6 @@ const NavItem = ({ text, to }: AppProps) => {
       </NavLink>
     </li>
   );
-};
+});
 
 export default NavItem;

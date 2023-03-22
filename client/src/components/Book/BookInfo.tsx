@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import bookshelfIcon from "../../assets/svg/shelf-svgrepo-com.svg";
 import doneIcon from "../../assets/svg/done.svg";
 import notDoneIcon from "../../assets/svg/close.svg";
@@ -14,7 +16,7 @@ type AppProps = {
   from: string;
 };
 
-const BookInfo = ({ book, from }: AppProps) => {
+const BookInfo = memo(({ book, from }: AppProps) => {
   const { authors, title, categories, pageCount, status } = book;
   const reading = status.reading;
 
@@ -75,6 +77,6 @@ const BookInfo = ({ book, from }: AppProps) => {
       </p>
     </div>
   );
-};
+});
 
 export default BookInfo;

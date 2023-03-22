@@ -1,3 +1,4 @@
+import { useMemo, memo, useCallback } from "react";
 import { useAppSelector } from "../../hooks/useStore";
 import LazyLoad from "react-lazy-load";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -20,89 +21,112 @@ import { useEffect, useState } from "react";
 type AppProps = {
   bookList: CompleteBook[];
   from: "user" | "social";
+  slice: number;
+  initialSlice: number;
+  setSlice: (value: number) => void;
 };
 
-const BookList = ({ bookList, from }: AppProps) => {
-  const bookStore = useAppSelector((state) => state.bookStore);
-  const usersStore = useAppSelector((state) => state.usersStore);
-  const books = bookStore.filteredBooks;
+const BookList = memo(
+  ({ bookList, from, slice, setSlice, initialSlice }: AppProps) => {
+    const bookStore = useAppSelector((state) => state.bookStore);
+    const usersStore = useAppSelector((state) => state.usersStore);
 
-  const [slice, setSlice] = useState(10);
-  const [displayBooks, setDisplayBooks] = useState<any[]>([]);
-  const [hasMore, setHasMore] = useState<boolean>(true);
+    // Quantity of books to render as you scroll down
+    const increment = 15;
 
-  useEffect(() => {
-    setDisplayBooks(
-      books.slice(0, slice).map((book: CompleteBook) => (
-        <LazyLoad>
-          <Book key={book.googleId} book={book} hasDelete={true} from={from} />
+    const [displayBooks, setDisplayBooks] = useState<JSX.Element[]>([]);
+    const [hasMore, setHasMore] = useState<boolean>(true);
+
+    let books: CompleteBook[] = useMemo(() => {
+      if (from === "user") {
+        return bookStore.filteredBooks;
+      } else {
+        return usersStore.filteredBooks;
+      }
+    }, [bookStore.filteredBooks, usersStore.filteredBooks, from]);
+
+    let filter: JSX.Element = useMemo(() => {
+      if (from === "user") {
+        return (
+          <Filter
+            initialSlice={initialSlice}
+            setSlice={setSlice}
+            store={bookStore}
+            searchAction={searchMyLibrary}
+            sortAction={sortPreferenceAction}
+          />
+        );
+      } else {
+        return (
+          <Filter
+            initialSlice={initialSlice}
+            setSlice={setSlice}
+            store={usersStore}
+            searchAction={searchSocialLibrary}
+            sortAction={sortSocialAction}
+          />
+        );
+      }
+    }, [bookStore, from, usersStore, initialSlice, setSlice]);
+
+    useEffect(() => {
+      setDisplayBooks(
+        books.slice(0, slice).map((book: CompleteBook) => (
+          <LazyLoad key={book.googleId}>
+            <Book book={book} hasDelete={true} from={from} />
+          </LazyLoad>
+        ))
+      );
+      if (books.length < 11) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+      }
+    }, [books, from, slice]);
+
+    const nextSlice = useCallback(() => {
+      return books.slice(slice, slice + increment).map((book: CompleteBook) => (
+        <LazyLoad key={book.googleId}>
+          <Book book={book} hasDelete={true} from={from} />
         </LazyLoad>
-      ))
+      ));
+    }, [books, slice, from]);
+
+    const addSlice = useCallback(() => {
+      const newBooks = [...displayBooks, ...nextSlice()];
+      setDisplayBooks(newBooks);
+      console.log(books.length);
+
+      setSlice(slice + increment);
+      if (slice + increment >= books.length) {
+        setHasMore(false);
+      }
+    }, [books.length, displayBooks, slice, nextSlice, setSlice]);
+
+    const bookListToRender = (
+      <InfiniteScroll
+        dataLength={displayBooks.length}
+        scrollableTarget="scrollableTarget"
+        next={addSlice}
+        className={styles.books}
+        scrollThreshold={0.8}
+        hasMore={hasMore}
+        loader={"Loading more Books..."}
+      >
+        {displayBooks}
+      </InfiniteScroll>
     );
-    if (books.length < 11) {
-      setHasMore(false);
-    } else {
-      setHasMore(true);
-    }
-  }, [books, from, slice]);
 
-  const addSlice = () => {
-    setDisplayBooks([...displayBooks, ...nextSlice()]);
+    const warning = <p className={styles.warning}>No books found!</p>;
 
-    setSlice(slice + 3);
-    if (slice >= books.length) {
-      setHasMore(false);
-    }
-  };
+    return (
+      <section className={styles.container}>
+        <div className={styles.actions}>{filter}</div>
 
-  const nextSlice = () => {
-    return books.slice(slice, slice + 3).map((book: CompleteBook) => (
-      <LazyLoad>
-        <Book key={book.googleId} book={book} hasDelete={true} from={from} />
-      </LazyLoad>
-    ));
-  };
-
-  let filter: JSX.Element = <ul></ul>;
-  if (from === "user") {
-    filter = (
-      <Filter
-        store={bookStore}
-        searchAction={searchMyLibrary}
-        sortAction={sortPreferenceAction}
-      />
-    );
-  } else if (from === "social") {
-    filter = (
-      <Filter
-        store={usersStore}
-        searchAction={searchSocialLibrary}
-        sortAction={sortSocialAction}
-      />
+        {bookList.length > 0 ? bookListToRender : warning}
+      </section>
     );
   }
-
-  return (
-    <section className={styles.container}>
-      <div className={styles.actions}>{filter}</div>
-
-      {bookList.length > 0 ? (
-        <InfiniteScroll
-          dataLength={displayBooks.length}
-          scrollableTarget="scrollable-div"
-          next={addSlice}
-          className={styles.books}
-          scrollThreshold={0.8}
-          hasMore={hasMore}
-          loader={"Loading more Books..."}
-        >
-          {displayBooks}
-        </InfiniteScroll>
-      ) : (
-        <p className={styles.warning}>No books found</p>
-      )}
-    </section>
-  );
-};
+);
 
 export default BookList;

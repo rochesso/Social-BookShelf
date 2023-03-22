@@ -11,7 +11,9 @@
   gap: var(--gap-big);
   justify-content: center;
   margin-bottom: var(--gap-medium);
-  padding: 0 var(--gap-medium);
+  min-height: 26rem;
+  padding: 0.9rem var(--gap-medium);
+  width: 100%;
 }
 
 .actions {
@@ -40,11 +42,5 @@
   100% {
     margin: var(--gap-big) 0;
     opacity: 100%;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .books {
-    padding: 0;
   }
 }

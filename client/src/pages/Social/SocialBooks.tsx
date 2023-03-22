@@ -1,4 +1,4 @@
-import { useEffect, Fragment } from "react";
+import { useEffect, Fragment, memo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import {
@@ -14,12 +14,16 @@ import Friends from "../../components/Friends/Friends";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import Loading from "../../components/Loading/Loading";
 
-const SocialBooks = () => {
+const SocialBooks = memo(() => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { googleId } = useParams();
   const usersStore = useAppSelector((state) => state.usersStore);
   const friendsStore = useAppSelector((state) => state.friendsStore);
+
+  // Quantity of books that is showed on the initial render
+  const initialSlice = 10;
+  const [slice, setSlice] = useState(initialSlice);
 
   const socialUser = usersStore.selectedUser;
   const filteredBooks = usersStore.filteredBooks;
@@ -27,6 +31,7 @@ const SocialBooks = () => {
 
   useEffect(() => {
     const getData = async () => {
+      setSlice(initialSlice);
       if (googleId) {
         dispatch(usersActions.selectLoadedUser(googleId));
         const selectedUser = usersStore.selectedUser;
@@ -115,9 +120,17 @@ const SocialBooks = () => {
           </div>
 
           {books.length > 0 ? (
-            <BookList bookList={filteredBooks} from={"social"} />
+            <BookList
+              initialSlice={initialSlice}
+              slice={slice}
+              setSlice={setSlice}
+              bookList={filteredBooks}
+              from={"social"}
+            />
           ) : (
-            <p className={styles.warning}>No books yet</p>
+            <p
+              className={styles.warning}
+            >{`${socialUser?.user.lastName} has no books yet!`}</p>
           )}
 
           <PageTitle>{`${
@@ -127,12 +140,14 @@ const SocialBooks = () => {
           {hasFriends() ? (
             <Friends userList={friends} />
           ) : (
-            <p className={styles.warning}>No friends yet</p>
+            <p
+              className={styles.warning}
+            >{`${socialUser?.user.lastName} is not following anyone!`}</p>
           )}
         </main>
       )}
     </Fragment>
   );
-};
+});
 
 export default SocialBooks;

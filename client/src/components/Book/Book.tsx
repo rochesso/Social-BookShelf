@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo, useCallback, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import { addBook } from "../../store/book-actions";
 import { ReadingStatus } from "../../globals";
@@ -21,7 +21,7 @@ type AppProps = {
   from: string;
 };
 
-const Book = ({ book, hasDelete, from }: AppProps) => {
+const Book = memo(({ book, hasDelete, from }: AppProps) => {
   const dispatch = useAppDispatch();
 
   const bookStore = useAppSelector((state) => state.bookStore);
@@ -32,12 +32,12 @@ const Book = ({ book, hasDelete, from }: AppProps) => {
   const { imageLinks, status } = book;
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const updatingBookHandler = () => {
+  const updatingBookHandler = useCallback(() => {
     setIsUpdating((prevState) => !prevState);
-  };
+  }, []);
 
-  // used when on the social page to add someone else book to your library
-  const addBookHandler = async () => {
+  // used on the social page to add someone else's book to your library
+  const addBookHandler = useCallback(async () => {
     if (user) {
       const status = {
         currentPage: 0,
@@ -52,9 +52,9 @@ const Book = ({ book, hasDelete, from }: AppProps) => {
         window.location.replace(API_URL + "/auth/google");
       }
     }
-  };
+  }, [book, dispatch, user]);
 
-  // Check image available
+  // Check if cover image is available
   let cover: string = "null";
   if (imageLinks) {
     if (imageLinks.thumbnail) {
@@ -64,57 +64,75 @@ const Book = ({ book, hasDelete, from }: AppProps) => {
     }
   }
 
+  // Check if you already has the book
+  const hasTheBook = useMemo(
+    () => userBooks.find((item) => item.googleId === book.googleId),
+    [book.googleId, userBooks]
+  );
+
+  // Content to render
+  const favoriteImage = status.isFavorite ? (
+    <LazyLoadImage
+      className={styles.favoriteIcon}
+      src={favoriteIcon}
+      alt="Favorite icon, heart."
+      loading="lazy"
+    />
+  ) : null;
+
+  const coverImage = (
+    <LazyLoadImage
+      className={styles.cover}
+      src={cover}
+      alt="Book cover"
+      loading="lazy"
+    />
+  );
+
+  const sideContent = isUpdating ? (
+    <BookSettings
+      hasDelete={hasDelete}
+      book={book}
+      updatingBookHandler={updatingBookHandler}
+    />
+  ) : (
+    <BookInfo book={book} from={from} />
+  );
+
+  const settingsGear = (
+    <div className={styles.settings} onClick={updatingBookHandler}>
+      <LazyLoadImage
+        className={styles.settings__img}
+        src={settingsIcon}
+        alt="Settings icon!"
+        loading="lazy"
+      />
+    </div>
+  );
+
+  const plusButton = (
+    <div className={styles.add} onClick={addBookHandler}>
+      <LazyLoadImage
+        className={styles.add__img}
+        src={plusIcon}
+        alt="Add this book to your library!"
+        loading="lazy"
+      />
+    </div>
+  );
+
   return (
     <div className={styles.book}>
       {/* Favorite heart icon */}
-      {status.isFavorite ? (
-        <LazyLoadImage
-          className={styles.favoriteIcon}
-          src={favoriteIcon}
-          alt="Favorite icon, heart."
-          loading="lazy"
-        />
-      ) : null}
+      {favoriteImage}
       <div className={styles.container}>
-        <LazyLoadImage
-          className={styles.cover}
-          src={cover}
-          alt="Book cover"
-          loading="lazy"
-        />
-
-        {isUpdating ? (
-          <BookSettings
-            hasDelete={hasDelete}
-            book={book}
-            updatingBookHandler={updatingBookHandler}
-          />
-        ) : (
-          <BookInfo book={book} from={from} />
-        )}
+        {coverImage}
+        {sideContent}
         {/* Button to open the form to updated a book */}
         {/* or if in social page add button */}
-        {from === "user" ? (
-          <div className={styles.settings} onClick={updatingBookHandler}>
-            <LazyLoadImage
-              className={styles.settings__img}
-              src={settingsIcon}
-              alt="Settings icon!"
-              loading="lazy"
-            />
-          </div>
-        ) : userBooks.find((item) => item.googleId === book.googleId) ? null : (
-          <div className={styles.add} onClick={addBookHandler}>
-            <LazyLoadImage
-              className={styles.add__img}
-              src={plusIcon}
-              alt="Add this book to your library!"
-              loading="lazy"
-            />
-          </div>
-        )}
+        {from === "user" ? settingsGear : hasTheBook ? null : plusButton}
       </div>
     </div>
   );
-};
+});
 export default Book;

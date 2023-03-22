@@ -1,8 +1,10 @@
+import { memo } from "react";
+
 import { useAppSelector } from "../../hooks/useStore";
 import styles from "./Header.module.css";
 import Login from "./Login";
 
-const Header = () => {
+const Header = memo(() => {
   const userStore = useAppSelector((state) => state.userStore);
   const user: User | null = userStore.user;
 
@@ -15,6 +17,6 @@ const Header = () => {
       <Login />
     </header>
   );
-};
+});
 
 export default Header;

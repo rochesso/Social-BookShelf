@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { updateBook } from "../../store/book-actions";
 import { useAppDispatch } from "../../hooks/useStore";
 
@@ -12,7 +13,7 @@ type AppProps = {
   from: string;
 };
 
-const RateItem = ({ rate, book, isColored, from }: AppProps) => {
+const RateItem = memo(({ rate, book, isColored, from }: AppProps) => {
   const dispatch = useAppDispatch();
 
   const updateBookHandler = async () => {
@@ -52,6 +53,6 @@ const RateItem = ({ rate, book, isColored, from }: AppProps) => {
   }
 
   return <Fragment>{content}</Fragment>;
-};
+});
 
 export default RateItem;

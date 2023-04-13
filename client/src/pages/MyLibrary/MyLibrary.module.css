@@ -1,0 +1,20 @@
+.container {
+  align-items: start;
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  justify-items: center;
+  margin-bottom: var(--gap-big);
+  margin-top: var(--gap-big);
+}
+
+.warning {
+  color: var(--color-background-septenary);
+  font-size: var(--font-size-big);
+  margin: var(--gap-big);
+  text-align: center;
+}
+
+.search {
+  font-weight: bold;
+  text-decoration: underline;
+}

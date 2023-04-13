@@ -1,0 +1,7 @@
+.container {
+  display: grid;
+  grid-template-rows: min-content min-content 1fr;
+  margin-bottom: var(--gap-big);
+  margin-top: var(--gap-big);
+  place-items: center;
+}

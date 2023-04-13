@@ -1,9 +1,9 @@
 # Social-BookShelf
-Full stack application developed by me for practice purposes and to be part of my portfolio. On this project I focused more on the functionality than the design.
+Full stack application developed by me for practice purposes and to be part of my portfolio. On this project I focused more on React, Redux, TypeScript, OAuth 2.0 and  NodeJS.
 
 ## Initial Configuration
 ### Server Folder
-As this project uses mongodb database, google books api and google authentication, you will need to configure the following variables in a '.env' file inside de server folder:
+As this project uses mongodb database, google books api and google authentication, you will need to configure the following variables in a '.env' file inside the server folder:
 
 > Obs.: I will leave the variables with some examples but you need to change with your details.
 

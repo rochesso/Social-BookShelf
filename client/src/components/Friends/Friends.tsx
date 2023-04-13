@@ -13,7 +13,7 @@ const Friends = ({ userList }: AppProps) => {
         <Link
           key={user.googleId}
           className={styles.user}
-          to={`/users/${user.googleId}`}
+          to={`/users/${user.googleId}/books`}
         >
           <img
             className={styles.picture}

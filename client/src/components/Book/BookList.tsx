@@ -37,7 +37,7 @@ const BookList = memo(
     const [displayBooks, setDisplayBooks] = useState<JSX.Element[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(true);
 
-    let books: CompleteBook[] = useMemo(() => {
+    const books: CompleteBook[] = useMemo(() => {
       if (from === "user") {
         return bookStore.filteredBooks;
       } else {
@@ -45,7 +45,7 @@ const BookList = memo(
       }
     }, [bookStore.filteredBooks, usersStore.filteredBooks, from]);
 
-    let filter: JSX.Element = useMemo(() => {
+    const filter: JSX.Element = useMemo(() => {
       if (from === "user") {
         return (
           <Filter
@@ -78,11 +78,14 @@ const BookList = memo(
             </LazyLoad>
           ))
         );
+        // If you have less books than the initialSlice disable the scroll
         if (books.length <= initialSlice) {
           setHasMore(false);
+          // If you have more books than the initialSlice enable the scroll
         } else {
           setHasMore(true);
         }
+        // When you update a book it allows react to re-render the change
       } else {
         setDisplayBooks(
           books.slice(0, slice).map((book: CompleteBook) => (
@@ -94,6 +97,7 @@ const BookList = memo(
       }
     }, [books, from, slice, initialSlice]);
 
+    // Functions used in the infinite scroll
     const nextSlice = useCallback(() => {
       return books.slice(slice, slice + increment).map((book: CompleteBook) => (
         <LazyLoad key={book.googleId}>
@@ -107,13 +111,12 @@ const BookList = memo(
       setDisplayBooks(newBooks);
 
       setSlice(slice + increment);
-      console.log(books.length);
-      console.log(slice + increment);
       if (slice + increment >= books.length) {
         setHasMore(false);
       }
     }, [books.length, displayBooks, slice, nextSlice, setSlice]);
 
+    // Content to render
     const bookListToRender = (
       <InfiniteScroll
         dataLength={displayBooks.length}

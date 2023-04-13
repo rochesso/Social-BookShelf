@@ -50,7 +50,7 @@ function App() {
         <Route element={<HomeLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/users/:googleId" element={<SocialBooks />} />
+          <Route path="/users/:googleId/*" element={<SocialBooks />} />
           <Route path="/users" element={<SocialUsers />} />
         </Route>
         <Route path="/user" element={<ProtectedLayout />}>
@@ -59,7 +59,6 @@ function App() {
           <Route path="friends" element={<Friends />} />
         </Route>
       </Routes>
-
       <Footer />
     </Fragment>
   );

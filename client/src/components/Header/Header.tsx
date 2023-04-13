@@ -9,7 +9,7 @@ const Header = memo(() => {
   const user: User | null = userStore.user;
 
   return (
-    <header className={styles.container}>
+    <header id="header" className={styles.container}>
       <h2 className={styles.name}>
         Welcome {user ? user.firstName : "Guest"}!
       </h2>

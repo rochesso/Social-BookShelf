@@ -1,5 +1,5 @@
 import { useEffect, Fragment, memo, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Routes, Route } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import {
   fetchSocialUserData,
@@ -13,6 +13,7 @@ import styles from "./SocialBooks.module.css";
 import Friends from "../../components/Friends/Friends";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import Loading from "../../components/Loading/Loading";
+import NavBottom from "../../components/NavBottom/NavBottom";
 
 const SocialBooks = memo(() => {
   const dispatch = useAppDispatch();
@@ -31,11 +32,14 @@ const SocialBooks = memo(() => {
 
   useEffect(() => {
     const getData = async () => {
+      // Resets the slice if you re-render the this page
       setSlice(initialSlice);
       if (googleId) {
+        // Check if you already downloaded the user data
         dispatch(usersActions.selectLoadedUser(googleId));
         const selectedUser = usersStore.selectedUser;
         if (!selectedUser || selectedUser === undefined) {
+          // Download the user data if you still didn't
           await dispatch(fetchSocialUserData(googleId));
           await dispatch(searchSocialLibrary("", "all"));
         } else {
@@ -87,6 +91,65 @@ const SocialBooks = memo(() => {
     return false;
   };
 
+  // Content to render
+  const friendsRoute = (
+    <Fragment>
+      {hasFriends() ? (
+        <Friends userList={friends} />
+      ) : (
+        <p
+          className={styles.warning}
+        >{`${socialUser?.user.lastName} is not following anyone!`}</p>
+      )}
+    </Fragment>
+  );
+
+  const friendsTitle = (
+    <span className={styles.title}>
+      <PageTitle>{`${
+        socialUser ? socialUser.user.lastName : null
+      }'s Friends!`}</PageTitle>
+    </span>
+  );
+
+  const booksRoute = (
+    <Fragment>
+      {books.length > 0 ? (
+        <BookList
+          initialSlice={initialSlice}
+          slice={slice}
+          setSlice={setSlice}
+          bookList={filteredBooks}
+          from={"social"}
+        />
+      ) : (
+        <p
+          className={styles.warning}
+        >{`${socialUser?.user.lastName} has no books yet!`}</p>
+      )}
+    </Fragment>
+  );
+
+  const booksTitle = (
+    <span className={styles.title}>
+      <PageTitle>{`Welcome to ${
+        socialUser ? socialUser.user.lastName : null
+      }'s Library!`}</PageTitle>
+    </span>
+  );
+
+  const followButton = isLoggedIn ? (
+    !isAdded ? (
+      <button className={styles.follow} onClick={addFriendHandler}>
+        Follow
+      </button>
+    ) : (
+      <button className={styles.unfollow} onClick={removeFriendHandler}>
+        Unfollow
+      </button>
+    )
+  ) : null;
+
   return (
     <Fragment>
       {usersStore.isLoading ? (
@@ -98,54 +161,25 @@ const SocialBooks = memo(() => {
               Go back
             </button>
 
-            {isLoggedIn ? (
-              !isAdded ? (
-                <button className={styles.follow} onClick={addFriendHandler}>
-                  Follow
-                </button>
-              ) : (
-                <button
-                  className={styles.unfollow}
-                  onClick={removeFriendHandler}
-                >
-                  Unfollow
-                </button>
-              )
-            ) : null}
-            <span className={styles.title}>
-              <PageTitle>{`Welcome to ${
-                socialUser ? socialUser.user.lastName : null
-              }'s Library!`}</PageTitle>
-            </span>
+            {followButton}
+
+            <Routes>
+              <Route path="books" element={booksTitle}></Route>
+              <Route path="friends" element={friendsTitle}></Route>
+            </Routes>
           </div>
 
-          {books.length > 0 ? (
-            <BookList
-              initialSlice={initialSlice}
-              slice={slice}
-              setSlice={setSlice}
-              bookList={filteredBooks}
-              from={"social"}
-            />
-          ) : (
-            <p
-              className={styles.warning}
-            >{`${socialUser?.user.lastName} has no books yet!`}</p>
-          )}
-
-          <PageTitle>{`${
-            socialUser ? socialUser.user.lastName : null
-          }'s Friends!`}</PageTitle>
-
-          {hasFriends() ? (
-            <Friends userList={friends} />
-          ) : (
-            <p
-              className={styles.warning}
-            >{`${socialUser?.user.lastName} is not following anyone!`}</p>
-          )}
+          <Routes>
+            <Route path="books" element={booksRoute}></Route>
+            <Route path="friends" element={friendsRoute}></Route>
+          </Routes>
         </main>
       )}
+      <NavBottom
+        initialSlice={initialSlice}
+        setSlice={setSlice}
+        fromExplore={true}
+      />
     </Fragment>
   );
 });

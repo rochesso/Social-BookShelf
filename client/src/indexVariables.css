@@ -11,6 +11,7 @@ body {
   --color-background-page: #fffde9;
   --color-background-primary: #c6baff;
   --color-background-secondary: #ffcdea;
+  --color-background-secondary-opacity: rgba(255, 205, 234, 0.8);
   --color-background-tertiary: #feb0e1;
   --color-background-quaternary: #fffbe0;
   --color-background-quinary: #9ad9f8;

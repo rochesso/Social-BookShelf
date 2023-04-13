@@ -1,4 +1,4 @@
-import { useEffect, memo, useState } from "react";
+import { useEffect, memo, useState, Fragment } from "react";
 import LazyLoad from "react-lazy-load";
 
 import { NavLink } from "react-router-dom";
@@ -11,6 +11,7 @@ import BookList from "../../components/Book/BookList";
 import styles from "./MyLibrary.module.css";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import Loading from "../../components/Loading/Loading";
+import NavBottom from "../../components/NavBottom/NavBottom";
 
 const MyLibrary = memo(() => {
   // Quantity of books that is showed on the initial render
@@ -54,18 +55,25 @@ const MyLibrary = memo(() => {
   );
 
   return (
-    <main className={styles.container}>
-      <PageTitle>Your Library</PageTitle>
-      {bookStore.fetchedData ? (
-        books.length > 0 ? (
-          bookListToRender
+    <Fragment>
+      <main className={styles.container}>
+        <PageTitle>Your Library</PageTitle>
+        {bookStore.fetchedData ? (
+          books.length > 0 ? (
+            bookListToRender
+          ) : (
+            warning
+          )
         ) : (
-          warning
-        )
-      ) : (
-        <Loading />
-      )}
-    </main>
+          <Loading />
+        )}
+      </main>
+      <NavBottom
+        initialSlice={initialSlice}
+        setSlice={setSlice}
+        fromExplore={false}
+      />
+    </Fragment>
   );
 });
 

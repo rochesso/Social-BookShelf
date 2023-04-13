@@ -1,0 +1,24 @@
+.container {
+  backdrop-filter: blur(1.3px);
+  background-color: var(--color-background-secondary-opacity);
+  bottom: 0;
+  font-size: var(--font-size-medium);
+  padding: 1.3rem;
+  position: sticky;
+  width: 100%;
+  z-index: 100;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-medium);
+  justify-content: center;
+  list-style: none;
+}
+
+.link {
+  background-color: var(--color-background-tertiary);
+  border-radius: 3rem;
+  padding: 0.5rem 2rem;
+}

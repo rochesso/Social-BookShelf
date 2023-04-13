@@ -59,9 +59,6 @@ const BookInfo = memo(({ book, from }: AppProps) => {
         return (
           <ReadingStatusComponent icon={notDoneIcon} text="Another Try?" />
         );
-
-      default:
-      // code block
     }
   };
 

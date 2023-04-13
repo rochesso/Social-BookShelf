@@ -10,7 +10,11 @@ const Users = ({ userList }: AppProps) => {
   const users = userList.map((user) => {
     if (user.googleId) {
       return (
-        <Link key={user.googleId} className={styles.user} to={user.googleId}>
+        <Link
+          key={user.googleId}
+          className={styles.user}
+          to={`${user.googleId}/books`}
+        >
           <img
             className={styles.picture}
             src={user.picture}

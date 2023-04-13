@@ -12,60 +12,56 @@ require("./services/passport");
 //import routes api
 import api from "./routes/api";
 
+//import express app
+const app = express();
+
 // .env
 dotenv.config();
 
-// Cors Configurations
-const corsOptions = {
-  methods: ["GET", "DELETE", "POST", "PATCH"],
-  origin: [
-    "http://localhost:3000",
-    "http://192.168.0.99:3000",
-    "http://rochesso.ddnsfree.com",
-    "http://127.0.0.1:3000",
-    "http://rochesso-api.ddnsfree.com:3000",
-  ],
-  // Needs to be true as Client and Server are in different domains
-  credentials: true,
-};
+// To make sure the environmental variables are loaded.
+if (
+  process.env.CLIENT_URL &&
+  process.env.COOKIE_KEY_ONE &&
+  process.env.MONGO_URL
+) {
+  // Cors Configurations
+  const corsOptions = {
+    methods: ["GET", "DELETE", "POST", "PATCH"],
+    origin: [process.env.CLIENT_URL],
+    // Needs to be true as Client and Server are in different domains
+    credentials: true,
+  };
 
-const app = express();
+  // Cookie keys
+  const cookieKeys = {
+    keyOne: process.env.COOKIE_KEY_ONE,
+    keyTwo: process.env.COOKIE_KEY_TWO,
+  };
 
-// Cookie keys
-const cookieKeys = {
-  keyOne: process.env.COOKIE_KEY_ONE,
-  keyTwo: process.env.COOKIE_KEY_TWO,
-};
+  // Middleware
+  app.use(helmet());
+  app.use(cors(corsOptions));
 
-// Middleware
-app.use(helmet());
-app.use(cors(corsOptions));
+  // Cookies config
+  if (cookieKeys.keyOne && cookieKeys.keyTwo) {
+    app.use(
+      cookieSession({
+        maxAge: 2 * 24 * 60 * 60 * 1000,
+        keys: [cookieKeys.keyOne, cookieKeys.keyTwo],
+      })
+    );
+  }
 
-// Cookies config
-if (cookieKeys.keyOne && cookieKeys.keyTwo) {
-  app.use(
-    cookieSession({
-      maxAge: 2 * 24 * 60 * 60 * 1000,
-      keys: [cookieKeys.keyOne, cookieKeys.keyTwo],
-    })
-  );
+  // Passport Middleware
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // Others Middleware
+  app.use(morgan("combined"));
+  app.use(express.json());
+
+  // Api route
+  app.use("/api/v1", api);
 }
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(morgan("combined"));
-app.use(express.json());
-
-// React app build
-// app.use(express.static(path.join(__dirname, '../public')));
-
-// Routes for api
-// api version 1.0
-app.use("/api/v1", api);
-
-// React app
-// app.get('/*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../public', 'index.html'));
-// });
 
 export default app;

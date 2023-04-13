@@ -19,7 +19,7 @@ MONGO_URL can be a local database or MongoDB Atlas.
 
 #### URL where your front end is running:
 
-CLIENT_URL='http://your-react-client.com/' or 'http://localhost:3000'
+CLIENT_URL='http://your-react-client.com' or 'http://localhost:3000'
 
 #### Google books api: (https://developers.google.com/books/docs/v1/using?hl=en)
 

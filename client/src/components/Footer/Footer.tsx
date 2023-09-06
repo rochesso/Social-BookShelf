@@ -1,6 +1,6 @@
 import styles from "./Footer.module.css";
 
-const Header = () => {
+const Footer = () => {
   return (
     <footer className={styles.container}>
       <p className={styles.text}>
@@ -19,4 +19,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Footer;
